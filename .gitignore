@@ -1,5 +1,4 @@
 /.claude
-/.specify
 
 # Node tooling (tests only; the page has no dependencies)
 node_modules/
