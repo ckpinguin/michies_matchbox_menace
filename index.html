@@ -1,0 +1,1401 @@
+<meta charset="utf-8" />
+<title>MENACE — The Matchbox Learning Machine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    --page: #e7e2d2;
+    --surface: #f2eee1;
+    --surface-2: #eae3cf;
+    --ink: #1c1712;
+    --ink-2: #55493a;
+    --ink-muted: #8a7c68;
+    --hairline: rgba(28, 23, 18, 0.14);
+    --hairline-strong: rgba(28, 23, 18, 0.28);
+    --accent: #a63a2c;
+    --accent-ink: #fbf3ea;
+    --brass: #9c7c3c;
+    --wood: #5b4630;
+    --shadow: rgba(35, 26, 14, 0.16);
+
+    --status-good: #0ca30c;
+    --status-warning: #c98200;
+    --status-critical: #d03b3b;
+    --status-good-fill: #0ca30c;
+    --status-warning-fill: #fab219;
+    --status-critical-fill: #d03b3b;
+
+    --cat-1: #2a78d6; /* square 1 */
+    --cat-2: #1baf7a; /* square 2 */
+    --cat-3: #eda100; /* square 3 */
+    --cat-4: #008300; /* square 4 */
+    --cat-5: #9c7c3c; /* square 5 — centre, brass */
+    --cat-6: #4a3aa7; /* square 6 */
+    --cat-7: #e34948; /* square 7 */
+    --cat-8: #e87ba4; /* square 8 */
+    --cat-9: #eb6834; /* square 9 */
+
+    --grid-line: #ded6bf;
+
+    --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Noto Serif", serif;
+    --font-mono: ui-monospace, "SF Mono", "Berkeley Mono", Menlo, Consolas, "Roboto Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #16110d;
+      --surface: #201911;
+      --surface-2: #281f14;
+      --ink: #f3ecdd;
+      --ink-2: #c9b99e;
+      --ink-muted: #8e7f68;
+      --hairline: rgba(255, 255, 255, 0.13);
+      --hairline-strong: rgba(255, 255, 255, 0.26);
+      --accent: #dd7a5c;
+      --accent-ink: #201005;
+      --brass: #cba24d;
+      --wood: #d8c7a8;
+      --shadow: rgba(0, 0, 0, 0.45);
+
+      --cat-1: #3987e5;
+      --cat-2: #22b884;
+      --cat-3: #c98500;
+      --cat-4: #2f9c2f;
+      --cat-5: #cba24d;
+      --cat-6: #9085e9;
+      --cat-7: #e66767;
+      --cat-8: #d55181;
+      --cat-9: #d95926;
+
+      --grid-line: #382c1c;
+    }
+  }
+
+  :root[data-theme="light"] {
+    --page: #e7e2d2;
+    --surface: #f2eee1;
+    --surface-2: #eae3cf;
+    --ink: #1c1712;
+    --ink-2: #55493a;
+    --ink-muted: #8a7c68;
+    --hairline: rgba(28, 23, 18, 0.14);
+    --hairline-strong: rgba(28, 23, 18, 0.28);
+    --accent: #a63a2c;
+    --accent-ink: #fbf3ea;
+    --brass: #9c7c3c;
+    --wood: #5b4630;
+    --shadow: rgba(35, 26, 14, 0.16);
+    --cat-1: #2a78d6;
+    --cat-2: #1baf7a;
+    --cat-3: #eda100;
+    --cat-4: #008300;
+    --cat-5: #9c7c3c;
+    --cat-6: #4a3aa7;
+    --cat-7: #e34948;
+    --cat-8: #e87ba4;
+    --cat-9: #eb6834;
+    --grid-line: #ded6bf;
+  }
+
+  :root[data-theme="dark"] {
+    --page: #16110d;
+    --surface: #201911;
+    --surface-2: #281f14;
+    --ink: #f3ecdd;
+    --ink-2: #c9b99e;
+    --ink-muted: #8e7f68;
+    --hairline: rgba(255, 255, 255, 0.13);
+    --hairline-strong: rgba(255, 255, 255, 0.26);
+    --accent: #dd7a5c;
+    --accent-ink: #201005;
+    --brass: #cba24d;
+    --wood: #d8c7a8;
+    --shadow: rgba(0, 0, 0, 0.45);
+    --cat-1: #3987e5;
+    --cat-2: #22b884;
+    --cat-3: #c98500;
+    --cat-4: #2f9c2f;
+    --cat-5: #cba24d;
+    --cat-6: #9085e9;
+    --cat-7: #e66767;
+    --cat-8: #d55181;
+    --cat-9: #d95926;
+    --grid-line: #382c1c;
+  }
+
+  /* ---------- Base ---------- */
+  * { box-sizing: border-box; }
+  html { color-scheme: light dark; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  a { color: inherit; }
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2.5px solid var(--accent);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 2.75rem 1.5rem 5rem;
+  }
+
+  /* ---------- Header ---------- */
+  header.masthead {
+    border-top: 3px solid var(--wood);
+    border-bottom: 1px solid var(--hairline-strong);
+    padding: 1.6rem 0 1.9rem;
+    margin-bottom: 2.6rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .masthead-text .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 0.6rem;
+  }
+  .masthead-text h1 {
+    font-size: clamp(2.3rem, 5.5vw, 3.5rem);
+    margin: 0 0 0.35rem;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+    font-weight: 600;
+  }
+  .masthead-text p.sub {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 1.05rem;
+    max-width: 46ch;
+  }
+  .matchbox-mark {
+    flex: none;
+    width: 108px;
+    height: 108px;
+  }
+
+  /* ---------- Intro ---------- */
+  .intro {
+    max-width: 66ch;
+    color: var(--ink-2);
+    font-size: 1.05rem;
+    margin-bottom: 2.6rem;
+  }
+  .intro strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Section headings ---------- */
+  h2.section-title {
+    font-size: 1.5rem;
+    margin: 0 0 1rem;
+    font-weight: 600;
+  }
+  .section-title .eyebrow-inline {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.35rem;
+    font-weight: 400;
+  }
+
+  /* ---------- Controls ---------- */
+  .controls-card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    box-shadow: 0 1px 0 var(--hairline), 0 6px 16px -10px var(--shadow);
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 2rem;
+    align-items: center;
+  }
+  .control-group { display: flex; flex-direction: column; gap: 0.45rem; }
+  .control-label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .segmented {
+    display: inline-flex;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .segmented button {
+    background: transparent;
+    border: none;
+    padding: 0.5rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-2);
+    border-right: 1px solid var(--hairline);
+  }
+  .segmented button:last-child { border-right: none; }
+  .segmented button[aria-pressed="true"] {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    background: var(--surface-2);
+    border: 1px solid var(--hairline-strong);
+    color: var(--ink);
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .btn.ghost { background: transparent; }
+  .btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .train-progress {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .train-progress .bar {
+    width: 90px; height: 6px; border-radius: 3px;
+    background: var(--surface-2); border: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  .train-progress .bar > i {
+    display: block; height: 100%; background: var(--accent); width: 0%;
+  }
+
+  /* ---------- Workspace ---------- */
+  .workspace {
+    display: grid;
+    grid-template-columns: minmax(300px, 400px) 1fr;
+    gap: 1.75rem;
+    margin-bottom: 2.5rem;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .workspace { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    box-shadow: 0 1px 0 var(--hairline), 0 8px 20px -14px var(--shadow);
+    padding: 1.4rem;
+  }
+  .card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 1rem;
+    font-weight: 500;
+  }
+
+  /* board */
+  .who-legend {
+    display: flex; gap: 1.1rem; margin-bottom: 0.9rem;
+    font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-2);
+  }
+  .who-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .who-legend svg { width: 15px; height: 15px; }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 6px;
+    background: var(--wood);
+    padding: 6px;
+    border-radius: 6px;
+    aspect-ratio: 1 / 1;
+    max-width: 340px;
+  }
+  .board button {
+    background: var(--surface);
+    border: none;
+    border-radius: 3px;
+    aspect-ratio: 1 / 1;
+    display: flex; align-items: center; justify-content: center;
+    padding: 14%;
+    transition: background 120ms ease;
+  }
+  .board button:not(:disabled):hover { background: var(--surface-2); }
+  .board button:disabled { cursor: default; }
+  .board svg { width: 100%; height: 100%; }
+
+  .status-line {
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    color: var(--ink-2);
+    min-height: 1.4em;
+  }
+  .status-line strong { color: var(--ink); }
+
+  /* box panel */
+  .box-id {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.2rem;
+  }
+  .box-id .code {
+    background: var(--surface-2);
+    border: 1px solid var(--hairline);
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+  }
+  .box-note {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    margin: 0.15rem 0 1rem;
+  }
+  .box-empty {
+    color: var(--ink-muted);
+    font-size: 0.92rem;
+  }
+
+  .box-entry {
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .box-entry:first-child { padding-top: 0; }
+  .box-entry:last-child { border-bottom: none; padding-bottom: 0; }
+  .box-entry-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 0.5rem;
+  }
+  .box-entry-resigned .box-entry-eyebrow { color: var(--status-critical); }
+
+  .box-body {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.4rem;
+    align-items: start;
+  }
+  @media (max-width: 560px) {
+    .box-body { grid-template-columns: 1fr; }
+  }
+  .mini-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    background: var(--wood);
+    padding: 4px;
+    border-radius: 5px;
+    width: 156px;
+  }
+  .mini-cell {
+    aspect-ratio: 1/1;
+    background: var(--surface);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .mini-cell svg.mark { width: 62%; height: 62%; }
+  .bead-chip {
+    width: 74%; height: 74%;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--accent-ink);
+  }
+  .bead-chip.drawn { box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--accent); }
+  .bead-chip.empty-color { background: transparent; border: 1.5px dashed var(--hairline-strong); color: var(--ink-muted); }
+
+  .bead-ledger { list-style: none; margin: 0; padding: 0; font-size: 0.86rem; }
+  .bead-ledger li {
+    display: flex; align-items: center; gap: 0.55rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px dotted var(--hairline);
+    color: var(--ink-2);
+  }
+  .bead-ledger li:last-child { border-bottom: none; }
+  .bead-ledger .swatch {
+    width: 12px; height: 12px; border-radius: 50%; flex: none;
+  }
+  .bead-ledger .sq-label { font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-muted); width: 6.5ch; }
+  .bead-ledger .count { margin-left: auto; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .bead-ledger .delta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 3px;
+  }
+  .delta.win { background: color-mix(in srgb, var(--status-good) 18%, transparent); color: var(--status-good); }
+  .delta.draw { background: color-mix(in srgb, var(--status-warning) 20%, transparent); color: var(--status-warning); }
+  .delta.loss { background: color-mix(in srgb, var(--status-critical) 18%, transparent); color: var(--status-critical); }
+
+  /* stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .stat-tile {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+  }
+  .stat-tile .label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.5rem;
+  }
+  .stat-tile .value {
+    font-family: var(--font-mono);
+    font-size: 1.9rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  .stat-tile .sub { font-size: 0.78rem; color: var(--ink-2); margin-top: 0.25rem; }
+  .record-pills { display: flex; gap: 0.5rem; margin-top: 0.6rem; flex-wrap: wrap; }
+  .pill {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 0.18rem 0.5rem;
+    border-radius: 20px;
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    color: var(--ink-2);
+    border: 1px solid var(--hairline);
+  }
+  .pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .meter {
+    height: 8px; border-radius: 4px; background: var(--surface-2);
+    border: 1px solid var(--hairline); overflow: hidden; margin-top: 0.6rem;
+  }
+  .meter > i { display: block; height: 100%; background: var(--brass); }
+
+  /* chart */
+  .chart-card { margin-bottom: 2.6rem; }
+  .chart-head {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 0.8rem; margin-bottom: 0.9rem;
+  }
+  .legend { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+  .legend .item {
+    font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-2);
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .legend .swatch { width: 10px; height: 10px; border-radius: 2px; }
+  .chart-empty {
+    color: var(--ink-muted); font-size: 0.9rem; padding: 2.4rem 0; text-align: center;
+  }
+  .chart-wrap { position: relative; }
+  .chart-wrap svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .chart-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--ink);
+    color: var(--page);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 5px;
+    line-height: 1.5;
+    white-space: nowrap;
+    transform: translate(-50%, -110%);
+    opacity: 0;
+    transition: opacity 100ms ease;
+    z-index: 5;
+  }
+  .chart-tooltip.visible { opacity: 1; }
+  .table-toggle { margin-top: 0.8rem; }
+  .chart-table-wrap { overflow-x: auto; margin-top: 0.9rem; }
+  table.data-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+  table.data-table th, table.data-table td {
+    text-align: right;
+    padding: 0.4rem 0.7rem;
+    border-bottom: 1px solid var(--hairline);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  table.data-table th:first-child, table.data-table td:first-child { text-align: left; }
+  table.data-table th { color: var(--ink-muted); font-weight: 500; font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  /* how it works */
+  .how-it-works {
+    max-width: 68ch;
+  }
+  .how-it-works p { color: var(--ink-2); margin: 0 0 1.1rem; font-size: 1.02rem; }
+  .how-it-works p:last-child { margin-bottom: 0; }
+
+  footer.colophon {
+    margin-top: 3.5rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--hairline);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--ink-muted);
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="masthead-text">
+      <p class="eyebrow">A learning machine built from matchboxes · Edinburgh, 1961</p>
+      <h1>MENACE</h1>
+      <p class="sub">The Matchbox Educable Noughts And Crosses Engine — Donald Michie's bead-and-cardboard learner, rebuilt as a live simulation.</p>
+    </div>
+    <svg class="matchbox-mark" viewBox="0 0 100 100" aria-hidden="true">
+      <rect x="8" y="26" width="84" height="58" rx="3" fill="var(--wood)"/>
+      <rect x="14" y="14" width="72" height="20" rx="2" fill="var(--surface)" stroke="var(--hairline-strong)"/>
+      <circle cx="24" cy="46" r="6" fill="var(--cat-1)"/>
+      <circle cx="42" cy="52" r="6" fill="var(--cat-3)"/>
+      <circle cx="60" cy="44" r="6" fill="var(--cat-7)"/>
+      <circle cx="76" cy="58" r="6" fill="var(--cat-2)"/>
+      <circle cx="34" cy="70" r="6" fill="var(--cat-6)"/>
+      <circle cx="58" cy="70" r="6" fill="var(--brass)"/>
+    </svg>
+  </header>
+
+  <p class="intro">
+    MENACE only ever plays <strong>◯</strong> and always moves first. Behind the board sits a drawer of
+    matchboxes — one per position it might face — each holding coloured beads standing for the moves it
+    could make. Shake a box, tip out a bead, play the square that colour names. Win, and the beads that led
+    there get reinforced; lose, and they get pulled from the box for good. Play a few games yourself, or set
+    it training against a mindless or a perfect opponent and watch the drawer fill up.
+  </p>
+
+  <section class="controls-card" aria-label="Game controls">
+    <div class="control-group">
+      <span class="control-label">Opponent</span>
+      <div class="segmented" role="group" id="opponent-select">
+        <button type="button" data-opponent="human" aria-pressed="true">Play it yourself</button>
+        <button type="button" data-opponent="random" aria-pressed="false">Random mover</button>
+        <button type="button" data-opponent="perfect" aria-pressed="false">Perfect player</button>
+      </div>
+    </div>
+
+    <div class="control-group" id="train-controls" hidden>
+      <span class="control-label">Auto-train</span>
+      <div class="btn-row">
+        <button type="button" class="btn" data-train="20">Run 20</button>
+        <button type="button" class="btn" data-train="100">Run 100</button>
+        <button type="button" class="btn" data-train="500">Run 500</button>
+        <button type="button" class="btn ghost" id="train-cancel" hidden>Stop</button>
+      </div>
+    </div>
+
+    <div class="control-group" id="train-progress-group" hidden>
+      <span class="control-label">Progress</span>
+      <div class="train-progress">
+        <span id="train-progress-text">0 / 0</span>
+        <span class="bar"><i id="train-progress-bar"></i></span>
+      </div>
+    </div>
+
+    <div class="control-group" style="margin-left:auto;">
+      <span class="control-label">&nbsp;</span>
+      <div class="btn-row">
+        <button type="button" class="btn" id="new-game-btn">New game</button>
+        <button type="button" class="btn ghost" id="reset-btn">Reset MENACE</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="workspace">
+    <div class="card" id="board-card">
+      <h3>The board</h3>
+      <div class="who-legend">
+        <span><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="32" fill="none" stroke="var(--accent)" stroke-width="12"/></svg> MENACE</span>
+        <span><svg viewBox="0 0 100 100"><line x1="22" y1="22" x2="78" y2="78" stroke="var(--ink)" stroke-width="12" stroke-linecap="round"/><line x1="78" y1="22" x2="22" y2="78" stroke="var(--ink)" stroke-width="12" stroke-linecap="round"/></svg> <span id="opponent-name">You</span></span>
+      </div>
+      <div class="board" id="board" role="group" aria-label="Tic-tac-toe board"></div>
+      <p class="status-line" id="status-line">Your move — click a square.</p>
+    </div>
+
+    <div class="card" id="box-card">
+      <h3>The boxes MENACE used this game</h3>
+      <div id="box-panel"></div>
+    </div>
+  </div>
+
+  <div class="stats-row" id="stats-row"></div>
+
+  <section class="card chart-card">
+    <h2 class="section-title"><span class="eyebrow-inline">Rolling last 20 games</span>Learning curve</h2>
+    <div id="chart-root"></div>
+  </section>
+
+  <section class="how-it-works">
+    <h2 class="section-title"><span class="eyebrow-inline">History &amp; mechanism</span>How MENACE works</h2>
+    <p>In 1961, the British AI researcher Donald Michie — a former Bletchley Park codebreaker who spent the
+      Second World War in the Testery, working alongside Alan Turing and Jack Good on German teleprinter
+      ciphers — built a noughts-and-crosses player out of 304 empty matchboxes and a jar of coloured glass
+      beads, together with his colleague Roger Chambers. He called it MENACE: the Matchbox Educable Noughts
+      And Crosses Engine.</p>
+    <p>Each matchbox stood for one board position MENACE might face on its own turn — it always moved first,
+      playing ◯. Rotations and mirror images of the same position were sorted into a single box, which is how
+      the game collapses to 304 cases instead of many more. Inside each box sat beads in nine colours, one per
+      empty square; whichever colour the operator shook out named MENACE's move.</p>
+    <p>Learning was simple bookkeeping. Win, and three more beads of the colour just drawn went into every box
+      used that game — success bred confidence. Draw, and each of those boxes gained a single bead. Lose, and
+      the drawn bead was removed for good, making that move a little less likely next time. Boxes for the
+      opening move started with four beads per colour; by the seventh move — the last one MENACE had any real
+      choice about — each colour was down to a single bead, so a bad habit late in the game could be trained
+      out almost immediately.</p>
+    <p>Starve a box of every coloured bead and MENACE had nothing left to draw: it resigned. Play it against a
+      sharp opponent for long enough, though, and it stopped losing altogether — one of the earliest working
+      demonstrations that a machine could improve at a task purely through trial, error, and reward, years
+      before "reinforcement learning" was standard vocabulary. Michie went on in 1965 to found the University
+      of Edinburgh's Department of Machine Intelligence and Perception.</p>
+    <p>This page runs the same rules against a virtual jar of beads: 304 boxes waiting to be discovered, the
+      same 4/3/2/1 starting beads, the same +3/+1/−1 bookkeeping, and the same resignation when a box runs
+      dry. Michie pre-built every box in advance; here, each one is opened the first time MENACE actually
+      reaches that position, so the drawer fills up as you play.</p>
+  </section>
+
+  <footer class="colophon">
+    A browser recreation of Donald Michie &amp; Roger Chambers' 1961 MENACE. Nothing here is transmitted or
+    stored — the drawer of matchboxes lives only in this tab and resets on reload.
+  </footer>
+</div>
+
+<div aria-live="polite" class="sr-only" id="live-status"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ================= Core game logic (unit-tested standalone) ================= */
+
+  const LINES = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6],
+  ];
+
+  function checkWinner(board) {
+    for (const [a,b,c] of LINES) {
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) return board[a];
+    }
+    if (board.every(c => c !== null)) return "draw";
+    return null;
+  }
+
+  // 8 elements of the dihedral group D4: transformed[i] = original[T[i]]
+  const TRANSFORMS = [
+    [0,1,2,3,4,5,6,7,8], // identity
+    [6,3,0,7,4,1,8,5,2], // rot90
+    [8,7,6,5,4,3,2,1,0], // rot180
+    [2,5,8,1,4,7,0,3,6], // rot270
+    [2,1,0,5,4,3,8,7,6], // flipH
+    [6,7,8,3,4,5,0,1,2], // flipV
+    [0,3,6,1,4,7,2,5,8], // flipDiag
+    [8,5,2,7,4,1,6,3,0], // flipAntiDiag
+  ];
+
+  function applyTransform(board, T) {
+    const out = new Array(9);
+    for (let i = 0; i < 9; i++) out[i] = board[T[i]];
+    return out;
+  }
+
+  function boardKey(board) {
+    return board.map(c => c === null ? "." : c).join("");
+  }
+
+  function canonicalize(board) {
+    let best = null;
+    for (const T of TRANSFORMS) {
+      const t = applyTransform(board, T);
+      const key = boardKey(t);
+      if (best === null || key < best.key) best = { key, T, board: t };
+    }
+    return best;
+  }
+
+  const TIER_BEADS = { 1: 4, 3: 3, 5: 2, 7: 1 };
+
+  function drawBead(counts) {
+    const total = counts.reduce((a, b) => a + b, 0);
+    if (total <= 0) return null;
+    let r = Math.random() * total;
+    for (let i = 0; i < 9; i++) {
+      if (counts[i] <= 0) continue;
+      if (r < counts[i]) return i;
+      r -= counts[i];
+    }
+    return null;
+  }
+
+  function minimax(board, player, memo) {
+    const key = boardKey(board) + player;
+    if (memo.has(key)) return memo.get(key);
+    const winner = checkWinner(board);
+    if (winner === "X") return { score: 1 };
+    if (winner === "O") return { score: -1 };
+    if (winner === "draw") return { score: 0 };
+    let best = null;
+    const moves = [];
+    for (let i = 0; i < 9; i++) {
+      if (board[i] !== null) continue;
+      const next = board.slice();
+      next[i] = player;
+      const result = minimax(next, player === "X" ? "O" : "X", memo);
+      const scored = { score: result.score, move: i };
+      moves.push(scored);
+      if (best === null) best = scored;
+      else if (player === "X" && scored.score > best.score) best = scored;
+      else if (player === "O" && scored.score < best.score) best = scored;
+    }
+    const ties = moves.filter(m => m.score === best.score);
+    const chosen = ties[Math.floor(Math.random() * ties.length)];
+    memo.set(key, chosen);
+    return chosen;
+  }
+  const minimaxMemo = new Map();
+
+  /* ================= App state ================= */
+
+  const state = {
+    board: Array(9).fill(null),
+    trajectory: [],
+    boxes: new Map(),        // canonical key -> { counts:[9], moveNumber, discoveryIndex, canonicalBoard }
+    discoveryCount: 0,
+    gamesPlayed: 0,
+    tally: { win: 0, draw: 0, loss: 0 },
+    gameLog: [],              // 'win' | 'draw' | 'loss' per game
+    opponent: "human",
+    resignedKey: null,        // box key MENACE resigned at this game, if any
+    lastGameDeltas: null,     // [{ key, colorIdx, before, after }] once the current/last game has been reinforced
+    lastOutcome: null,        // 'win' | 'draw' | 'loss' of the current/last game, for delta pill colour
+    pendingHumanResolve: null,
+    gameActive: false,
+    training: { running: false, cancel: false },
+  };
+
+  const TIER_LABEL = { 1: "1st", 3: "3rd", 5: "5th", 7: "7th" };
+
+  function tierBeads(moveNumber) { return TIER_BEADS[moveNumber] || 1; }
+
+  function getOrCreateBox(key, moveNumber, canonicalBoard) {
+    let box = state.boxes.get(key);
+    if (!box) {
+      const counts = canonicalBoard.map(c => c === null ? tierBeads(moveNumber) : 0);
+      box = { counts, moveNumber, discoveryIndex: ++state.discoveryCount, canonicalBoard: canonicalBoard.slice() };
+      state.boxes.set(key, box);
+    }
+    return box;
+  }
+
+  function menaceMove(board) {
+    const filled = board.filter(c => c !== null).length;
+    const emptyCount = 9 - filled;
+    if (emptyCount === 1) {
+      const realIdx = board.indexOf(null);
+      return { forced: true, realIdx };
+    }
+    const moveNumber = filled + 1;
+    const { key, T, board: canonicalBoard } = canonicalize(board);
+    const box = getOrCreateBox(key, moveNumber, canonicalBoard);
+    const colorIdx = drawBead(box.counts);
+    if (colorIdx === null) return { resigned: true, key, box };
+    const realIdx = T[colorIdx];
+    return { forced: false, realIdx, key, colorIdx, box, T, canonicalBoard };
+  }
+
+  function reinforce(trajectory, outcome) {
+    const deltas = [];
+    for (const step of trajectory) {
+      const box = state.boxes.get(step.key);
+      if (!box) continue;
+      const before = box.counts[step.colorIdx];
+      if (outcome === "win") box.counts[step.colorIdx] += 3;
+      else if (outcome === "draw") box.counts[step.colorIdx] += 1;
+      else box.counts[step.colorIdx] = Math.max(0, box.counts[step.colorIdx] - 1);
+      deltas.push({ key: step.key, colorIdx: step.colorIdx, before, after: box.counts[step.colorIdx] });
+    }
+    return deltas;
+  }
+
+  function randomMove(board) {
+    const empties = [];
+    for (let i = 0; i < 9; i++) if (board[i] === null) empties.push(i);
+    return empties[Math.floor(Math.random() * empties.length)];
+  }
+
+  function perfectMove(board) {
+    const result = minimax(board.slice(), "O", minimaxMemo);
+    return result.move;
+  }
+
+  /* ================= Rendering: board ================= */
+
+  const boardEl = document.getElementById("board");
+  const statusEl = document.getElementById("status-line");
+  const liveEl = document.getElementById("live-status");
+  const opponentNameEl = document.getElementById("opponent-name");
+
+  // Display layer only: MENACE (engine mark "X", always first) is drawn as a nought;
+  // the opponent (engine mark "O") is drawn as a cross. The engine's internal "X"/"O"
+  // bookkeeping is unchanged — only the glyph shown to the player is swapped.
+  function markSVG(mark) {
+    if (mark === "X") {
+      return '<svg class="mark" viewBox="0 0 100 100" aria-hidden="true">' +
+        '<circle cx="50" cy="50" r="32" fill="none" stroke="var(--accent)" stroke-width="11"/></svg>';
+    }
+    if (mark === "O") {
+      return '<svg class="mark" viewBox="0 0 100 100" aria-hidden="true">' +
+        '<line x1="22" y1="22" x2="78" y2="78" stroke="var(--ink)" stroke-width="11" stroke-linecap="round"/>' +
+        '<line x1="78" y1="22" x2="22" y2="78" stroke="var(--ink)" stroke-width="11" stroke-linecap="round"/></svg>';
+    }
+    return "";
+  }
+
+  function squareWord(i) { return "square " + (i + 1); }
+
+  function renderBoard() {
+    boardEl.innerHTML = "";
+    state.board.forEach((mark, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.dataset.idx = i;
+      const canClick = state.gameActive && state.opponent === "human" &&
+        state.pendingHumanResolve !== null && mark === null;
+      btn.disabled = !canClick;
+      btn.setAttribute("aria-label", mark ? (squareWord(i) + ", " + (mark === "X" ? "MENACE" : "you")) : (squareWord(i) + ", empty"));
+      btn.innerHTML = markSVG(mark);
+      boardEl.appendChild(btn);
+    });
+  }
+
+  boardEl.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-idx]");
+    if (!btn || btn.disabled) return;
+    const idx = Number(btn.dataset.idx);
+    if (state.pendingHumanResolve) {
+      const resolve = state.pendingHumanResolve;
+      state.pendingHumanResolve = null;
+      resolve(idx);
+    }
+  });
+
+  /* ================= Rendering: open box panel ================= */
+
+  const boxPanelEl = document.getElementById("box-panel");
+
+  function catColor(i) { return "var(--cat-" + (i + 1) + ")"; }
+
+  function boxCardHTML(box, drawnIdx, delta) {
+    const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
+    let html = "";
+    html += '<div class="box-id"><span>Box #' + box.discoveryIndex + '</span>' +
+      '<span class="code">' + box.canonicalBoard.map(c => c || "·").join("") + "</span></div>";
+    html += '<p class="box-note">Opened on MENACE’s ' + tierWord + " move · " +
+      box.counts.reduce((a,b)=>a+b,0) + " beads inside</p>";
+
+    html += '<div class="box-body">';
+    html += '<div class="mini-board">';
+    for (let i = 0; i < 9; i++) {
+      const mark = box.canonicalBoard[i];
+      html += '<div class="mini-cell">';
+      if (mark) {
+        html += markSVG(mark);
+      } else if (box.counts[i] > 0) {
+        const drawn = drawnIdx === i;
+        html += '<div class="bead-chip' + (drawn ? " drawn" : "") + '" style="background:' + catColor(i) + '">' + box.counts[i] + "</div>";
+      } else {
+        html += '<div class="bead-chip empty-color">0</div>';
+      }
+      html += "</div>";
+    }
+    html += "</div>";
+
+    html += '<ul class="bead-ledger">';
+    for (let i = 0; i < 9; i++) {
+      if (box.canonicalBoard[i]) continue;
+      let deltaHtml = "";
+      if (delta && delta.colorIdx === i) {
+        const sign = delta.after > delta.before ? "+" + (delta.after - delta.before) : (delta.after - delta.before);
+        deltaHtml = '<span class="delta ' + state.lastOutcome + '">' + sign + "</span>";
+      }
+      html += '<li><span class="swatch" style="background:' + catColor(i) + '"></span>' +
+        '<span class="sq-label">square ' + (i + 1) + "</span>" +
+        '<span class="count">' + box.counts[i] + " beads</span>" + deltaHtml + "</li>";
+    }
+    html += "</ul></div>";
+    return html;
+  }
+
+  function renderBoxPanel() {
+    const trajectory = state.trajectory;
+
+    if (trajectory.length === 0 && !state.resignedKey) {
+      boxPanelEl.innerHTML = '<p class="box-empty">MENACE hasn’t opened a box yet this game — make a move, or start training, to see one.</p>';
+      return;
+    }
+
+    let html = "";
+    trajectory.forEach((step) => {
+      const box = state.boxes.get(step.key);
+      if (!box) return;
+      const delta = state.lastGameDeltas ? state.lastGameDeltas.find(d => d.key === step.key) : null;
+      const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
+      html += '<div class="box-entry"><p class="box-entry-eyebrow">' + tierWord + ' move</p>' +
+        boxCardHTML(box, step.colorIdx, delta) + "</div>";
+    });
+
+    if (state.resignedKey) {
+      const box = state.boxes.get(state.resignedKey);
+      if (box) {
+        const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
+        html += '<div class="box-entry box-entry-resigned"><p class="box-entry-eyebrow">' + tierWord + ' move · resigned</p>' +
+          '<div class="box-id"><span>Box #' + box.discoveryIndex + '</span>' +
+          '<span class="code">' + box.canonicalBoard.map(c => c || "·").join("") + "</span></div>" +
+          '<p class="box-note"><strong>Every colour was already at 0 beads.</strong> MENACE had nothing left to draw, so it resigned.</p></div>';
+      }
+    }
+
+    boxPanelEl.innerHTML = html;
+  }
+
+  /* ================= Rendering: stats ================= */
+
+  const statsRowEl = document.getElementById("stats-row");
+
+  function pct(n, total) { return total === 0 ? 0 : Math.round((n / total) * 100); }
+
+  function renderStats() {
+    const { win, draw, loss } = state.tally;
+    const total = state.gamesPlayed;
+    const discovered = state.boxes.size;
+    statsRowEl.innerHTML =
+      '<div class="stat-tile"><div class="label">Games played</div><div class="value">' + total + "</div></div>" +
+      '<div class="stat-tile"><div class="label">Record</div><div class="value">' + pct(win,total) + "% wins</div>" +
+        '<div class="record-pills">' +
+          '<span class="pill"><span class="dot" style="background:var(--status-good-fill)"></span>' + win + " win" + (win===1?"":"s") + "</span>" +
+          '<span class="pill"><span class="dot" style="background:var(--status-warning-fill)"></span>' + draw + " draw" + (draw===1?"":"s") + "</span>" +
+          '<span class="pill"><span class="dot" style="background:var(--status-critical-fill)"></span>' + loss + " loss" + (loss===1?"":"es") + "</span>" +
+        "</div></div>" +
+      '<div class="stat-tile"><div class="label">Boxes discovered</div><div class="value">' + discovered + " / 304</div>" +
+        '<div class="meter"><i style="width:' + Math.min(100, pct(discovered,304)) + '%"></i></div></div>';
+  }
+
+  /* ================= Game announcements ================= */
+
+  function setStatus(text) {
+    statusEl.innerHTML = text;
+    liveEl.textContent = text.replace(/<[^>]+>/g, "");
+  }
+
+  /* ================= Opponent moves ================= */
+
+  function getOpponentMove(board, opponent) {
+    if (opponent === "random") {
+      return Promise.resolve(randomMove(board));
+    }
+    if (opponent === "perfect") {
+      return Promise.resolve(perfectMove(board));
+    }
+    return new Promise((resolve) => {
+      state.pendingHumanResolve = resolve;
+      renderBoard();
+    });
+  }
+
+  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  /* ================= Main game loop ================= */
+
+  async function playGame(opponent, animate) {
+    state.board = Array(9).fill(null);
+    state.trajectory = [];
+    state.gameActive = true;
+    state.resignedKey = null;
+    state.lastGameDeltas = null;
+    renderBoard();
+    if (animate) renderBoxPanel();
+
+    let outcome = null;
+
+    while (outcome === null) {
+      // MENACE's move
+      if (animate) setStatus("MENACE is shaking a box…");
+      const mv = menaceMove(state.board);
+
+      if (mv.resigned) {
+        outcome = "loss";
+        state.resignedKey = mv.key;
+        if (animate) { renderBoxPanel(); setStatus("MENACE has <strong>no beads left</strong> for this position — it resigns."); }
+        break;
+      }
+
+      if (!mv.forced) {
+        state.trajectory.push({ key: mv.key, colorIdx: mv.colorIdx });
+      }
+      state.board[mv.realIdx] = "X";
+      if (animate) {
+        renderBoard();
+        renderBoxPanel();
+        setStatus(mv.forced
+          ? "Only one square left — MENACE plays " + squareWord(mv.realIdx) + " by default."
+          : "MENACE drew a bead and played " + squareWord(mv.realIdx) + ".");
+        await delay(450);
+      }
+
+      const w1 = checkWinner(state.board);
+      if (w1) { outcome = w1 === "X" ? "win" : "draw"; break; }
+
+      // Opponent's move
+      if (animate) setStatus(opponent === "human" ? "Your move — click a square." : (opponentLabel(opponent) + " is thinking…"));
+      renderBoard();
+      const oppIdx = await getOpponentMove(state.board, opponent);
+      state.board[oppIdx] = "O";
+      renderBoard();
+      if (animate) { setStatus((opponent === "human" ? "You" : opponentLabel(opponent)) + " played " + squareWord(oppIdx) + "."); await delay(350); }
+
+      const w2 = checkWinner(state.board);
+      if (w2) { outcome = w2 === "X" ? "win" : (w2 === "draw" ? "draw" : "loss"); break; }
+    }
+
+    state.lastGameDeltas = reinforce(state.trajectory, outcome);
+    state.lastOutcome = outcome;
+
+    state.gamesPlayed++;
+    state.tally[outcome]++;
+    state.gameLog.push(outcome);
+    state.gameActive = false;
+
+    if (animate) {
+      renderBoard();
+      renderBoxPanel();
+      renderStats();
+      renderChart();
+      const msg = outcome === "win" ? "<strong>MENACE wins.</strong> +3 beads to every box it used."
+        : outcome === "draw" ? "<strong>It’s a draw.</strong> +1 bead to every box MENACE used."
+        : "<strong>MENACE loses.</strong> The beads it drew are gone for good.";
+      setStatus(msg);
+    }
+
+    return outcome;
+  }
+
+  function opponentLabel(o) {
+    return o === "random" ? "The random mover" : o === "perfect" ? "The perfect player" : "Your opponent";
+  }
+
+  /* ================= Chart ================= */
+
+  const chartRoot = document.getElementById("chart-root");
+  const WINDOW = 20;
+
+  function rollingSeries() {
+    const log = state.gameLog;
+    const pts = [];
+    for (let i = 0; i < log.length; i++) {
+      const start = Math.max(0, i - WINDOW + 1);
+      const slice = log.slice(start, i + 1);
+      const w = slice.filter(x => x === "win").length;
+      const d = slice.filter(x => x === "draw").length;
+      const l = slice.filter(x => x === "loss").length;
+      const n = slice.length;
+      pts.push({ game: i + 1, win: w / n, draw: d / n, loss: l / n });
+    }
+    return pts;
+  }
+
+  let chartHoverBound = false;
+
+  function renderChart() {
+    const pts = rollingSeries();
+    if (pts.length < 2) {
+      chartRoot.innerHTML =
+        '<div class="chart-empty">Play or train a few games to see the learning curve.</div>';
+      return;
+    }
+
+    const W = 760, H = 260, padL = 34, padR = 30, padT = 12, padB = 26;
+    const innerW = W - padL - padR, innerH = H - padT - padB;
+    const n = pts.length;
+    const x = (i) => padL + (n === 1 ? 0 : (i / (n - 1)) * innerW);
+    const y = (v) => padT + innerH * (1 - v);
+
+    function areaPath(getTop, getBottom) {
+      let d = "M " + x(0) + " " + y(getBottom(0));
+      for (let i = 0; i < n; i++) d += " L " + x(i) + " " + y(getBottom(i));
+      for (let i = n - 1; i >= 0; i--) d += " L " + x(i) + " " + y(getTop(i));
+      d += " Z";
+      return d;
+    }
+    function linePath(get) {
+      let d = "";
+      for (let i = 0; i < n; i++) d += (i === 0 ? "M " : " L ") + x(i) + " " + y(get(i));
+      return d;
+    }
+
+    const winTop = (i) => pts[i].win;
+    const drawTop = (i) => pts[i].win + pts[i].draw;
+    const lossTop = (i) => 1; // == pts[i].win+draw+loss
+
+    // 2px surface-color gap between stacked bands: inset each boundary line with a stroke in surface color
+    let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" role="img" aria-label="Rolling 20-game win, draw and loss rate over ' + n + ' games">';
+
+    // gridlines at 0/25/50/75/100%
+    for (const g of [0, 0.25, 0.5, 0.75, 1]) {
+      svg += '<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + y(g) + '" y2="' + y(g) + '" stroke="var(--grid-line)" stroke-width="1"/>';
+      svg += '<text x="' + (padL - 8) + '" y="' + (y(g) + 3) + '" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="var(--ink-muted)">' + Math.round(g * 100) + "%</text>";
+    }
+    svg += '<line x1="' + padL + '" x2="' + padL + '" y1="' + padT + '" y2="' + (H - padB) + '" stroke="var(--hairline-strong)" stroke-width="1"/>';
+    svg += '<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + (H - padB) + '" y2="' + (H - padB) + '" stroke="var(--hairline-strong)" stroke-width="1"/>';
+
+    svg += '<path d="' + areaPath(winTop, () => 0) + '" fill="var(--status-good-fill)" opacity="0.55"/>';
+    svg += '<path d="' + areaPath(drawTop, winTop) + '" fill="var(--status-warning-fill)" opacity="0.55"/>';
+    svg += '<path d="' + areaPath(lossTop, drawTop) + '" fill="var(--status-critical-fill)" opacity="0.55"/>';
+
+    // 2px surface-colour separators at each band boundary
+    svg += '<path d="' + linePath(winTop) + '" fill="none" stroke="var(--surface)" stroke-width="2"/>';
+    svg += '<path d="' + linePath(drawTop) + '" fill="none" stroke="var(--surface)" stroke-width="2"/>';
+
+    // emphasized top line for win band (the headline series) + endpoint dot
+    svg += '<path d="' + linePath(winTop) + '" fill="none" stroke="var(--status-good-fill)" stroke-width="2"/>';
+    svg += '<circle cx="' + x(n-1) + '" cy="' + y(winTop(n-1)) + '" r="4" fill="var(--status-good-fill)" stroke="var(--surface)" stroke-width="2"/>';
+    svg += '<circle cx="' + x(n-1) + '" cy="' + y(drawTop(n-1)) + '" r="4" fill="var(--status-warning-fill)" stroke="var(--surface)" stroke-width="2"/>';
+    svg += '<circle cx="' + x(n-1) + '" cy="' + y(1) + '" r="4" fill="var(--status-critical-fill)" stroke="var(--surface)" stroke-width="2"/>';
+
+    // endpoint direct labels
+    const lastPt = pts[n-1];
+    const labelX = x(n-1) + 9;
+    svg += '<text x="' + labelX + '" y="' + (y(winTop(n-1)) + 3) + '" font-family="var(--font-mono)" font-size="10" fill="var(--ink-2)">' + Math.round(lastPt.win*100) + "%</text>";
+
+    svg += '<g id="chart-crosshair" style="display:none">' +
+      '<line id="crosshair-line" x1="0" x2="0" y1="' + padT + '" y2="' + (H-padB) + '" stroke="var(--ink-muted)" stroke-width="1" stroke-dasharray="2,2"/>' +
+      '</g>';
+    svg += '<rect id="chart-hit" x="' + padL + '" y="' + padT + '" width="' + innerW + '" height="' + innerH + '" fill="transparent"/>';
+    svg += "</svg>";
+
+    let html = '<div class="chart-head"><div class="legend">' +
+      '<span class="item"><span class="swatch" style="background:var(--status-good-fill)"></span>Win</span>' +
+      '<span class="item"><span class="swatch" style="background:var(--status-warning-fill)"></span>Draw</span>' +
+      '<span class="item"><span class="swatch" style="background:var(--status-critical-fill)"></span>Loss</span>' +
+      "</div></div>";
+    html += '<div class="chart-wrap">' + svg + '<div class="chart-tooltip" id="chart-tooltip"></div></div>';
+    html += '<div class="table-toggle"><button type="button" class="btn ghost" id="table-toggle-btn" aria-expanded="false">View as table</button></div>';
+    html += '<div class="chart-table-wrap" id="chart-table-wrap" hidden></div>';
+
+    chartRoot.innerHTML = html;
+    bindChartInteraction(pts, x, y, W, innerW, padL);
+    document.getElementById("table-toggle-btn").addEventListener("click", (e) => {
+      const wrap = document.getElementById("chart-table-wrap");
+      const expanded = e.target.getAttribute("aria-expanded") === "true";
+      wrap.hidden = expanded;
+      e.target.setAttribute("aria-expanded", String(!expanded));
+      if (!expanded && !wrap.dataset.built) {
+        wrap.innerHTML = buildTableHTML(pts);
+        wrap.dataset.built = "1";
+      }
+    });
+  }
+
+  function buildTableHTML(pts) {
+    const bucket = 10;
+    let rows = "";
+    for (let start = 0; start < pts.length; start += bucket) {
+      const slice = pts.slice(start, Math.min(start + bucket, pts.length));
+      const last = slice[slice.length - 1];
+      rows += "<tr><td>" + (start + 1) + "–" + (start + slice.length) + "</td>" +
+        "<td>" + Math.round(last.win * 100) + "%</td>" +
+        "<td>" + Math.round(last.draw * 100) + "%</td>" +
+        "<td>" + Math.round(last.loss * 100) + "%</td></tr>";
+    }
+    return '<table class="data-table"><thead><tr><th>Games</th><th>Win</th><th>Draw</th><th>Loss</th></tr></thead><tbody>' + rows + "</tbody></table>";
+  }
+
+  function bindChartInteraction(pts, x, y, W, innerW, padL) {
+    const svg = chartRoot.querySelector("svg");
+    const hit = document.getElementById("chart-hit");
+    const tooltip = document.getElementById("chart-tooltip");
+    const crosshair = document.getElementById("chart-crosshair");
+    const line = document.getElementById("crosshair-line");
+    const wrap = chartRoot.querySelector(".chart-wrap");
+    const n = pts.length;
+
+    function handleMove(evt) {
+      const rect = svg.getBoundingClientRect();
+      const scaleX = W / rect.width;
+      const px = (evt.clientX - rect.left) * scaleX;
+      let i = Math.round(((px - padL) / innerW) * (n - 1));
+      i = Math.max(0, Math.min(n - 1, i));
+      const p = pts[i];
+      crosshair.style.display = "";
+      line.setAttribute("x1", x(i)); line.setAttribute("x2", x(i));
+      tooltip.innerHTML = "Game " + p.game + "<br>Win " + Math.round(p.win*100) + "% · Draw " + Math.round(p.draw*100) + "% · Loss " + Math.round(p.loss*100) + "%";
+      const wrapRect = wrap.getBoundingClientRect();
+      const leftPx = ((x(i)) / W) * wrapRect.width;
+      tooltip.style.left = Math.max(40, Math.min(wrapRect.width - 40, leftPx)) + "px";
+      tooltip.style.top = "0px";
+      tooltip.classList.add("visible");
+    }
+    hit.addEventListener("pointermove", handleMove);
+    hit.addEventListener("pointerleave", () => {
+      crosshair.style.display = "none";
+      tooltip.classList.remove("visible");
+    });
+  }
+
+  /* ================= Auto-training ================= */
+
+  const trainProgressGroup = document.getElementById("train-progress-group");
+  const trainProgressText = document.getElementById("train-progress-text");
+  const trainProgressBar = document.getElementById("train-progress-bar");
+  const trainCancelBtn = document.getElementById("train-cancel");
+
+  async function runBatch(n) {
+    if (state.training.running) return;
+    state.training.running = true;
+    state.training.cancel = false;
+    trainProgressGroup.hidden = false;
+    trainCancelBtn.hidden = false;
+    setControlsDisabled(true);
+
+    for (let i = 0; i < n; i++) {
+      if (state.training.cancel) break;
+      await playGame(state.opponent, false);
+      if (i % 5 === 0 || i === n - 1) {
+        trainProgressText.textContent = (i + 1) + " / " + n;
+        trainProgressBar.style.width = Math.round(((i + 1) / n) * 100) + "%";
+        renderStats();
+        renderChart();
+        renderBoxPanel();
+        await delay(0);
+      }
+    }
+    renderStats();
+    renderChart();
+    renderBoxPanel();
+    renderBoard();
+    setStatus("Training finished. " + state.gamesPlayed + " games played in total.");
+
+    state.training.running = false;
+    trainProgressGroup.hidden = true;
+    trainCancelBtn.hidden = true;
+    setControlsDisabled(false);
+  }
+
+  trainCancelBtn.addEventListener("click", () => { state.training.cancel = true; });
+
+  function setControlsDisabled(disabled) {
+    document.querySelectorAll("#opponent-select button, [data-train], #new-game-btn, #reset-btn").forEach(b => b.disabled = disabled);
+  }
+
+  /* ================= Controls wiring ================= */
+
+  const opponentSelect = document.getElementById("opponent-select");
+  const trainControls = document.getElementById("train-controls");
+
+  opponentSelect.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-opponent]");
+    if (!btn || state.training.running) return;
+    state.opponent = btn.dataset.opponent;
+    opponentSelect.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+    opponentNameEl.textContent = state.opponent === "human" ? "You" : (state.opponent === "random" ? "Random mover" : "Perfect player");
+    trainControls.hidden = state.opponent === "human";
+    if (state.pendingHumanResolve) { state.pendingHumanResolve = null; }
+    startNewGame();
+  });
+
+  document.querySelectorAll("[data-train]").forEach(btn => {
+    btn.addEventListener("click", () => runBatch(Number(btn.dataset.train)));
+  });
+
+  document.getElementById("new-game-btn").addEventListener("click", () => {
+    if (state.training.running) return;
+    startNewGame();
+  });
+
+  let resetArmed = false, resetTimer = null;
+  const resetBtn = document.getElementById("reset-btn");
+  resetBtn.addEventListener("click", () => {
+    if (state.training.running) return;
+    if (!resetArmed) {
+      resetArmed = true;
+      resetBtn.textContent = "Really reset? (click again)";
+      resetTimer = setTimeout(() => { resetArmed = false; resetBtn.textContent = "Reset MENACE"; }, 4000);
+      return;
+    }
+    clearTimeout(resetTimer);
+    resetArmed = false;
+    resetBtn.textContent = "Reset MENACE";
+    state.boxes.clear();
+    state.discoveryCount = 0;
+    state.gamesPlayed = 0;
+    state.tally = { win: 0, draw: 0, loss: 0 };
+    state.gameLog = [];
+    minimaxMemo.clear();
+    startNewGame();
+    renderStats();
+    renderChart();
+  });
+
+  function startNewGame() {
+    if (state.pendingHumanResolve) state.pendingHumanResolve = null;
+    playGame(state.opponent, true).then(() => {
+      if (state.opponent !== "human") {
+        // small pause then auto-continue is left to explicit New game / Run buttons
+      }
+    });
+  }
+
+  /* ================= Init ================= */
+
+  renderStats();
+  renderChart();
+  startNewGame();
+})();
+</script>

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "menace-drawer.v1.schema.json",
+  "title": "Saved MENACE (menace-drawer, version 1)",
+  "description": "Structural rules only. Semantic rules (reachable canonical positions, record consistency, bead bounds, discovery order) are listed in save-file.md and enforced by MenaceEngine.parseSave.",
+  "type": "object",
+  "required": ["format", "version", "savedAt", "beadRule", "record", "boxes"],
+  "additionalProperties": true,
+  "properties": {
+    "format": { "const": "menace-drawer" },
+    "version": { "const": 1 },
+    "savedAt": { "type": "string", "format": "date-time" },
+    "beadRule": { "enum": ["michie1963", "perSquare"] },
+    "record": {
+      "type": "object",
+      "required": ["gamesPlayed", "win", "draw", "loss", "outcomes"],
+      "additionalProperties": false,
+      "properties": {
+        "gamesPlayed": { "type": "integer", "minimum": 0 },
+        "win": { "type": "integer", "minimum": 0 },
+        "draw": { "type": "integer", "minimum": 0 },
+        "loss": { "type": "integer", "minimum": 0 },
+        "outcomes": { "type": "string", "pattern": "^[WDL]*$" }
+      }
+    },
+    "boxes": {
+      "type": "array",
+      "maxItems": 304,
+      "items": {
+        "type": "object",
+        "required": ["position", "moveNumber", "discoveryIndex", "beads"],
+        "additionalProperties": false,
+        "properties": {
+          "position": { "type": "string", "pattern": "^[XO.]{9}$" },
+          "moveNumber": { "enum": [1, 3, 5, 7] },
+          "discoveryIndex": { "type": "integer", "minimum": 1, "maximum": 304 },
+          "beads": {
+            "type": "array",
+            "minItems": 9,
+            "maxItems": 9,
+            "items": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    }
+  }
+}
