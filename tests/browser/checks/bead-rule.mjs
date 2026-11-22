@@ -1,4 +1,23 @@
-import { readdir, rm } from "node:fs/promises";
+import { readdir, readFile, rm } from "node:fs/promises";
+import path from "node:path";
+
+// The "same rules" text must name every known difference from Michie's machine (Constitution III;
+// FR-027): 304 boxes against his 287, boxes opened on first use, and, under one per square, colours.
+function sameRulesText() {
+  return {
+    sameRules: document.querySelector("#same-rules-text").textContent.replace(/\s+/g, " ").trim(),
+    ruleCurrent: document.querySelector("#bead-rule-current").textContent.replace(/\s+/g, " ").trim(),
+    difference: document.querySelector("#same-rules-difference").textContent.replace(/\s+/g, " ").trim(),
+  };
+}
+
+function assertDifferencesNamed(ctx, text, rule) {
+  ctx.assert(!/The one difference/.test(text), `"The one difference" is not true: ${text}`);
+  ctx.assert(/304/.test(text) && /287/.test(text), `The box-count difference is not named (${rule}): ${text}`);
+  ctx.assert(/opened the first time/.test(text) && /fixed set/.test(text), `The first-use difference is not named (${rule}): ${text}`);
+  if (rule === "perSquare") ctx.assert(/colours differ/.test(text), `The colour difference is not named: ${text}`);
+  else ctx.assert(/shared just as in his paper/.test(text), `Michie 1963 colours not described: ${text}`);
+}
 
 // Bead-rule choice (US6; FR-021–FR-025; SC-008; quickstart §3).
 
@@ -27,6 +46,17 @@ export default [
     spec: "FR-021–FR-025, SC-008",
     timeout: 90000,
     async run(ctx) {
+      // The page's static text (before its script runs) matches what the default rule displays.
+      const html = await readFile(path.join(ctx.repoRoot, "index.html"), "utf8");
+      const staticText = (id) => {
+        const m = new RegExp(`<span id="${id}">([\\s\\S]*?)</span>`).exec(html);
+        return m ? m[1].replace(/\s+/g, " ").trim() : null;
+      };
+      const live = await ctx.eval(sameRulesText);
+      ctx.assert(staticText("bead-rule-current") === live.ruleCurrent, `Static #bead-rule-current differs from the default: ${staticText("bead-rule-current")}`);
+      ctx.assert(staticText("same-rules-difference") === live.difference, `Static #same-rules-difference differs from the default: ${staticText("same-rules-difference")}`);
+      assertDifferencesNamed(ctx, live.sameRules, "michie1963");
+
       // FR-022: Michie 1963 on first load; the opening box (shown after MENACE's first move) has 3 colours.
       let s = await ctx.eval(readRule);
       ctx.assert(s.pressed === "michie1963", `Initial rule: ${s.pressed}`);
@@ -87,6 +117,7 @@ export default [
       ctx.assert(s.tile === "One per square", `Rule tile: ${s.tile}`);
       ctx.assert(/one per square rule/i.test(s.eyebrow), `Chart eyebrow: ${s.eyebrow}`);
       ctx.assert(/1st move/.test(s.firstBoxEyebrow) && s.firstBoxColours === 9, `The opening box shows ${s.firstBoxColours} colours under one per square`);
+      assertDifferencesNamed(ctx, (await ctx.eval(sameRulesText)).sameRules, "perSquare");
 
       // From a fresh MENACE the switch back needs no confirmation.
       await ctx.click('[data-rule="michie1963"]');

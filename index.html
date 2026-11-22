@@ -915,8 +915,7 @@
       paper, moves that are mirror images of each other within a box share one colour: the empty board
       needs only three, for a corner, an edge and the centre. A simpler scheme gives every empty square its
       own colour, so the empty board needs nine. Both play the same game, but Michie’s pools the beads of
-      equivalent moves, so each colour is reinforced more often. <span id="bead-rule-current">This page
-      currently gives every empty square its own colour.</span></p>
+      equivalent moves, so each colour is reinforced more often. <span id="bead-rule-current">This page uses Michie’s scheme unless you switch the Bead rule control to one colour per square.</span></p>
     <p>Learning was simple bookkeeping. Win, and three more beads of the colour just drawn went into every
       box used that game — success bred confidence. Draw, and each of those boxes gained a single bead.
       Lose, and the drawn bead was removed for good, making that move a little less likely next time. Boxes
@@ -932,12 +931,12 @@
       With his colleague Roger Chambers he later carried the matchbox idea over to BOXES (1968), a program
       that learned to balance a pole on a moving cart.</p>
     <p id="same-rules-text">This page runs Michie’s rules against a virtual jar of beads: the same 4/3/2/1
-      starting beads, the same +3/+1/−1 bookkeeping, and the same resignation when a box runs dry. It has a
-      box for every position in which MENACE has a real choice, which comes to 304, the figure most accounts
-      give. <span id="same-rules-difference">The one difference, for now, is the colour scheme: every empty
-      square has its own colour.</span> Michie’s machine was a fixed set of matchboxes glued together like a
-      chest of drawers, each box marked with a drawing of its position; here, each box is opened the first
-      time MENACE actually reaches that position, so the drawer fills up as you play.</p>
+      starting beads, the same +3/+1/−1 bookkeeping, and the same resignation when a box runs dry. Its drawer
+      is built differently from his. It has a box for every position in which MENACE has a real choice: 304
+      in all, the figure most accounts give, where his 1963 paper counts 287. And his machine was a fixed set
+      of matchboxes glued together like a chest of drawers, each box marked with a drawing of its position;
+      here, each box is opened the first time MENACE actually reaches that position, so the drawer fills up
+      as you play. <span id="same-rules-difference">With the Michie 1963 bead rule, the colours are shared just as in his paper.</span></p>
   </section>
 
   <footer class="colophon">
@@ -2679,10 +2678,10 @@ var MenaceEngine = (function () {
     chartEyebrowEl.textContent = "Rolling last 20 games · " + RULE_PHRASE[rule] + " rule";
     if (rule === "michie1963") {
       beadRuleCurrentEl.textContent = "This page uses Michie’s scheme unless you switch the Bead rule control to one colour per square.";
-      sameRulesDifferenceEl.textContent = "With the Michie 1963 bead rule, its colours are shared just as in his paper too.";
+      sameRulesDifferenceEl.textContent = "With the Michie 1963 bead rule, the colours are shared just as in his paper.";
     } else {
       beadRuleCurrentEl.textContent = "You have switched this page to one colour per square; choose “Michie 1963” under Bead rule to return to his scheme.";
-      sameRulesDifferenceEl.textContent = "The one difference, with the one-per-square bead rule selected, is the colour scheme: every empty square has its own colour.";
+      sameRulesDifferenceEl.textContent = "With the one-per-square bead rule selected, the colours differ as well: every empty square has its own colour, where Michie gave equivalent moves one shared colour.";
     }
   }
 
