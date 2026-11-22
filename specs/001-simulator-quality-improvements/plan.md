@@ -83,17 +83,19 @@ The page stays a single file with no dependencies that works offline from `file:
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[.specify/memory/constitution.md](../../.specify/memory/constitution.md) is still the unfilled template, so it sets no ratified principles and no gates.
+Checked against [.specify/memory/constitution.md](../../.specify/memory/constitution.md) v1.0.0 (ratified 2026-11-22). The plan was first written against provisional gates G1–G5, before the constitution existed. Those gates became Principles I (G1, G5), II (G2), III (G3) and IV (G4). Principle V is new. The table below cites the principles.
 
-To keep the gate meaningful, this plan checks against **provisional gates** taken from the spec's constraints. We recommend running `/speckit-constitution` to ratify or replace them.
-
-| # | Provisional gate (source) | Pre-research | Post-design |
+| Principle / constraint | Pre-research | Post-design | Post-implementation (2026-11-22) |
 | --- | --- | --- | --- |
-| G1 | **Single self-contained file**: the page works offline from `file://` with no install (spec Assumptions) | ✅ Planned | ✅ The engine and UI stay inline. Tests read the same file (R13). No modules or workers (R2). |
-| G2 | **No data leaves the device** (FR-039) | ✅ Planned | ✅ Save is a local download and load is a local file pick. The `no-network` browser check enforces this. |
-| G3 | **Verified rules preserved** (FR-040) | ✅ Planned | ✅ `rules.test.mjs` asserts 304 boxes, 4/3/2/1 and +3/+1/−1 under both rules. |
-| G4 | **WCAG 2.1 AA** (FR-010–FR-016, FR-041) | ✅ Planned | ✅ Token values are pre-computed (R6), the browser audits contrast in both schemes, and the keyboard and labels are contracted ([ui.md](./contracts/ui.md)). |
-| G5 | **No runtime dependencies** (spec Assumptions) | ✅ Planned | ✅ None. The dev tooling is built into Node and Chrome. `package.json` lists scripts only. |
+| **I. Single Self-Contained Page** | ✅ Planned | ✅ The engine and UI stay inline. Tests read the same file (R13). No modules or workers (R2). | ✅ `index.html` is still one file: inline styles and two inline classic scripts, no external resources, works from `file://`. Tooling lives only in `tests/` and `package.json`. |
+| **II. Privacy by Construction** | ✅ Planned | ✅ Save is a local download and load is a local file pick. | ✅ The `no-network` check passes. Nothing is put in browser storage, and the footer says so (FR-039). |
+| **III. Historical Fidelity** | ✅ Planned | ✅ `rules.test.mjs` asserts 304 boxes, 4/3/2/1 and +3/+1/−1. Michie 1963 is available and the default. | ✅ The rules tests pass under both bead rules. The history text was re-checked against its sources, and R14 records the source for each claim. |
+| **IV. Accessible to Everyone** | ✅ Planned | ✅ Tokens are pre-computed (R6), and the keyboard behaviour and labels are contracted ([ui.md](./contracts/ui.md)). | ✅ `contrast-*`, `keyboard*`, `labels` and `narrow-320*` pass in both schemes, including the dialog and the drawer. The manual screen-reader pass is still pending (tasks T036). |
+| **V. Pure, Tested Engine** | — (new) | ✅ A DOM-free `menace-engine` block with injected `rng`/`now` and a single `commit` (R1, R13). | ✅ 37 engine tests run against the block extracted from `index.html`, with `Math.random` and `Date` blocked. |
+| Technical Constraints: browser floor | ✅ | ✅ `color-mix()` and `<dialog>` | ✅ No newer features. `content-visibility` only speeds up the drawer where it is supported and changes nothing elsewhere. |
+| Technical Constraints: performance budgets | ✅ | ✅ | ✅ The `perf-*` checks pass: 500 games against the perfect player well under 3 s, no long tasks (also with a 50,000-game record and the table and drawer open), full drawer < 16 ms, 10,000-game save/load < 200 ms. |
+| Technical Constraints: save format | ✅ | ✅ Format id, integer version, full validation before applying, 5 MB limit | ✅ `save-file.test.mjs` passes: round trip, every rejection code, 200 mutations without a throw. |
+| Technical Constraints: development tooling | ✅ | ✅ Node ≥ 22 and Chrome only | ✅ `package.json` has no dependencies. |
 
 **Result**: PASS, with no violations, so Complexity Tracking is empty.
 

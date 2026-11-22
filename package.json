@@ -1,0 +1,14 @@
+{
+  "name": "menace-simulator",
+  "version": "1.0.0",
+  "description": "MENACE, Donald Michie's matchbox learning machine, as a single self-contained web page.",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/engine/",
+    "check:browser": "node tests/browser/check.mjs"
+  }
+}

@@ -1,6 +1,10 @@
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8" />
-<title>MENACE — The Matchbox Learning Machine</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MENACE — The Matchbox Learning Machine</title>
+<meta name="description" content="Play noughts and crosses against MENACE, Donald Michie's learning machine built from matchboxes and coloured beads, and watch it learn from every game." />
 
 <style>
   /* ---------- Tokens ---------- */
@@ -10,7 +14,11 @@
     --surface-2: #eae3cf;
     --ink: #1c1712;
     --ink-2: #55493a;
-    --ink-muted: #8a7c68;
+    --ink-muted: #6b624e;
+    --brass-ink: #75602e;
+    --status-good-ink: #0c6e0c;
+    --status-warning-ink: #805400;
+    --status-critical-ink: #a32f2f;
     --hairline: rgba(28, 23, 18, 0.14);
     --hairline-strong: rgba(28, 23, 18, 0.28);
     --accent: #a63a2c;
@@ -26,15 +34,25 @@
     --status-warning-fill: #fab219;
     --status-critical-fill: #d03b3b;
 
-    --cat-1: #2a78d6; /* square 1 */
+    --cat-1: #3a84da; /* square 1 */
     --cat-2: #1baf7a; /* square 2 */
     --cat-3: #eda100; /* square 3 */
-    --cat-4: #008300; /* square 4 */
-    --cat-5: #9c7c3c; /* square 5 — centre, brass */
+    --cat-4: #008000; /* square 4 */
+    --cat-5: #9e7f40; /* square 5 — centre, brass */
     --cat-6: #4a3aa7; /* square 6 */
-    --cat-7: #e34948; /* square 7 */
+    --cat-7: #e44d4c; /* square 7 */
     --cat-8: #e87ba4; /* square 8 */
     --cat-9: #eb6834; /* square 9 */
+    /* Text on each bead: whichever of dark or light ink contrasts better (research R6). */
+    --cat-1-ink: #1c1712;
+    --cat-2-ink: #1c1712;
+    --cat-3-ink: #1c1712;
+    --cat-4-ink: #fbf3ea;
+    --cat-5-ink: #1c1712;
+    --cat-6-ink: #fbf3ea;
+    --cat-7-ink: #1c1712;
+    --cat-8-ink: #1c1712;
+    --cat-9-ink: #1c1712;
 
     --grid-line: #ded6bf;
 
@@ -49,7 +67,11 @@
       --surface-2: #281f14;
       --ink: #f3ecdd;
       --ink-2: #c9b99e;
-      --ink-muted: #8e7f68;
+      --ink-muted: #948771;
+      --brass-ink: #cba24d;
+      --status-good-ink: #24ad24;
+      --status-warning-ink: #cf8f1e;
+      --status-critical-ink: #df6e6e;
       --hairline: rgba(255, 255, 255, 0.13);
       --hairline-strong: rgba(255, 255, 255, 0.26);
       --accent: #dd7a5c;
@@ -65,8 +87,17 @@
       --cat-5: #cba24d;
       --cat-6: #9085e9;
       --cat-7: #e66767;
-      --cat-8: #d55181;
-      --cat-9: #d95926;
+      --cat-8: #d65484;
+      --cat-9: #da5c2a;
+      --cat-1-ink: #1c1712;
+      --cat-2-ink: #1c1712;
+      --cat-3-ink: #1c1712;
+      --cat-4-ink: #1c1712;
+      --cat-5-ink: #1c1712;
+      --cat-6-ink: #1c1712;
+      --cat-7-ink: #1c1712;
+      --cat-8-ink: #1c1712;
+      --cat-9-ink: #1c1712;
 
       --grid-line: #382c1c;
     }
@@ -78,7 +109,11 @@
     --surface-2: #eae3cf;
     --ink: #1c1712;
     --ink-2: #55493a;
-    --ink-muted: #8a7c68;
+    --ink-muted: #6b624e;
+    --brass-ink: #75602e;
+    --status-good-ink: #0c6e0c;
+    --status-warning-ink: #805400;
+    --status-critical-ink: #a32f2f;
     --hairline: rgba(28, 23, 18, 0.14);
     --hairline-strong: rgba(28, 23, 18, 0.28);
     --accent: #a63a2c;
@@ -86,15 +121,24 @@
     --brass: #9c7c3c;
     --wood: #5b4630;
     --shadow: rgba(35, 26, 14, 0.16);
-    --cat-1: #2a78d6;
+    --cat-1: #3a84da;
     --cat-2: #1baf7a;
     --cat-3: #eda100;
-    --cat-4: #008300;
-    --cat-5: #9c7c3c;
+    --cat-4: #008000;
+    --cat-5: #9e7f40;
     --cat-6: #4a3aa7;
-    --cat-7: #e34948;
+    --cat-7: #e44d4c;
     --cat-8: #e87ba4;
     --cat-9: #eb6834;
+    --cat-1-ink: #1c1712;
+    --cat-2-ink: #1c1712;
+    --cat-3-ink: #1c1712;
+    --cat-4-ink: #fbf3ea;
+    --cat-5-ink: #1c1712;
+    --cat-6-ink: #fbf3ea;
+    --cat-7-ink: #1c1712;
+    --cat-8-ink: #1c1712;
+    --cat-9-ink: #1c1712;
     --grid-line: #ded6bf;
   }
 
@@ -104,7 +148,11 @@
     --surface-2: #281f14;
     --ink: #f3ecdd;
     --ink-2: #c9b99e;
-    --ink-muted: #8e7f68;
+    --ink-muted: #948771;
+    --brass-ink: #cba24d;
+    --status-good-ink: #24ad24;
+    --status-warning-ink: #cf8f1e;
+    --status-critical-ink: #df6e6e;
     --hairline: rgba(255, 255, 255, 0.13);
     --hairline-strong: rgba(255, 255, 255, 0.26);
     --accent: #dd7a5c;
@@ -119,13 +167,23 @@
     --cat-5: #cba24d;
     --cat-6: #9085e9;
     --cat-7: #e66767;
-    --cat-8: #d55181;
-    --cat-9: #d95926;
+    --cat-8: #d65484;
+    --cat-9: #da5c2a;
+    --cat-1-ink: #1c1712;
+    --cat-2-ink: #1c1712;
+    --cat-3-ink: #1c1712;
+    --cat-4-ink: #1c1712;
+    --cat-5-ink: #1c1712;
+    --cat-6-ink: #1c1712;
+    --cat-7-ink: #1c1712;
+    --cat-8-ink: #1c1712;
+    --cat-9-ink: #1c1712;
     --grid-line: #382c1c;
   }
 
   /* ---------- Base ---------- */
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html { color-scheme: light dark; }
   body {
     margin: 0;
@@ -176,7 +234,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--brass);
+    color: var(--brass-ink);
     margin: 0 0 0.6rem;
   }
   .masthead-text h1 {
@@ -276,10 +334,26 @@
     letter-spacing: 0.02em;
   }
   .btn:hover { border-color: var(--accent); }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn:disabled { opacity: 0.55; cursor: not-allowed; } /* stays ≥ 3:1 */
   .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
   .btn.ghost { background: transparent; }
   .btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .control-hint { font-size: 0.8rem; color: var(--ink-2); max-width: 32ch; }
+
+  /* ---------- Confirmation dialog ---------- */
+  .confirm-dialog {
+    width: min(32rem, calc(100vw - 2rem));
+    border: 1px solid var(--hairline-strong);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    padding: 1.4rem 1.5rem;
+    box-shadow: 0 24px 48px -24px var(--shadow);
+  }
+  .confirm-dialog::backdrop { background: rgba(20, 14, 8, 0.45); }
+  .confirm-dialog h2 { font-size: 1.25rem; font-weight: 600; margin: 0 0 0.6rem; }
+  .confirm-dialog p { color: var(--ink-2); margin: 0 0 1.3rem; }
+  .confirm-actions { justify-content: flex-end; }
   .train-progress {
     font-family: var(--font-mono);
     font-size: 0.78rem;
@@ -333,9 +407,9 @@
   .who-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
   .who-legend svg { width: 15px; height: 15px; }
 
+  /* role="grid" → rows → gridcells, each holding one persistent square button */
   .board {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 6px;
     background: var(--wood);
@@ -344,7 +418,11 @@
     aspect-ratio: 1 / 1;
     max-width: 340px;
   }
-  .board button {
+  .board-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; min-height: 0; }
+  .board-cell { display: flex; min-width: 0; min-height: 0; }
+  .board .square {
+    flex: 1;
+    width: 100%;
     background: var(--surface);
     border: none;
     border-radius: 3px;
@@ -353,8 +431,21 @@
     padding: 14%;
     transition: background 120ms ease;
   }
-  .board button:not(:disabled):hover { background: var(--surface-2); }
-  .board button:disabled { cursor: default; }
+  .board .square:not([aria-disabled="true"]):hover { background: var(--surface-2); }
+  .board .square[aria-disabled="true"] { cursor: default; }
+  /* Winning line: a thick inset outline plus a tint, so it reads without colour (FR-019). */
+  .board .square.win {
+    background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+    box-shadow: inset 0 0 0 4px var(--accent);
+    animation: win-pop 360ms ease-out;
+  }
+  @keyframes win-pop {
+    from { transform: scale(0.92); }
+    to { transform: scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .board .square.win { animation: none; }
+  }
   .board svg { width: 100%; height: 100%; }
 
   .status-line {
@@ -404,10 +495,10 @@
     font-size: 0.65rem;
     letter-spacing: 0.11em;
     text-transform: uppercase;
-    color: var(--brass);
+    color: var(--brass-ink);
     margin: 0 0 0.5rem;
   }
-  .box-entry-resigned .box-entry-eyebrow { color: var(--status-critical); }
+  .box-entry-resigned .box-entry-eyebrow { color: var(--status-critical-ink); }
 
   .box-body {
     display: grid;
@@ -446,6 +537,22 @@
   }
   .bead-chip.drawn { box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--accent); }
   .bead-chip.empty-color { background: transparent; border: 1.5px dashed var(--hairline-strong); color: var(--ink-muted); }
+  .bead-chip.member { background: transparent; border: 2.5px solid; width: 52%; height: 52%; }
+  .box-legend {
+    display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem;
+    font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-2);
+    margin: 0 0 1rem;
+  }
+  .orientation-note {
+    font-size: 0.84rem;
+    color: var(--ink-2);
+    background: var(--surface-2);
+    border-left: 3px solid var(--brass);
+    border-radius: 3px;
+    padding: 0.45rem 0.7rem;
+    margin: 0 0 1rem;
+  }
+  .orientation-note strong { color: var(--ink); font-weight: 600; }
 
   .bead-ledger { list-style: none; margin: 0; padding: 0; font-size: 0.86rem; }
   .bead-ledger li {
@@ -455,10 +562,12 @@
     color: var(--ink-2);
   }
   .bead-ledger li:last-child { border-bottom: none; }
+  .bead-ledger li.drawn .sq-label { color: var(--ink); font-weight: 600; }
   .bead-ledger .swatch {
     width: 12px; height: 12px; border-radius: 50%; flex: none;
   }
-  .bead-ledger .sq-label { font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-muted); width: 6.5ch; }
+  .bead-ledger .sq-label { font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-2); }
+  .bead-ledger .same-as { color: var(--ink-muted); }
   .bead-ledger .count { margin-left: auto; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
   .bead-ledger .delta {
     font-family: var(--font-mono);
@@ -466,9 +575,9 @@
     padding: 0.05rem 0.4rem;
     border-radius: 3px;
   }
-  .delta.win { background: color-mix(in srgb, var(--status-good) 18%, transparent); color: var(--status-good); }
-  .delta.draw { background: color-mix(in srgb, var(--status-warning) 20%, transparent); color: var(--status-warning); }
-  .delta.loss { background: color-mix(in srgb, var(--status-critical) 18%, transparent); color: var(--status-critical); }
+  .delta.win { background: color-mix(in srgb, var(--status-good) 18%, transparent); color: var(--status-good-ink); }
+  .delta.draw { background: color-mix(in srgb, var(--status-warning) 20%, transparent); color: var(--status-warning-ink); }
+  .delta.loss { background: color-mix(in srgb, var(--status-critical) 18%, transparent); color: var(--status-critical-ink); }
 
   /* stats */
   .stats-row {
@@ -498,6 +607,7 @@
     color: var(--ink);
   }
   .stat-tile .sub { font-size: 0.78rem; color: var(--ink-2); margin-top: 0.25rem; }
+  .stat-tile .value.value-text { font-size: 1.35rem; line-height: 1.6; }
   .record-pills { display: flex; gap: 0.5rem; margin-top: 0.6rem; flex-wrap: wrap; }
   .pill {
     font-family: var(--font-mono);
@@ -531,7 +641,7 @@
     color: var(--ink-muted); font-size: 0.9rem; padding: 2.4rem 0; text-align: center;
   }
   .chart-wrap { position: relative; }
-  .chart-wrap svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .chart-wrap svg { width: 100%; height: auto; display: block; }
   .chart-tooltip {
     position: absolute;
     pointer-events: none;
@@ -565,7 +675,73 @@
     white-space: nowrap;
   }
   table.data-table th:first-child, table.data-table td:first-child { text-align: left; }
+  table.data-table caption {
+    caption-side: top; text-align: left; padding: 0 0 0.5rem;
+    font-family: var(--font-serif); font-size: 0.84rem; color: var(--ink-2);
+  }
   table.data-table th { color: var(--ink-muted); font-weight: 500; font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  /* drawer view */
+  .drawer-section { margin-bottom: 2.6rem; }
+  .drawer-body { margin-top: 1.2rem; }
+  .drawer-controls {
+    display: flex; flex-wrap: wrap; align-items: flex-end;
+    gap: 0.9rem 1.8rem; margin-bottom: 1rem;
+  }
+  .drawer-move { border: none; margin: 0; padding: 0; min-width: 0; }
+  .drawer-move legend { padding: 0; margin-bottom: 0.45rem; }
+  .drawer-move label, .drawer-check {
+    font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-2);
+    display: inline-flex; align-items: center; gap: 0.3rem; margin-right: 0.8rem;
+    cursor: pointer;
+  }
+  .drawer-controls input { accent-color: var(--accent); margin: 0; }
+  .drawer-sort { display: flex; flex-direction: column; gap: 0.45rem; }
+  .drawer-sort select {
+    font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink);
+    background: var(--surface-2); border: 1px solid var(--hairline-strong);
+    border-radius: 6px; padding: 0.4rem 0.5rem;
+  }
+  .drawer-count { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-2); margin: 0 0 0.9rem; }
+  .drawer-message { color: var(--ink-2); font-size: 0.92rem; margin: 0 0 0.6rem; }
+  .drawer-list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 0.9rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 236px), 1fr));
+  }
+  .drawer-item {
+    content-visibility: auto;          /* off-screen cards skip layout and paint */
+    contain-intrinsic-size: auto 172px;
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    padding: 0.8rem 0.85rem;
+    background: var(--surface);
+  }
+  .drawer-item.used { border-color: var(--accent); }
+  .drawer-list .drawer-box-title {
+    font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0; text-transform: none; color: var(--ink);
+    margin: 0 0 0.6rem;
+  }
+  .drawer-item-body { display: flex; gap: 0.8rem; align-items: flex-start; }
+  .drawer-item-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; min-width: 0; }
+  .drawer-item .code {
+    font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.03em;
+    background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+  }
+  .mini-board.mini-board-sm { width: 100px; gap: 3px; padding: 3px; flex: none; }
+  .mini-board-sm .bead-chip { font-size: 0.66rem; }
+  .mark-glyph { font-family: var(--font-mono); font-size: 1rem; line-height: 1; font-weight: 600; }
+  .mark-glyph.mark-X { color: var(--accent); }
+  .mark-glyph.mark-O { color: var(--ink); }
+  .mini-board-sm .bead-chip.drawn { box-shadow: none; }
+  .badge {
+    font-family: var(--font-mono); font-size: 0.68rem;
+    padding: 0.1rem 0.45rem; border-radius: 3px;
+  }
+  .badge.used { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--ink); }
+  .badge.empty { background: color-mix(in srgb, var(--status-critical) 18%, transparent); color: var(--status-critical-ink); }
 
   /* how it works */
   .how-it-works {
@@ -583,12 +759,14 @@
     color: var(--ink-muted);
   }
 </style>
+</head>
+<body>
 
 <div class="page">
 
   <header class="masthead">
     <div class="masthead-text">
-      <p class="eyebrow">A learning machine built from matchboxes · Edinburgh, 1961</p>
+      <p class="eyebrow">A learning machine built from matchboxes · Donald Michie, 1961</p>
       <h1>MENACE</h1>
       <p class="sub">The Matchbox Educable Noughts And Crosses Engine — Donald Michie's bead-and-cardboard learner, rebuilt as a live simulation.</p>
     </div>
@@ -612,14 +790,23 @@
     it training against a mindless or a perfect opponent and watch the drawer fill up.
   </p>
 
-  <section class="controls-card" aria-label="Game controls">
+  <section class="controls-card" id="controls" data-training="idle" aria-label="Game controls">
     <div class="control-group">
-      <span class="control-label">Opponent</span>
-      <div class="segmented" role="group" id="opponent-select">
+      <span class="control-label" id="opponent-label">Opponent</span>
+      <div class="segmented" role="group" id="opponent-select" aria-labelledby="opponent-label">
         <button type="button" data-opponent="human" aria-pressed="true">Play it yourself</button>
         <button type="button" data-opponent="random" aria-pressed="false">Random mover</button>
         <button type="button" data-opponent="perfect" aria-pressed="false">Perfect player</button>
       </div>
+    </div>
+
+    <div class="control-group">
+      <span class="control-label" id="rule-label">Bead rule</span>
+      <div class="segmented" role="group" id="rule-select" aria-labelledby="rule-label" aria-describedby="rule-hint">
+        <button type="button" data-rule="michie1963" aria-pressed="true">Michie 1963</button>
+        <button type="button" data-rule="perSquare" aria-pressed="false">One per square</button>
+      </div>
+      <span class="control-hint" id="rule-hint">Mirror-image moves share one bead colour.</span>
     </div>
 
     <div class="control-group" id="train-controls" hidden>
@@ -640,6 +827,15 @@
       </div>
     </div>
 
+    <div class="control-group">
+      <span class="control-label">Your MENACE</span>
+      <div class="btn-row">
+        <button type="button" class="btn" id="save-btn">Save MENACE…</button>
+        <button type="button" class="btn" id="load-btn">Load MENACE…</button>
+        <input type="file" id="load-input" accept=".json,application/json" hidden />
+      </div>
+    </div>
+
     <div class="control-group" style="margin-left:auto;">
       <span class="control-label">&nbsp;</span>
       <div class="btn-row">
@@ -656,7 +852,7 @@
         <span><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="32" fill="none" stroke="var(--accent)" stroke-width="12"/></svg> MENACE</span>
         <span><svg viewBox="0 0 100 100"><line x1="22" y1="22" x2="78" y2="78" stroke="var(--ink)" stroke-width="12" stroke-linecap="round"/><line x1="78" y1="22" x2="22" y2="78" stroke="var(--ink)" stroke-width="12" stroke-linecap="round"/></svg> <span id="opponent-name">You</span></span>
       </div>
-      <div class="board" id="board" role="group" aria-label="Tic-tac-toe board"></div>
+      <div class="board" id="board" role="grid" aria-label="Noughts and crosses board" data-state="idle"></div>
       <p class="status-line" id="status-line">Your move — click a square.</p>
     </div>
 
@@ -669,77 +865,159 @@
   <div class="stats-row" id="stats-row"></div>
 
   <section class="card chart-card">
-    <h2 class="section-title"><span class="eyebrow-inline">Rolling last 20 games</span>Learning curve</h2>
+    <h2 class="section-title"><span class="eyebrow-inline" id="chart-eyebrow">Rolling last 20 games · Michie 1963 rule</span>Learning curve</h2>
     <div id="chart-root"></div>
+  </section>
+
+  <section class="card drawer-section" aria-labelledby="drawer-title">
+    <h2 class="section-title" id="drawer-title"><span class="eyebrow-inline">Every box MENACE has opened</span>The drawer</h2>
+    <button type="button" class="btn" id="drawer-toggle" aria-expanded="false" aria-controls="drawer-body">Open the drawer · 0 boxes</button>
+    <div class="drawer-body" id="drawer-body" hidden>
+      <div class="drawer-controls">
+        <fieldset class="drawer-move">
+          <legend class="control-label">Move</legend>
+          <label><input type="radio" name="drawer-move" value="all" checked /> All</label>
+          <label><input type="radio" name="drawer-move" value="1" /> 1st</label>
+          <label><input type="radio" name="drawer-move" value="3" /> 3rd</label>
+          <label><input type="radio" name="drawer-move" value="5" /> 5th</label>
+          <label><input type="radio" name="drawer-move" value="7" /> 7th</label>
+        </fieldset>
+        <label class="drawer-check"><input type="checkbox" id="drawer-empty" /> Only empty boxes</label>
+        <div class="drawer-sort">
+          <label class="control-label" for="drawer-sort">Sort</label>
+          <select id="drawer-sort">
+            <option value="discovery">Discovery order</option>
+            <option value="most">Most beads</option>
+            <option value="fewest">Fewest beads</option>
+          </select>
+        </div>
+      </div>
+      <p class="drawer-count" id="drawer-count"></p>
+      <p class="drawer-message" id="drawer-message" hidden></p>
+      <ul class="drawer-list" id="drawer-list"></ul>
+    </div>
   </section>
 
   <section class="how-it-works">
     <h2 class="section-title"><span class="eyebrow-inline">History &amp; mechanism</span>How MENACE works</h2>
-    <p>In 1961, the British AI researcher Donald Michie — a former Bletchley Park codebreaker who spent the
-      Second World War in the Testery, working alongside Alan Turing and Jack Good on German teleprinter
-      ciphers — built a noughts-and-crosses player out of 304 empty matchboxes and a jar of coloured glass
-      beads, together with his colleague Roger Chambers. He called it MENACE: the Matchbox Educable Noughts
-      And Crosses Engine.</p>
+    <p>In 1961 the British researcher Donald Michie built a noughts-and-crosses player out of matchboxes
+      and a supply of coloured beads, one box for each essentially different position it could face: 287 of
+      them by the count in his 1963 paper, though most later accounts give 304. He called it MENACE: the
+      Matchbox Educable Noughts And Crosses Engine. During the Second World War Michie had worked at Bletchley Park on the German
+      “Tunny” teleprinter cipher, first in the Testery and then in Max Newman’s Newmanry alongside Jack
+      Good, and his contact there with Alan Turing left him with a lasting interest in machines that
+      learn.</p>
     <p>Each matchbox stood for one board position MENACE might face on its own turn — it always moved first,
-      playing ◯. Rotations and mirror images of the same position were sorted into a single box, which is how
-      the game collapses to 304 cases instead of many more. Inside each box sat beads in nine colours, one per
-      empty square; whichever colour the operator shook out named MENACE's move.</p>
-    <p>Learning was simple bookkeeping. Win, and three more beads of the colour just drawn went into every box
-      used that game — success bred confidence. Draw, and each of those boxes gained a single bead. Lose, and
-      the drawn bead was removed for good, making that move a little less likely next time. Boxes for the
-      opening move started with four beads per colour; by the seventh move — the last one MENACE had any real
-      choice about — each colour was down to a single bead, so a bad habit late in the game could be trained
-      out almost immediately.</p>
-    <p>Starve a box of every coloured bead and MENACE had nothing left to draw: it resigned. Play it against a
-      sharp opponent for long enough, though, and it stopped losing altogether — one of the earliest working
-      demonstrations that a machine could improve at a task purely through trial, error, and reward, years
-      before "reinforcement learning" was standard vocabulary. Michie went on in 1965 to found the University
-      of Edinburgh's Department of Machine Intelligence and Perception.</p>
-    <p>This page runs the same rules against a virtual jar of beads: 304 boxes waiting to be discovered, the
-      same 4/3/2/1 starting beads, the same +3/+1/−1 bookkeeping, and the same resignation when a box runs
-      dry. Michie pre-built every box in advance; here, each one is opened the first time MENACE actually
-      reaches that position, so the drawer fills up as you play.</p>
+      playing ◯. Rotations and mirror images of the same position share a single box, which is how the game
+      collapses to a few hundred cases instead of many more. Inside each box sat coloured beads, one colour for each
+      move MENACE could make there; whichever colour the operator shook out named MENACE’s move.</p>
+    <p id="bead-rule-text">How many colours does a box need? In Michie’s own scheme, described in his 1963
+      paper, moves that are mirror images of each other within a box share one colour: the empty board
+      needs only three, for a corner, an edge and the centre. A simpler scheme gives every empty square its
+      own colour, so the empty board needs nine. Both play the same game, but Michie’s pools the beads of
+      equivalent moves, so each colour is reinforced more often. <span id="bead-rule-current">This page
+      currently gives every empty square its own colour.</span></p>
+    <p>Learning was simple bookkeeping. Win, and three more beads of the colour just drawn went into every
+      box used that game — success bred confidence. Draw, and each of those boxes gained a single bead.
+      Lose, and the drawn bead was removed for good, making that move a little less likely next time. Boxes
+      for the opening move started with four beads of each colour, boxes for MENACE’s third move with three,
+      its fifth with two and its seventh — the last move it had any real choice about — with one, so a bad
+      habit late in the game could be trained out almost immediately.</p>
+    <p>Starve a box of every bead and MENACE had nothing left to draw: it resigned. In a tournament Michie
+      played against it in 1961, MENACE was drawing consistently after about twenty games. Michie called it
+      “a trial-and-error device which learns to play”: an early working example of a machine learning from
+      success and failure, in the way now called reinforcement learning. In 1965 Michie became director of the University of Edinburgh’s
+      Experimental Programming Unit, which grew into its Department of Machine Intelligence and Perception,
+      formed in 1966.
+      With his colleague Roger Chambers he later carried the matchbox idea over to BOXES (1968), a program
+      that learned to balance a pole on a moving cart.</p>
+    <p id="same-rules-text">This page runs Michie’s rules against a virtual jar of beads: the same 4/3/2/1
+      starting beads, the same +3/+1/−1 bookkeeping, and the same resignation when a box runs dry. It has a
+      box for every position in which MENACE has a real choice, which comes to 304, the figure most accounts
+      give. <span id="same-rules-difference">The one difference, for now, is the colour scheme: every empty
+      square has its own colour.</span> Michie’s machine was a fixed set of matchboxes glued together like a
+      chest of drawers, each box marked with a drawing of its position; here, each box is opened the first
+      time MENACE actually reaches that position, so the drawer fills up as you play.</p>
   </section>
 
   <footer class="colophon">
-    A browser recreation of Donald Michie &amp; Roger Chambers' 1961 MENACE. Nothing here is transmitted or
-    stored — the drawer of matchboxes lives only in this tab and resets on reload.
+    A browser recreation of Donald Michie’s 1961 MENACE. Nothing here is sent anywhere. The drawer lives in
+    this tab and resets on reload, unless you save it to a file on your device with <em>Save MENACE</em>.
   </footer>
 </div>
 
 <div aria-live="polite" class="sr-only" id="live-status"></div>
 
-<script>
-(function () {
+<dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-body">
+  <h2 id="confirm-title"></h2>
+  <p id="confirm-body"></p>
+  <div class="btn-row confirm-actions" id="confirm-actions"></div>
+</dialog>
+
+<script id="menace-engine">
+/* =====================================================================================
+   MENACE engine: pure game logic.
+   No DOM, no timers, no Math.random, no Date. Randomness arrives as `rng` (a function
+   returning a float in [0, 1)) and time as `now`. The page's UI script below uses it, and
+   the Node tests load this block straight out of this file (tests/helpers/load-engine.mjs).
+   Contract: specs/001-simulator-quality-improvements/contracts/engine-api.md
+   ===================================================================================== */
+var MenaceEngine = (function () {
   "use strict";
 
-  /* ================= Core game logic (unit-tested standalone) ================= */
+  /* ---------- Constants ---------- */
 
-  const LINES = [
-    [0,1,2],[3,4,5],[6,7,8],
-    [0,3,6],[1,4,7],[2,5,8],
-    [0,4,8],[2,4,6],
-  ];
+  const TOTAL_BOXES = 304;
+  const BEAD_RULES = Object.freeze(["michie1963", "perSquare"]);
+  const DEFAULT_BEAD_RULE = "michie1963";
+  const START_BEADS = Object.freeze({ 1: 4, 3: 3, 5: 2, 7: 1 });
+  const REINFORCE = Object.freeze({ win: 3, draw: 1, loss: -1 });
+  const SAVE_FORMAT = "menace-drawer";
+  const SAVE_VERSION = 1;
+
+  const LINES = Object.freeze([
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6],
+  ].map(Object.freeze));
+
+  // The 8 symmetries of the board (the dihedral group D4). transformed[i] = original[T[i]],
+  // so canonical (box) square i shows real board square T[i]. Index 0 is the identity.
+  const TRANSFORMS = Object.freeze([
+    [0, 1, 2, 3, 4, 5, 6, 7, 8], // identity
+    [6, 3, 0, 7, 4, 1, 8, 5, 2], // rotate 90° clockwise
+    [8, 7, 6, 5, 4, 3, 2, 1, 0], // rotate 180°
+    [2, 5, 8, 1, 4, 7, 0, 3, 6], // rotate 90° anticlockwise
+    [2, 1, 0, 5, 4, 3, 8, 7, 6], // mirror left–right
+    [6, 7, 8, 3, 4, 5, 0, 1, 2], // mirror top–bottom
+    [0, 3, 6, 1, 4, 7, 2, 5, 8], // mirror along the ↘ diagonal
+    [8, 5, 2, 7, 4, 1, 6, 3, 0], // mirror along the ↙ diagonal
+  ].map(Object.freeze));
+
+  // How the box picture relates to the real board (research R4).
+  const TRANSFORM_NAMES = Object.freeze([
+    "in the same orientation",
+    "rotated 90° clockwise",
+    "rotated 180°",
+    "rotated 90° anticlockwise",
+    "mirrored left–right",
+    "mirrored top–bottom",
+    "mirrored along the ↘ diagonal",
+    "mirrored along the ↙ diagonal",
+  ]);
+
+  /* ---------- Board helpers ---------- */
 
   function checkWinner(board) {
-    for (const [a,b,c] of LINES) {
-      if (board[a] && board[a] === board[b] && board[a] === board[c]) return board[a];
+    for (const line of LINES) {
+      const [a, b, c] = line;
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        return { winner: board[a], line: line.slice() };
+      }
     }
-    if (board.every(c => c !== null)) return "draw";
-    return null;
+    if (board.every((cell) => cell !== null)) return { winner: "draw", line: null };
+    return { winner: null, line: null };
   }
-
-  // 8 elements of the dihedral group D4: transformed[i] = original[T[i]]
-  const TRANSFORMS = [
-    [0,1,2,3,4,5,6,7,8], // identity
-    [6,3,0,7,4,1,8,5,2], // rot90
-    [8,7,6,5,4,3,2,1,0], // rot180
-    [2,5,8,1,4,7,0,3,6], // rot270
-    [2,1,0,5,4,3,8,7,6], // flipH
-    [6,7,8,3,4,5,0,1,2], // flipV
-    [0,3,6,1,4,7,2,5,8], // flipDiag
-    [8,5,2,7,4,1,6,3,0], // flipAntiDiag
-  ];
 
   function applyTransform(board, T) {
     const out = new Array(9);
@@ -748,132 +1026,728 @@
   }
 
   function boardKey(board) {
-    return board.map(c => c === null ? "." : c).join("");
+    let key = "";
+    for (let i = 0; i < 9; i++) key += board[i] === null ? "." : board[i];
+    return key;
   }
 
+  function keyToBoard(key) {
+    const board = new Array(9);
+    for (let i = 0; i < 9; i++) board[i] = key[i] === "." ? null : key[i];
+    return board;
+  }
+
+  function countMarks(board) {
+    let n = 0;
+    for (let i = 0; i < 9; i++) if (board[i] !== null) n++;
+    return n;
+  }
+
+  // The lexicographically smallest key among the 8 symmetries; ties go to the lowest index.
   function canonicalize(board) {
     let best = null;
-    for (const T of TRANSFORMS) {
-      const t = applyTransform(board, T);
-      const key = boardKey(t);
-      if (best === null || key < best.key) best = { key, T, board: t };
+    for (let t = 0; t < TRANSFORMS.length; t++) {
+      const T = TRANSFORMS[t];
+      const transformed = applyTransform(board, T);
+      const key = boardKey(transformed);
+      if (best === null || key < best.key) best = { key, transformIndex: t, T, board: transformed };
     }
     return best;
   }
 
-  const TIER_BEADS = { 1: 4, 3: 3, 5: 2, 7: 1 };
+  let reachableCache = null;
 
-  function drawBead(counts) {
-    const total = counts.reduce((a, b) => a + b, 0);
+  // Every canonical position MENACE can face on its own turn with a real choice (≥ 2 free squares).
+  function reachablePositions() {
+    if (reachableCache) return reachableCache;
+    const found = new Set();
+    const visited = new Set();
+    const board = new Array(9).fill(null);
+    (function walk(player) {
+      const key = boardKey(board) + player;
+      if (visited.has(key)) return;
+      visited.add(key);
+      if (checkWinner(board).winner) return;
+      if (player === "X" && 9 - countMarks(board) >= 2) found.add(canonicalize(board).key);
+      for (let i = 0; i < 9; i++) {
+        if (board[i] !== null) continue;
+        board[i] = player;
+        walk(player === "X" ? "O" : "X");
+        board[i] = null;
+      }
+    })("X");
+    reachableCache = found;
+    return found;
+  }
+
+  function assertRule(beadRule) {
+    if (!BEAD_RULES.includes(beadRule)) throw new TypeError("Unknown bead rule: " + beadRule);
+  }
+
+  // Move groups (research R3): free squares that the position's own symmetries (its stabiliser)
+  // map onto each other. Representative first and lowest; groups sorted by representative.
+  function moveGroups(canonicalBoard, beadRule) {
+    assertRule(beadRule);
+    const free = [];
+    for (let i = 0; i < 9; i++) if (canonicalBoard[i] === null) free.push(i);
+    if (beadRule === "perSquare") return free.map((i) => [i]);
+    const stabiliser = TRANSFORMS.filter((T) => T.every((src, i) => canonicalBoard[src] === canonicalBoard[i]));
+    const assigned = new Set();
+    const groups = [];
+    for (const i of free) {
+      if (assigned.has(i)) continue;
+      const orbit = Array.from(new Set(stabiliser.map((T) => T[i]))).sort((a, b) => a - b);
+      for (const j of orbit) assigned.add(j);
+      groups.push(orbit);
+    }
+    return groups;
+  }
+
+  function beadsFor(groups, moveNumber) {
+    const beads = new Array(9).fill(0);
+    for (const group of groups) beads[group[0]] = START_BEADS[moveNumber];
+    return beads;
+  }
+
+  function startingBeads(positionKey, moveNumber, beadRule) {
+    return beadsFor(moveGroups(keyToBoard(positionKey), beadRule), moveNumber);
+  }
+
+  function makeBox(positionKey, canonicalBoard, moveNumber, beadRule, discoveryIndex) {
+    const groups = moveGroups(canonicalBoard, beadRule);
+    return {
+      positionKey,
+      canonicalBoard: canonicalBoard.slice(),
+      moveNumber,
+      groups,
+      beads: beadsFor(groups, moveNumber),
+      discoveryIndex,
+    };
+  }
+
+  /* ---------- Menace and games ---------- */
+
+  function createMenace(options) {
+    const beadRule = options && options.beadRule !== undefined ? options.beadRule : DEFAULT_BEAD_RULE;
+    assertRule(beadRule);
+    return {
+      beadRule,
+      boxes: new Map(),
+      discoveryCount: 0,
+      record: { gamesPlayed: 0, win: 0, draw: 0, loss: 0, outcomes: "" },
+    };
+  }
+
+  let gameCounter = 0;
+
+  function newGame(options) {
+    const opts = options || {};
+    return {
+      id: ++gameCounter,
+      opponent: opts.opponent || null,
+      board: new Array(9).fill(null),
+      steps: [],
+      provisional: new Map(),
+      signal: opts.signal || null,
+      status: "inProgress",
+      outcome: null,
+      winLine: null,
+      resignedAt: null,
+    };
+  }
+
+  // A weighted draw: each bead is equally likely. Returns the square, or null if the box is empty.
+  function drawBead(counts, rng) {
+    let total = 0;
+    for (let i = 0; i < 9; i++) total += counts[i] > 0 ? counts[i] : 0;
     if (total <= 0) return null;
-    let r = Math.random() * total;
+    let r = rng() * total;
     for (let i = 0; i < 9; i++) {
       if (counts[i] <= 0) continue;
       if (r < counts[i]) return i;
       r -= counts[i];
     }
+    for (let i = 8; i >= 0; i--) if (counts[i] > 0) return i; // guards against rng() rounding to 1
     return null;
   }
 
-  function minimax(board, player, memo) {
-    const key = boardKey(board) + player;
-    if (memo.has(key)) return memo.get(key);
-    const winner = checkWinner(board);
-    if (winner === "X") return { score: 1 };
-    if (winner === "O") return { score: -1 };
-    if (winner === "draw") return { score: 0 };
-    let best = null;
-    const moves = [];
-    for (let i = 0; i < 9; i++) {
-      if (board[i] !== null) continue;
-      const next = board.slice();
-      next[i] = player;
-      const result = minimax(next, player === "X" ? "O" : "X", memo);
-      const scored = { score: result.score, move: i };
-      moves.push(scored);
-      if (best === null) best = scored;
-      else if (player === "X" && scored.score > best.score) best = scored;
-      else if (player === "O" && scored.score < best.score) best = scored;
+  // MENACE's move. Reads committed boxes, creates provisional ones in the game, appends a
+  // trajectory step, and never mutates the Menace.
+  function chooseMove(menace, game, rng) {
+    const board = game.board;
+    const free = 9 - countMarks(board);
+    if (free === 1) return { kind: "forced", realIdx: board.indexOf(null) };
+
+    const moveNumber = 10 - free;
+    const c = canonicalize(board);
+    let box = menace.boxes.get(c.key);
+    let provisional = false;
+    if (!box) {
+      provisional = true;
+      box = game.provisional.get(c.key);
+      if (!box) {
+        const tentativeIndex = menace.discoveryCount + game.provisional.size + 1;
+        box = makeBox(c.key, c.board, moveNumber, menace.beadRule, tentativeIndex);
+        game.provisional.set(c.key, box);
+      }
     }
-    const ties = moves.filter(m => m.score === best.score);
-    const chosen = ties[Math.floor(Math.random() * ties.length)];
-    memo.set(key, chosen);
-    return chosen;
+
+    const colorIdx = drawBead(box.beads, rng);
+    if (colorIdx === null) return { kind: "resigned", positionKey: c.key, moveNumber, box };
+
+    const group = box.groups.find((g) => g[0] === colorIdx) || [colorIdx];
+    const step = {
+      positionKey: c.key,
+      transformIndex: c.transformIndex,
+      colorIdx,
+      groupSquares: group.slice(),
+      realIdx: c.T[colorIdx],
+    };
+    game.steps.push(step);
+    return {
+      kind: "bead",
+      positionKey: c.key,
+      transformIndex: c.transformIndex,
+      colorIdx,
+      groupSquares: step.groupSquares.slice(),
+      realIdx: step.realIdx,
+      box,
+      provisional,
+    };
   }
-  const minimaxMemo = new Map();
+
+  // The only function that changes a Menace: one synchronous step per finished game.
+  function commit(menace, game) {
+    if (!game || game.status !== "finished") throw new Error("Only a finished game can be committed");
+    if (game.committed) throw new Error("This game has already been committed");
+    if (!Object.prototype.hasOwnProperty.call(REINFORCE, game.outcome)) throw new Error("Unknown outcome");
+
+    // 1. New boxes join the drawer in discovery order and get their final numbers.
+    for (const [key, box] of game.provisional) {
+      if (menace.boxes.has(key)) continue;
+      menace.discoveryCount += 1;
+      box.discoveryIndex = menace.discoveryCount;
+      menace.boxes.set(key, box);
+    }
+
+    // 2. Reinforce every bead drawn this game.
+    const change = REINFORCE[game.outcome];
+    const deltas = [];
+    for (const step of game.steps) {
+      const box = menace.boxes.get(step.positionKey);
+      if (!box) continue;
+      const before = box.beads[step.colorIdx];
+      const after = Math.max(0, before + change);
+      box.beads[step.colorIdx] = after;
+      deltas.push({ positionKey: step.positionKey, colorIdx: step.colorIdx, before, after });
+    }
+
+    // 3. Record the outcome.
+    const record = menace.record;
+    record.gamesPlayed += 1;
+    record[game.outcome] += 1;
+    record.outcomes += game.outcome === "win" ? "W" : game.outcome === "draw" ? "D" : "L";
+
+    game.committed = true;
+    return deltas;
+  }
+
+  /* ---------- Opponents ---------- */
+
+  function freeSquaresOf(board) {
+    const free = [];
+    for (let i = 0; i < 9; i++) if (board[i] === null) free.push(i);
+    return free;
+  }
+
+  function randomMove(board, rng) {
+    const free = freeSquaresOf(board);
+    return free[Math.min(free.length - 1, Math.floor(rng() * free.length))];
+  }
+
+  // Perfect player (research R5). Scores are depth-aware: a win is worth 10 − (marks on the
+  // board when it happens), so a sooner win scores higher and a later loss is preferred. The
+  // memo holds scores only, keyed by position and player to move, never a chosen move; ties
+  // are broken afresh with the injected rng on every call, so play varies between games.
+  // Scores never depend on MENACE, so the memo lives as long as the page.
+  const scoreMemo = new Map();
+
+  function score(board, toMove) {
+    const key = boardKey(board) + toMove;
+    const known = scoreMemo.get(key);
+    if (known !== undefined) return known;
+    const winner = checkWinner(board).winner;
+    let v;
+    if (winner === "X") v = 10 - countMarks(board);
+    else if (winner === "O") v = -(10 - countMarks(board));
+    else if (winner === "draw") v = 0;
+    else {
+      const next = toMove === "X" ? "O" : "X";
+      v = toMove === "X" ? -Infinity : Infinity;
+      for (let i = 0; i < 9; i++) {
+        if (board[i] !== null) continue;
+        board[i] = toMove;
+        const child = score(board, next);
+        board[i] = null;
+        if (toMove === "X" ? child > v : child < v) v = child;
+      }
+    }
+    scoreMemo.set(key, v);
+    return v;
+  }
+
+  // Chooses uniformly at random among the best replies for the player to move.
+  function perfectMove(board, rng) {
+    const b = board.slice();
+    let xs = 0, os = 0;
+    for (let i = 0; i < 9; i++) {
+      if (b[i] === "X") xs++;
+      else if (b[i] === "O") os++;
+    }
+    const toMove = xs > os ? "O" : "X";
+    const next = toMove === "X" ? "O" : "X";
+    let best = null;
+    let ties = [];
+    for (let i = 0; i < 9; i++) {
+      if (b[i] !== null) continue;
+      b[i] = toMove;
+      const v = score(b, next);
+      b[i] = null;
+      if (best === null || (toMove === "O" ? v < best : v > best)) {
+        best = v;
+        ties = [i];
+      } else if (v === best) {
+        ties.push(i);
+      }
+    }
+    return ties[Math.min(ties.length - 1, Math.floor(rng() * ties.length))];
+  }
+
+  /* ---------- Playing a game ---------- */
+
+  const noPause = () => Promise.resolve();
+  const noop = () => {};
+
+  async function playGame(params) {
+    const menace = params.menace;
+    const opponent = params.opponent;
+    const rng = params.rng;
+    const signal = params.signal || null;
+    const pause = params.pause || noPause;
+    const onEvent = params.onEvent || noop;
+    const aborted = () => Boolean(signal && signal.aborted);
+
+    const game = newGame({ opponent: params.opponentKind || null, signal });
+    const abandon = () => {
+      game.status = "abandoned";
+      return { status: "abandoned", game };
+    };
+    const finish = (result) => {
+      game.status = "finished";
+      game.outcome = result.winner === "X" ? "win" : result.winner === "O" ? "loss" : "draw";
+      game.winLine = result.line;
+    };
+
+    onEvent({ type: "start", game });
+    if (aborted()) return abandon();
+
+    for (;;) {
+      const choice = chooseMove(menace, game, rng);
+      if (choice.kind === "resigned") {
+        game.status = "finished";
+        game.outcome = "loss";
+        game.resignedAt = { positionKey: choice.positionKey, moveNumber: choice.moveNumber };
+        onEvent({ type: "menace", choice, board: game.board.slice() });
+        break;
+      }
+      game.board[choice.realIdx] = "X";
+      onEvent({ type: "menace", choice, board: game.board.slice() });
+
+      await pause("menace-move", signal);
+      if (aborted()) return abandon();
+
+      let result = checkWinner(game.board);
+      if (result.winner) {
+        finish(result);
+        break;
+      }
+
+      const square = await opponent(game.board.slice(), signal);
+      if (aborted() || square === null || square === undefined) return abandon();
+      if (!Number.isInteger(square) || square < 0 || square > 8 || game.board[square] !== null) {
+        throw new Error("The opponent chose an illegal square: " + square);
+      }
+      game.board[square] = "O";
+      onEvent({ type: "opponent", square, board: game.board.slice() });
+
+      await pause("opponent-move", signal);
+      if (aborted()) return abandon();
+
+      result = checkWinner(game.board);
+      if (result.winner) {
+        finish(result);
+        break;
+      }
+    }
+
+    const deltas = commit(menace, game);
+    onEvent({ type: "end", game, deltas });
+    return { status: "finished", game, deltas };
+  }
+
+  /* ---------- Record helpers ---------- */
+
+  // Rolling win/draw/loss rates over the last `window` games, one point per game.
+  function rollingSeries(outcomes, window) {
+    return extendRollingSeries([], outcomes, window);
+  }
+
+  // Appends to `series` (made by rollingSeries for a prefix of `outcomes`) the points for the
+  // games after it, in place, and returns it. Long records then cost only the new games.
+  function extendRollingSeries(series, outcomes, window) {
+    const size = window || 20;
+    const seq = typeof outcomes === "string" ? outcomes : outcomes.join("");
+    let w = 0, d = 0, l = 0;
+    const bump = (ch, by) => {
+      if (ch === "W") w += by;
+      else if (ch === "D") d += by;
+      else l += by;
+    };
+    const start = series.length;
+    for (let i = Math.max(0, start - size); i < start; i++) bump(seq[i], 1);
+    for (let i = start; i < seq.length; i++) {
+      bump(seq[i], 1);
+      if (i >= size) bump(seq[i - size], -1);
+      const n = Math.min(i + 1, size);
+      series.push({ game: i + 1, win: w / n, draw: d / n, loss: l / n });
+    }
+    return series;
+  }
+
+  // Table rows in ranges of `bucket` games; each row gives the rolling rates as at the last
+  // game of its range (FR-020). `fromRow` skips rows already shown (0-based).
+  function tableRows(series, bucket, fromRow) {
+    const size = bucket || 10;
+    const rows = [];
+    for (let from = (fromRow || 0) * size + 1; from <= series.length; from += size) {
+      const to = Math.min(from + size - 1, series.length);
+      const last = series[to - 1];
+      rows.push({ from, to, win: last.win, draw: last.draw, loss: last.loss });
+    }
+    return rows;
+  }
+
+  /* ---------- Saving and loading (contracts/save-file.md) ---------- */
+
+  const MAX_SAVE_BYTES = 5 * 1024 * 1024;
+  const ISO_DATE_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/;
+
+  const REJECTIONS = Object.freeze({
+    "too-large": "This file is too large to be a saved MENACE (the limit is 5 MB).",
+    "not-json": "This file can’t be read as a saved MENACE: it isn’t valid JSON, or it was cut short.",
+    "not-menace": "This file isn’t a saved MENACE.",
+    "unsupported-version": "This file’s format version isn’t one this page can read.",
+    "bad-structure": "This file is damaged: part of it is missing or holds the wrong kind of value.",
+    "bad-record": "This file is damaged: its win, draw and loss totals don’t add up.",
+    "bad-position": "This file holds a position that can’t occur in play, or lists the same box twice.",
+    "bad-move-number": "This file gives a box the wrong move number for its position.",
+    "bad-beads": "This file holds impossible bead counts: negative, on an occupied square, on a square that shares another’s colour, or more than training could add.",
+    "bad-discovery": "This file’s box numbers have gaps or repeats.",
+  });
+  const NEWER_VERSION = "This file was saved by a newer version of this page, so this version can’t read it.";
+
+  function rejectionMessage(code) {
+    return REJECTIONS[code] || REJECTIONS["not-menace"];
+  }
+
+  function reject(code, message) {
+    return { ok: false, code, message: message || rejectionMessage(code) };
+  }
+
+  // Pretty-printed JSON, one box per line, boxes in discovery order. `now` is an ISO 8601 string.
+  function serialize(menace, options) {
+    const now = options && options.now;
+    if (typeof now !== "string") throw new TypeError("serialize needs { now } as an ISO 8601 string");
+    const r = menace.record;
+    const boxes = Array.from(menace.boxes.values()).sort((a, b) => a.discoveryIndex - b.discoveryIndex);
+    const lines = [
+      "{",
+      '  "format": ' + JSON.stringify(SAVE_FORMAT) + ",",
+      '  "version": ' + SAVE_VERSION + ",",
+      '  "savedAt": ' + JSON.stringify(now) + ",",
+      '  "beadRule": ' + JSON.stringify(menace.beadRule) + ",",
+      '  "record": {',
+      '    "gamesPlayed": ' + r.gamesPlayed + ",",
+      '    "win": ' + r.win + ",",
+      '    "draw": ' + r.draw + ",",
+      '    "loss": ' + r.loss + ",",
+      '    "outcomes": ' + JSON.stringify(r.outcomes),
+      "  },",
+      boxes.length ? '  "boxes": [' : '  "boxes": []',
+    ];
+    boxes.forEach((b, i) => {
+      lines.push(
+        '    { "position": ' + JSON.stringify(b.positionKey) + ', "moveNumber": ' + b.moveNumber +
+          ', "discoveryIndex": ' + b.discoveryIndex + ', "beads": [' + b.beads.join(", ") + "] }" +
+          (i < boxes.length - 1 ? "," : ""),
+      );
+    });
+    if (boxes.length) lines.push("  ]");
+    lines.push("}");
+    return lines.join("\n") + "\n";
+  }
+
+  // UTF-8 byte length, stopping early once past `limit`.
+  function utf8Length(text, limit) {
+    let bytes = 0;
+    for (let i = 0; i < text.length; i++) {
+      const c = text.charCodeAt(i);
+      if (c < 0x80) bytes += 1;
+      else if (c < 0x800) bytes += 2;
+      else if (c >= 0xd800 && c <= 0xdbff) {
+        bytes += 4;
+        i++;
+      } else bytes += 3;
+      if (bytes > limit) return bytes;
+    }
+    return bytes;
+  }
+
+  const isInt = (v) => typeof v === "number" && Number.isSafeInteger(v);
+  const isCount = (v) => isInt(v) && v >= 0;
+  const isObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
+  const hasExactly = (obj, keys) => {
+    const own = Object.keys(obj);
+    return own.length === keys.length && keys.every((k) => Object.prototype.hasOwnProperty.call(obj, k));
+  };
+
+  // Validates a saved file completely (structure, then meaning) and builds a Menace only if every
+  // check passes, so a file is never applied in part. Never throws.
+  function parseSave(text) {
+    if (typeof text !== "string") return reject("not-json");
+    if (text.length > MAX_SAVE_BYTES || utf8Length(text, MAX_SAVE_BYTES) > MAX_SAVE_BYTES) return reject("too-large");
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (error) {
+      return reject("not-json");
+    }
+    if (!isObject(data) || data.format !== SAVE_FORMAT) return reject("not-menace");
+    if (data.version !== SAVE_VERSION) {
+      return reject("unsupported-version", isInt(data.version) && data.version > SAVE_VERSION ? NEWER_VERSION : undefined);
+    }
+
+    // Stage 1: structure (contracts/save-file.schema.json).
+    const r = data.record;
+    if (
+      typeof data.savedAt !== "string" || !ISO_DATE_TIME.test(data.savedAt) ||
+      !BEAD_RULES.includes(data.beadRule) ||
+      !isObject(r) || !hasExactly(r, ["gamesPlayed", "win", "draw", "loss", "outcomes"]) ||
+      !isCount(r.gamesPlayed) || !isCount(r.win) || !isCount(r.draw) || !isCount(r.loss) ||
+      typeof r.outcomes !== "string" || !/^[WDL]*$/.test(r.outcomes) ||
+      !Array.isArray(data.boxes) || data.boxes.length > TOTAL_BOXES
+    ) {
+      return reject("bad-structure");
+    }
+    for (const b of data.boxes) {
+      if (
+        !isObject(b) || !hasExactly(b, ["position", "moveNumber", "discoveryIndex", "beads"]) ||
+        typeof b.position !== "string" || !/^[XO.]{9}$/.test(b.position) ||
+        ![1, 3, 5, 7].includes(b.moveNumber) ||
+        !isInt(b.discoveryIndex) || b.discoveryIndex < 1 || b.discoveryIndex > TOTAL_BOXES ||
+        !Array.isArray(b.beads) || b.beads.length !== 9 ||
+        !b.beads.every((v) => typeof v === "number" && Number.isFinite(v))
+      ) {
+        return reject("bad-structure");
+      }
+    }
+
+    // Stage 2: meaning. Rule 2: the record is consistent.
+    let w = 0, d = 0, l = 0;
+    for (const ch of r.outcomes) {
+      if (ch === "W") w++;
+      else if (ch === "D") d++;
+      else l++;
+    }
+    if (
+      r.win + r.draw + r.loss !== r.gamesPlayed || r.outcomes.length !== r.gamesPlayed ||
+      w !== r.win || d !== r.draw || l !== r.loss
+    ) {
+      return reject("bad-record");
+    }
+
+    // Rule 3: canonical, reachable, unique positions.
+    const reachable = reachablePositions();
+    const seen = new Set();
+    for (const b of data.boxes) {
+      if (!reachable.has(b.position) || canonicalize(keyToBoard(b.position)).key !== b.position || seen.has(b.position)) {
+        return reject("bad-position");
+      }
+      seen.add(b.position);
+    }
+
+    // Rule 4: move numbers match the pieces on the board.
+    for (const b of data.boxes) {
+      if (b.moveNumber !== countMarks(keyToBoard(b.position)) + 1) return reject("bad-move-number");
+    }
+
+    // Rule 5: beads are whole, non-negative, only on free representatives, and within reach of training.
+    const rule = data.beadRule;
+    for (const b of data.boxes) {
+      const board = keyToBoard(b.position);
+      const reps = new Set(moveGroups(board, rule).map((g) => g[0]));
+      const limit = START_BEADS[b.moveNumber] + REINFORCE.win * r.gamesPlayed;
+      for (let i = 0; i < 9; i++) {
+        const v = b.beads[i];
+        if (!isCount(v) || v > limit || (v !== 0 && (board[i] !== null || !reps.has(i)))) return reject("bad-beads");
+      }
+    }
+
+    // Rule 6: discovery numbers are exactly 1…n.
+    const order = data.boxes.map((b) => b.discoveryIndex).sort((a, b) => a - b);
+    for (let k = 0; k < order.length; k++) if (order[k] !== k + 1) return reject("bad-discovery");
+
+    // Every check passed: build the Menace.
+    const menace = createMenace({ beadRule: rule });
+    const boxes = data.boxes.slice().sort((a, b) => a.discoveryIndex - b.discoveryIndex);
+    for (const b of boxes) {
+      const board = keyToBoard(b.position);
+      menace.boxes.set(b.position, {
+        positionKey: b.position,
+        canonicalBoard: board,
+        moveNumber: b.moveNumber,
+        groups: moveGroups(board, rule),
+        beads: b.beads.slice(),
+        discoveryIndex: b.discoveryIndex,
+      });
+    }
+    menace.discoveryCount = boxes.length;
+    menace.record = { gamesPlayed: r.gamesPlayed, win: r.win, draw: r.draw, loss: r.loss, outcomes: r.outcomes };
+    return { ok: true, menace, savedAt: data.savedAt };
+  }
+
+  return Object.freeze({
+    TOTAL_BOXES,
+    BEAD_RULES,
+    DEFAULT_BEAD_RULE,
+    START_BEADS,
+    REINFORCE,
+    LINES,
+    TRANSFORMS,
+    TRANSFORM_NAMES,
+    SAVE_FORMAT,
+    SAVE_VERSION,
+    MAX_SAVE_BYTES,
+    checkWinner,
+    applyTransform,
+    boardKey,
+    keyToBoard,
+    canonicalize,
+    reachablePositions,
+    moveGroups,
+    startingBeads,
+    createMenace,
+    newGame,
+    drawBead,
+    chooseMove,
+    commit,
+    randomMove,
+    perfectMove,
+    playGame,
+    rollingSeries,
+    extendRollingSeries,
+    tableRows,
+    serialize,
+    parseSave,
+    rejectionMessage,
+  });
+})();
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  const E = window.MenaceEngine;
 
   /* ================= App state ================= */
 
   const state = {
-    board: Array(9).fill(null),
-    trajectory: [],
-    boxes: new Map(),        // canonical key -> { counts:[9], moveNumber, discoveryIndex, canonicalBoard }
-    discoveryCount: 0,
-    gamesPlayed: 0,
-    tally: { win: 0, draw: 0, loss: 0 },
-    gameLog: [],              // 'win' | 'draw' | 'loss' per game
+    menace: E.createMenace({ beadRule: E.DEFAULT_BEAD_RULE }), // Michie 1963 (FR-022)
     opponent: "human",
-    resignedKey: null,        // box key MENACE resigned at this game, if any
-    lastGameDeltas: null,     // [{ key, colorIdx, before, after }] once the current/last game has been reinforced
-    lastOutcome: null,        // 'win' | 'draw' | 'loss' of the current/last game, for delta pill colour
-    pendingHumanResolve: null,
-    gameActive: false,
-    training: { running: false, cancel: false },
   };
+
+  // UI-only state (data-model.md: UI-only state).
+  const ui = {
+    lastGame: null, // { steps, deltas, outcome, winLine, resignedAt } of the most recent finished game
+    view: null,     // { game, deltas } — the game shown on the board and in the box panel
+    tableOpen: false, // the learning-curve table stays open across re-renders
+    drawer: { open: false, move: "all", emptyOnly: false, sort: "discovery" },
+    training: { running: false, stopRequested: false, target: 0, done: 0 },
+  };
+
+  /* ================= Game controller (research R1) =================
+     At most one game is in progress. Every action that starts something new first calls
+     abandonCurrentGame(), which aborts that game's signal: its pauses end at once, a pending
+     human move resolves to null, and the engine returns "abandoned" without committing. */
+
+  let currentRun = null;   // { controller } of the animated game in progress
+  let pendingHuman = null; // { resolve(square | null) } while waiting for the visitor's move
+
+  function abandonCurrentGame() {
+    if (currentRun) {
+      currentRun.controller.abort();
+      currentRun = null;
+    }
+    if (pendingHuman) pendingHuman.resolve(null);
+  }
+
+  // Resolves after ms, or at once if the signal aborts.
+  function pause(ms, signal) {
+    return new Promise((resolve) => {
+      if (signal.aborted) return resolve();
+      const done = () => {
+        clearTimeout(timer);
+        signal.removeEventListener("abort", done);
+        resolve();
+      };
+      const timer = setTimeout(done, ms);
+      signal.addEventListener("abort", done, { once: true });
+    });
+  }
+
+  // Waits for the visitor's square; resolves to null if the game is abandoned.
+  function humanMove(signal) {
+    return new Promise((resolve) => {
+      if (signal.aborted) return resolve(null);
+      const entry = {
+        resolve(square) {
+          if (pendingHuman !== entry) return;
+          pendingHuman = null;
+          signal.removeEventListener("abort", onAbort);
+          resolve(square);
+          renderBoard();
+        },
+      };
+      const onAbort = () => entry.resolve(null);
+      pendingHuman = entry;
+      signal.addEventListener("abort", onAbort, { once: true });
+      renderBoard();
+    });
+  }
 
   const TIER_LABEL = { 1: "1st", 3: "3rd", 5: "5th", 7: "7th" };
 
-  function tierBeads(moveNumber) { return TIER_BEADS[moveNumber] || 1; }
+  // data-model.md: BeadRule (display names).
+  const RULE_NAMES = { michie1963: "Michie 1963", perSquare: "One per square" };
+  const RULE_PHRASE = { michie1963: "Michie 1963", perSquare: "one per square" }; // mid-sentence form
+  const RULE_HINTS = {
+    michie1963: "Mirror-image moves share one bead colour.",
+    perSquare: "Every empty square has its own bead colour.",
+  };
 
-  function getOrCreateBox(key, moveNumber, canonicalBoard) {
-    let box = state.boxes.get(key);
-    if (!box) {
-      const counts = canonicalBoard.map(c => c === null ? tierBeads(moveNumber) : 0);
-      box = { counts, moveNumber, discoveryIndex: ++state.discoveryCount, canonicalBoard: canonicalBoard.slice() };
-      state.boxes.set(key, box);
-    }
-    return box;
-  }
-
-  function menaceMove(board) {
-    const filled = board.filter(c => c !== null).length;
-    const emptyCount = 9 - filled;
-    if (emptyCount === 1) {
-      const realIdx = board.indexOf(null);
-      return { forced: true, realIdx };
-    }
-    const moveNumber = filled + 1;
-    const { key, T, board: canonicalBoard } = canonicalize(board);
-    const box = getOrCreateBox(key, moveNumber, canonicalBoard);
-    const colorIdx = drawBead(box.counts);
-    if (colorIdx === null) return { resigned: true, key, box };
-    const realIdx = T[colorIdx];
-    return { forced: false, realIdx, key, colorIdx, box, T, canonicalBoard };
-  }
-
-  function reinforce(trajectory, outcome) {
-    const deltas = [];
-    for (const step of trajectory) {
-      const box = state.boxes.get(step.key);
-      if (!box) continue;
-      const before = box.counts[step.colorIdx];
-      if (outcome === "win") box.counts[step.colorIdx] += 3;
-      else if (outcome === "draw") box.counts[step.colorIdx] += 1;
-      else box.counts[step.colorIdx] = Math.max(0, box.counts[step.colorIdx] - 1);
-      deltas.push({ key: step.key, colorIdx: step.colorIdx, before, after: box.counts[step.colorIdx] });
-    }
-    return deltas;
-  }
-
-  function randomMove(board) {
-    const empties = [];
-    for (let i = 0; i < 9; i++) if (board[i] === null) empties.push(i);
-    return empties[Math.floor(Math.random() * empties.length)];
-  }
-
-  function perfectMove(board) {
-    const result = minimax(board.slice(), "O", minimaxMemo);
-    return result.move;
+  function lookupBox(key, game) {
+    return state.menace.boxes.get(key) || (game ? game.provisional.get(key) : undefined);
   }
 
   /* ================= Rendering: board ================= */
@@ -899,32 +1773,116 @@
     return "";
   }
 
-  function squareWord(i) { return "square " + (i + 1); }
+  // Square names are always qualified (FR-009): "board square n" here, "box square n" in boxes.
+  function squareWord(i) { return "board square " + (i + 1); }
 
-  function renderBoard() {
-    boardEl.innerHTML = "";
-    state.board.forEach((mark, i) => {
+  // data-model.md: Opponent (display names).
+  function opponentDisplayName(kind) {
+    return kind === "random" ? "Random mover" : kind === "perfect" ? "Perfect player" : "You";
+  }
+
+  function currentBoard() {
+    return ui.view ? ui.view.game.board : Array(9).fill(null);
+  }
+
+  function shownOpponent() {
+    return (ui.view && ui.view.game.opponent) || state.opponent;
+  }
+
+  // "Board square 5, MENACE's nought" / "…, Random mover's cross" / "…, your cross" (FR-012).
+  function squareLabel(i, mark, winning) {
+    let label = "Board square " + (i + 1) + ", ";
+    if (!mark) label += "empty";
+    else if (mark === "X") label += "MENACE's nought";
+    else label += shownOpponent() === "human" ? "your cross" : opponentDisplayName(shownOpponent()) + "'s cross";
+    return winning ? label + ", winning line" : label;
+  }
+
+  // The nine squares are created once and updated in place, so keyboard focus survives every
+  // move (research R7). Rows and gridcells give the board its grid semantics.
+  const squares = [];
+  for (let r = 0; r < 3; r++) {
+    const row = document.createElement("div");
+    row.className = "board-row";
+    row.setAttribute("role", "row");
+    for (let c = 0; c < 3; c++) {
+      const cell = document.createElement("div");
+      cell.className = "board-cell";
+      cell.setAttribute("role", "gridcell");
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.dataset.idx = i;
-      const canClick = state.gameActive && state.opponent === "human" &&
-        state.pendingHumanResolve !== null && mark === null;
-      btn.disabled = !canClick;
-      btn.setAttribute("aria-label", mark ? (squareWord(i) + ", " + (mark === "X" ? "MENACE" : "you")) : (squareWord(i) + ", empty"));
-      btn.innerHTML = markSVG(mark);
-      boardEl.appendChild(btn);
+      btn.className = "square";
+      btn.dataset.idx = String(r * 3 + c);
+      btn.dataset.mark = "";
+      btn.tabIndex = r * 3 + c === 0 ? 0 : -1;
+      cell.appendChild(btn);
+      row.appendChild(cell);
+      squares.push(btn);
+    }
+    boardEl.appendChild(row);
+  }
+  ui.focusSquare = 0;
+
+  function renderBoard() {
+    const board = currentBoard();
+    const game = ui.view ? ui.view.game : null;
+    const inProgress = Boolean(game && game.status === "inProgress");
+    boardEl.dataset.state = !game ? "idle" : inProgress ? "playing" : "over";
+    boardEl.dataset.turn = inProgress && pendingHuman ? "human" : "";
+    const winLine = game && game.status === "finished" && game.winLine ? game.winLine : [];
+    squares.forEach((btn, i) => {
+      const mark = board[i];
+      const winning = winLine.includes(i);
+      btn.classList.toggle("win", winning);
+      const playable = inProgress && pendingHuman !== null && mark === null;
+      if (playable) btn.removeAttribute("aria-disabled");
+      else btn.setAttribute("aria-disabled", "true");
+      if (btn.dataset.mark !== (mark || "")) {
+        btn.innerHTML = markSVG(mark);
+        btn.dataset.mark = mark || "";
+      }
+      btn.setAttribute("aria-label", squareLabel(i, mark, winning));
     });
   }
 
+  // Roving tabindex: exactly one square is in the tab order.
+  function setRovingSquare(i) {
+    ui.focusSquare = i;
+    squares.forEach((b, k) => { b.tabIndex = k === i ? 0 : -1; });
+  }
+
+  boardEl.addEventListener("focusin", (e) => {
+    const btn = e.target.closest("button[data-idx]");
+    if (btn) setRovingSquare(Number(btn.dataset.idx));
+  });
+
+  // Arrows move (wrapping at the edges), Home/End jump to squares 1 and 9. Enter and Space
+  // activate the focused button natively, which plays it.
+  boardEl.addEventListener("keydown", (e) => {
+    const btn = e.target.closest("button[data-idx]");
+    if (!btn || e.altKey || e.ctrlKey || e.metaKey) return;
+    const i = Number(btn.dataset.idx);
+    const r = Math.floor(i / 3), c = i % 3;
+    let next;
+    switch (e.key) {
+      case "ArrowRight": next = r * 3 + (c + 1) % 3; break;
+      case "ArrowLeft": next = r * 3 + (c + 2) % 3; break;
+      case "ArrowDown": next = ((r + 1) % 3) * 3 + c; break;
+      case "ArrowUp": next = ((r + 2) % 3) * 3 + c; break;
+      case "Home": next = 0; break;
+      case "End": next = 8; break;
+      default: return;
+    }
+    e.preventDefault();
+    setRovingSquare(next);
+    squares[next].focus();
+  });
+
   boardEl.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-idx]");
-    if (!btn || btn.disabled) return;
+    if (!btn || btn.getAttribute("aria-disabled") === "true") return;
     const idx = Number(btn.dataset.idx);
-    if (state.pendingHumanResolve) {
-      const resolve = state.pendingHumanResolve;
-      state.pendingHumanResolve = null;
-      resolve(idx);
-    }
+    if (pendingHuman && currentBoard()[idx] === null) pendingHuman.resolve(idx);
   });
 
   /* ================= Rendering: open box panel ================= */
@@ -932,74 +1890,129 @@
   const boxPanelEl = document.getElementById("box-panel");
 
   function catColor(i) { return "var(--cat-" + (i + 1) + ")"; }
+  function catInk(i) { return "var(--cat-" + (i + 1) + "-ink)"; }
 
-  function boxCardHTML(box, drawnIdx, delta) {
-    const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
-    let html = "";
-    html += '<div class="box-id"><span>Box #' + box.discoveryIndex + '</span>' +
-      '<span class="code">' + box.canonicalBoard.map(c => c || "·").join("") + "</span></div>";
-    html += '<p class="box-note">Opened on MENACE’s ' + tierWord + " move · " +
-      box.counts.reduce((a,b)=>a+b,0) + " beads inside</p>";
+  function totalBeads(box) { return box.beads.reduce((a, b) => a + b, 0); }
+  function beadWord(n) { return n + (n === 1 ? " bead" : " beads"); }
 
-    html += '<div class="box-body">';
-    html += '<div class="mini-board">';
+  // One display mapping for the engine's marks (research R4): X → ◯ MENACE, O → ✕ opponent.
+  function glyph(mark) { return mark === "X" ? "◯" : mark === "O" ? "✕" : "·"; }
+
+  function positionSentence(board) {
+    const where = (m) => board.flatMap((c, i) => (c === m ? [i + 1] : []));
+    const menace = where("X"), opponent = where("O");
+    if (!menace.length && !opponent.length) return "Position: empty board.";
+    const part = (who, list) => who + " on box square" + (list.length === 1 ? " " : "s ") + list.join(", ");
+    return "Position: " + [menace.length ? part("MENACE", menace) : "", opponent.length ? part("opponent", opponent) : ""]
+      .filter(Boolean).join("; ") + ".";
+  }
+
+  // The position code, in the board's own symbols, with a spoken equivalent.
+  function codeHTML(board) {
+    return '<span class="code" aria-hidden="true">' + board.map(glyph).join("") + "</span>" +
+      '<span class="sr-only">' + positionSentence(board) + "</span>";
+  }
+
+  function groupOf(box, square) {
+    return box.groups.find((g) => g.includes(square)) || null;
+  }
+
+  // Mini-board of a box: marks, bead counts on each group's representative, and a hollow chip in
+  // the representative's colour on the other members of its group (Michie 1963 rule). It is
+  // aria-hidden; the ledger or a list gives the same facts in words.
+  // `compact` draws the marks as text glyphs: the drawer shows up to 304 of these at once.
+  function miniBoardHTML(box, drawnIdx, className, compact) {
+    let html = '<div class="' + (className || "mini-board") + '" aria-hidden="true">';
     for (let i = 0; i < 9; i++) {
       const mark = box.canonicalBoard[i];
       html += '<div class="mini-cell">';
       if (mark) {
-        html += markSVG(mark);
-      } else if (box.counts[i] > 0) {
-        const drawn = drawnIdx === i;
-        html += '<div class="bead-chip' + (drawn ? " drawn" : "") + '" style="background:' + catColor(i) + '">' + box.counts[i] + "</div>";
+        html += compact ? '<span class="mark-glyph mark-' + mark + '">' + glyph(mark) + "</span>" : markSVG(mark);
       } else {
-        html += '<div class="bead-chip empty-color">0</div>';
+        const group = groupOf(box, i);
+        const rep = group ? group[0] : i;
+        if (rep !== i) {
+          html += '<div class="bead-chip member" style="border-color:' + catColor(rep) + '"></div>';
+        } else if (box.beads[i] > 0) {
+          html += '<div class="bead-chip' + (drawnIdx === i ? " drawn" : "") + '" style="background:' + catColor(i) + ";color:" + catInk(i) + '">' + box.beads[i] + "</div>";
+        } else {
+          html += '<div class="bead-chip empty-color">0</div>';
+        }
       }
       html += "</div>";
     }
-    html += "</div>";
+    return html + "</div>";
+  }
 
+  function boxCardHTML(box, step, delta, outcome) {
+    const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
+    let html = "";
+    html += '<div class="box-id"><span>Box #' + box.discoveryIndex + "</span>" + codeHTML(box.canonicalBoard) + "</div>";
+    html += '<p class="box-note">Opened on MENACE’s ' + tierWord + " move · " + beadWord(totalBeads(box)) + " inside</p>";
+
+    // FR-008: say when the box is drawn in a different orientation from the real board.
+    if (step && step.transformIndex !== 0) {
+      html += '<p class="orientation-note">This box shows the board <strong>' + E.TRANSFORM_NAMES[step.transformIndex] +
+        "</strong>. The bead for box square " + (step.colorIdx + 1) + " was played on board square " + (step.realIdx + 1) + ".</p>";
+    } else if (step && step.groupSquares.length > 1) {
+      // US6/AC4: a shared-colour bead stands for several squares, so name the one played.
+      html += '<p class="orientation-note">The bead for box square ' + (step.colorIdx + 1) + " (same as " +
+        step.groupSquares.slice(1).map((i) => i + 1).join(", ") + ") was played on board square " + (step.realIdx + 1) + ".</p>";
+    }
+
+    html += '<div class="box-body">';
+    html += miniBoardHTML(box, step ? step.colorIdx : null);
+
+    // One ledger row per move group: "box square c (same as d, e) — k beads" (FR-009).
     html += '<ul class="bead-ledger">';
-    for (let i = 0; i < 9; i++) {
-      if (box.canonicalBoard[i]) continue;
+    for (const group of box.groups) {
+      const rep = group[0];
       let deltaHtml = "";
-      if (delta && delta.colorIdx === i) {
-        const sign = delta.after > delta.before ? "+" + (delta.after - delta.before) : (delta.after - delta.before);
-        deltaHtml = '<span class="delta ' + state.lastOutcome + '">' + sign + "</span>";
+      if (delta && delta.colorIdx === rep) {
+        const change = delta.after - delta.before;
+        const sign = change > 0 ? "+" + change : change < 0 ? "−" + Math.abs(change) : "±0";
+        deltaHtml = '<span class="delta ' + outcome + '">' + sign + "</span>";
       }
-      html += '<li><span class="swatch" style="background:' + catColor(i) + '"></span>' +
-        '<span class="sq-label">square ' + (i + 1) + "</span>" +
-        '<span class="count">' + box.counts[i] + " beads</span>" + deltaHtml + "</li>";
+      const same = group.length > 1
+        ? ' <span class="same-as">(same as ' + group.slice(1).map((i) => i + 1).join(", ") + ")</span>"
+        : "";
+      html += '<li' + (step && step.colorIdx === rep ? ' class="drawn"' : "") + '><span class="swatch" style="background:' + catColor(rep) + '"></span>' +
+        '<span class="sq-label">box square ' + (rep + 1) + same + "</span>" +
+        '<span class="count">' + beadWord(box.beads[rep]) + "</span>" + deltaHtml + "</li>";
     }
     html += "</ul></div>";
     return html;
   }
 
-  function renderBoxPanel() {
-    const trajectory = state.trajectory;
+  const BOX_LEGEND = '<p class="box-legend" aria-hidden="true"><span>◯ MENACE</span><span>✕ opponent</span><span>· empty</span></p>';
 
-    if (trajectory.length === 0 && !state.resignedKey) {
+  function renderBoxPanel() {
+    const game = ui.view ? ui.view.game : null;
+    if (!game || (game.steps.length === 0 && !game.resignedAt)) {
       boxPanelEl.innerHTML = '<p class="box-empty">MENACE hasn’t opened a box yet this game — make a move, or start training, to see one.</p>';
       return;
     }
 
-    let html = "";
-    trajectory.forEach((step) => {
-      const box = state.boxes.get(step.key);
+    const deltas = ui.view.deltas;
+    let html = BOX_LEGEND;
+    game.steps.forEach((step) => {
+      const box = lookupBox(step.positionKey, game);
       if (!box) return;
-      const delta = state.lastGameDeltas ? state.lastGameDeltas.find(d => d.key === step.key) : null;
+      const delta = deltas ? deltas.find(d => d.positionKey === step.positionKey) : null;
       const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
-      html += '<div class="box-entry"><p class="box-entry-eyebrow">' + tierWord + ' move</p>' +
-        boxCardHTML(box, step.colorIdx, delta) + "</div>";
+      html += '<div class="box-entry"><p class="box-entry-eyebrow">' + tierWord + " move</p>" +
+        boxCardHTML(box, step, delta, game.outcome) + "</div>";
     });
 
-    if (state.resignedKey) {
-      const box = state.boxes.get(state.resignedKey);
+    if (game.resignedAt) {
+      const box = lookupBox(game.resignedAt.positionKey, game);
       if (box) {
         const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
-        html += '<div class="box-entry box-entry-resigned"><p class="box-entry-eyebrow">' + tierWord + ' move · resigned</p>' +
-          '<div class="box-id"><span>Box #' + box.discoveryIndex + '</span>' +
-          '<span class="code">' + box.canonicalBoard.map(c => c || "·").join("") + "</span></div>" +
-          '<p class="box-note"><strong>Every colour was already at 0 beads.</strong> MENACE had nothing left to draw, so it resigned.</p></div>';
+        html += '<div class="box-entry box-entry-resigned"><p class="box-entry-eyebrow">' + tierWord + " move · resigned</p>" +
+          '<div class="box-id"><span>Box #' + box.discoveryIndex + "</span>" + codeHTML(box.canonicalBoard) + "</div>" +
+          '<p class="box-note"><strong>Every colour was already at 0 beads.</strong> MENACE had nothing left to draw, so it resigned.' +
+          (box.moveNumber === 1 ? " This is its opening box, so it can’t start any game until you reset MENACE or load a saved one." : "") +
+          "</p></div>";
       }
     }
 
@@ -1013,184 +2026,240 @@
   function pct(n, total) { return total === 0 ? 0 : Math.round((n / total) * 100); }
 
   function renderStats() {
-    const { win, draw, loss } = state.tally;
-    const total = state.gamesPlayed;
-    const discovered = state.boxes.size;
+    const { win, draw, loss, gamesPlayed: total } = state.menace.record;
+    const discovered = state.menace.boxes.size;
     statsRowEl.innerHTML =
-      '<div class="stat-tile"><div class="label">Games played</div><div class="value">' + total + "</div></div>" +
-      '<div class="stat-tile"><div class="label">Record</div><div class="value">' + pct(win,total) + "% wins</div>" +
+      '<div class="stat-tile" data-stat="games"><div class="label">Games played</div><div class="value">' + total + "</div></div>" +
+      '<div class="stat-tile" data-stat="record"><div class="label">Record</div><div class="value">' + pct(win,total) + "% wins</div>" +
         '<div class="record-pills">' +
           '<span class="pill"><span class="dot" style="background:var(--status-good-fill)"></span>' + win + " win" + (win===1?"":"s") + "</span>" +
           '<span class="pill"><span class="dot" style="background:var(--status-warning-fill)"></span>' + draw + " draw" + (draw===1?"":"s") + "</span>" +
           '<span class="pill"><span class="dot" style="background:var(--status-critical-fill)"></span>' + loss + " loss" + (loss===1?"":"es") + "</span>" +
         "</div></div>" +
-      '<div class="stat-tile"><div class="label">Boxes discovered</div><div class="value">' + discovered + " / 304</div>" +
-        '<div class="meter"><i style="width:' + Math.min(100, pct(discovered,304)) + '%"></i></div></div>';
+      '<div class="stat-tile" data-stat="boxes"><div class="label">Boxes discovered</div><div class="value">' + discovered + " / " + E.TOTAL_BOXES + "</div>" +
+        '<div class="meter"><i style="width:' + Math.min(100, pct(discovered, E.TOTAL_BOXES)) + '%"></i></div></div>' +
+      '<div class="stat-tile" data-stat="rule"><div class="label">Bead rule</div><div class="value value-text">' +
+        RULE_NAMES[state.menace.beadRule] + '</div><div class="sub">' + RULE_HINTS[state.menace.beadRule] + "</div></div>";
   }
 
   /* ================= Game announcements ================= */
 
-  function setStatus(text) {
-    statusEl.innerHTML = text;
-    liveEl.textContent = text.replace(/<[^>]+>/g, "");
+  // The visible status line always updates. Only meaningful events (moves, results, training
+  // start and end, save and load) are also spoken; passing messages such as "shaking a box" or
+  // "thinking" are visible only (FR-016, contracts/ui.md §Status line).
+  function setStatus(html, options) {
+    statusEl.innerHTML = html;
+    if (!options || options.announce !== false) announce(html.replace(/<[^>]+>/g, ""));
   }
 
-  /* ================= Opponent moves ================= */
-
-  function getOpponentMove(board, opponent) {
-    if (opponent === "random") {
-      return Promise.resolve(randomMove(board));
-    }
-    if (opponent === "perfect") {
-      return Promise.resolve(perfectMove(board));
-    }
-    return new Promise((resolve) => {
-      state.pendingHumanResolve = resolve;
-      renderBoard();
-    });
+  let lastAnnounced = "";
+  let announceToggle = false;
+  function announce(text) {
+    // A repeated identical message is still spoken: toggle an invisible trailing no-break space.
+    announceToggle = text === lastAnnounced ? !announceToggle : false;
+    lastAnnounced = text;
+    liveEl.textContent = announceToggle ? text + "\u00a0" : text;
   }
 
-  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-  /* ================= Main game loop ================= */
-
-  async function playGame(opponent, animate) {
-    state.board = Array(9).fill(null);
-    state.trajectory = [];
-    state.gameActive = true;
-    state.resignedKey = null;
-    state.lastGameDeltas = null;
-    renderBoard();
-    if (animate) renderBoxPanel();
-
-    let outcome = null;
-
-    while (outcome === null) {
-      // MENACE's move
-      if (animate) setStatus("MENACE is shaking a box…");
-      const mv = menaceMove(state.board);
-
-      if (mv.resigned) {
-        outcome = "loss";
-        state.resignedKey = mv.key;
-        if (animate) { renderBoxPanel(); setStatus("MENACE has <strong>no beads left</strong> for this position — it resigns."); }
-        break;
-      }
-
-      if (!mv.forced) {
-        state.trajectory.push({ key: mv.key, colorIdx: mv.colorIdx });
-      }
-      state.board[mv.realIdx] = "X";
-      if (animate) {
-        renderBoard();
-        renderBoxPanel();
-        setStatus(mv.forced
-          ? "Only one square left — MENACE plays " + squareWord(mv.realIdx) + " by default."
-          : "MENACE drew a bead and played " + squareWord(mv.realIdx) + ".");
-        await delay(450);
-      }
-
-      const w1 = checkWinner(state.board);
-      if (w1) { outcome = w1 === "X" ? "win" : "draw"; break; }
-
-      // Opponent's move
-      if (animate) setStatus(opponent === "human" ? "Your move — click a square." : (opponentLabel(opponent) + " is thinking…"));
-      renderBoard();
-      const oppIdx = await getOpponentMove(state.board, opponent);
-      state.board[oppIdx] = "O";
-      renderBoard();
-      if (animate) { setStatus((opponent === "human" ? "You" : opponentLabel(opponent)) + " played " + squareWord(oppIdx) + "."); await delay(350); }
-
-      const w2 = checkWinner(state.board);
-      if (w2) { outcome = w2 === "X" ? "win" : (w2 === "draw" ? "draw" : "loss"); break; }
-    }
-
-    state.lastGameDeltas = reinforce(state.trajectory, outcome);
-    state.lastOutcome = outcome;
-
-    state.gamesPlayed++;
-    state.tally[outcome]++;
-    state.gameLog.push(outcome);
-    state.gameActive = false;
-
-    if (animate) {
-      renderBoard();
-      renderBoxPanel();
-      renderStats();
-      renderChart();
-      const msg = outcome === "win" ? "<strong>MENACE wins.</strong> +3 beads to every box it used."
-        : outcome === "draw" ? "<strong>It’s a draw.</strong> +1 bead to every box MENACE used."
-        : "<strong>MENACE loses.</strong> The beads it drew are gone for good.";
-      setStatus(msg);
-    }
-
-    return outcome;
-  }
+  /* ================= Opponents ================= */
 
   function opponentLabel(o) {
     return o === "random" ? "The random mover" : o === "perfect" ? "The perfect player" : "Your opponent";
   }
 
-  /* ================= Chart ================= */
+  function computerMove(kind, board) {
+    return kind === "random" ? E.randomMove(board, Math.random) : E.perfectMove(board, Math.random);
+  }
+
+  // The engine's opponent(board, signal) for an animated game.
+  function animatedOpponent(kind) {
+    return (board, signal) => {
+      if (kind === "human") {
+        setStatus("Your move — choose a board square.", { announce: false });
+        return humanMove(signal);
+      }
+      setStatus(opponentLabel(kind) + " is thinking…", { announce: false });
+      return Promise.resolve(computerMove(kind, board));
+    };
+  }
+
+  function nextTask() { return new Promise((resolve) => setTimeout(resolve, 0)); }
+
+  // FR-006: MENACE resigned at its very first move, so it cannot start any game.
+  function openingBoxEmpty(game) {
+    return Boolean(game.resignedAt && game.resignedAt.moveNumber === 1);
+  }
+
+  function squaresList(line) {
+    return line.map((i) => i + 1).join(", ");
+  }
+
+  // The result names the winner and the winning squares (FR-019).
+  function resultMessage(game) {
+    if (game.outcome === "draw") return "<strong>It’s a draw.</strong> +1 bead to every box MENACE used.";
+    const where = game.winLine ? " on board squares " + squaresList(game.winLine) : "";
+    if (game.outcome === "win") return "<strong>MENACE wins</strong>" + where + ". +3 beads to every box it used.";
+    const who = game.opponent === "human" ? "You win" : opponentDisplayName(game.opponent) + " wins";
+    return "<strong>" + who + "</strong>" + where + ". MENACE loses the beads it drew.";
+  }
+
+  const OPENING_EMPTY_MESSAGE =
+    "<strong>MENACE can’t start a game:</strong> its opening box has no beads left. " +
+    "Reset MENACE or load a saved MENACE to play again.";
+
+  /* ================= Main game loop ================= */
+
+  function rememberFinished(game, deltas) {
+    ui.view = { game, deltas };
+    ui.lastGame = {
+      steps: game.steps,
+      deltas,
+      outcome: game.outcome,
+      winLine: game.winLine,
+      resignedAt: game.resignedAt,
+    };
+  }
+
+  function onAnimatedEvent(event) {
+    if (event.type === "start") {
+      ui.view = { game: event.game, deltas: null };
+      renderBoard();
+      renderBoxPanel();
+      setStatus("MENACE is shaking a box…", { announce: false });
+    } else if (event.type === "menace") {
+      const choice = event.choice;
+      renderBoard();
+      renderBoxPanel();
+      if (choice.kind === "resigned") {
+        setStatus("MENACE has <strong>no beads left</strong> for this position — it resigns.");
+      } else {
+        setStatus(choice.kind === "forced"
+          ? "Only one square left — MENACE plays " + squareWord(choice.realIdx) + " by default."
+          : "MENACE drew a bead and played " + squareWord(choice.realIdx) + ".");
+      }
+    } else if (event.type === "opponent") {
+      renderBoard();
+      setStatus(opponentDisplayName(shownOpponent()) + " played " + squareWord(event.square) + ".");
+    } else if (event.type === "end") {
+      rememberFinished(event.game, event.deltas);
+      renderBoard();
+      renderBoxPanel();
+      renderStats();
+      renderChart();
+      renderDrawer();
+      const outcome = event.game.outcome;
+      if (openingBoxEmpty(event.game)) {
+        setStatus(OPENING_EMPTY_MESSAGE);
+      } else if (event.game.resignedAt) {
+        setStatus("MENACE has <strong>no beads left</strong> for this position — it resigns.");
+      } else {
+        setStatus(resultMessage(event.game));
+      }
+    }
+  }
+
+  // Abandons any game in progress and starts a new animated one.
+  function startNewGame() {
+    abandonCurrentGame();
+    const run = { controller: new AbortController() };
+    currentRun = run;
+    E.playGame({
+      menace: state.menace,
+      opponent: animatedOpponent(state.opponent),
+      opponentKind: state.opponent,
+      rng: Math.random,
+      signal: run.controller.signal,
+      pause: (kind, signal) => pause(kind === "menace-move" ? 450 : 350, signal),
+      onEvent: (event) => {
+        if (currentRun === run) onAnimatedEvent(event);
+      },
+    }).finally(() => {
+      if (currentRun === run) currentRun = null;
+    });
+  }
+
+  /* ================= Chart (research R9) =================
+     The chart's view is redrawn on every update, but the table toggle and the table persist:
+     the toggle keeps keyboard focus, and the table only gains the new rows, so long records
+     stay cheap to update during training (constitution: no task over 50 ms). */
 
   const chartRoot = document.getElementById("chart-root");
   const WINDOW = 20;
+  let chartWidth = 0;
+  chartRoot.innerHTML =
+    '<div id="chart-view"></div>' +
+    '<div class="table-toggle" id="table-toggle-row" hidden><button type="button" class="btn ghost" id="table-toggle-btn" ' +
+    'aria-controls="chart-table-wrap" aria-expanded="false">View as table</button></div>' +
+    '<div class="chart-table-wrap" id="chart-table-wrap" hidden></div>';
+  const chartView = document.getElementById("chart-view");
+  const tableToggleRow = document.getElementById("table-toggle-row");
+  const tableToggle = document.getElementById("table-toggle-btn");
+  const tableWrap = document.getElementById("chart-table-wrap");
 
-  function rollingSeries() {
-    const log = state.gameLog;
-    const pts = [];
-    for (let i = 0; i < log.length; i++) {
-      const start = Math.max(0, i - WINDOW + 1);
-      const slice = log.slice(start, i + 1);
-      const w = slice.filter(x => x === "win").length;
-      const d = slice.filter(x => x === "draw").length;
-      const l = slice.filter(x => x === "loss").length;
-      const n = slice.length;
-      pts.push({ game: i + 1, win: w / n, draw: d / n, loss: l / n });
+  // The rolling series is extended with each new game rather than recomputed.
+  let seriesCache = { menace: null, points: [] };
+  function currentSeries() {
+    const outcomes = state.menace.record.outcomes;
+    if (seriesCache.menace !== state.menace || seriesCache.points.length > outcomes.length) {
+      seriesCache = { menace: state.menace, points: [] };
     }
-    return pts;
+    return E.extendRollingSeries(seriesCache.points, outcomes, WINDOW);
   }
 
-  let chartHoverBound = false;
+  // Evenly spaced indices (always including the last), so very long records stay cheap to draw.
+  function sampleIndices(n, max) {
+    if (n <= max) return Array.from({ length: n }, (_, i) => i);
+    const out = [];
+    const step = (n - 1) / (max - 1);
+    for (let k = 0; k < max; k++) out.push(Math.round(k * step));
+    return out;
+  }
 
   function renderChart() {
-    const pts = rollingSeries();
+    const pts = currentSeries();
     if (pts.length < 2) {
-      chartRoot.innerHTML =
-        '<div class="chart-empty">Play or train a few games to see the learning curve.</div>';
+      chartWidth = 0;
+      chartView.innerHTML = '<div class="chart-empty">Play or train a few games to see the learning curve.</div>';
+      tableToggleRow.hidden = true;
+      renderTable(pts);
       return;
     }
 
-    const W = 760, H = 260, padL = 34, padR = 30, padT = 12, padB = 26;
+    // Drawn at the container's real width, so one SVG unit is one CSS pixel and the 11 px
+    // labels stay 11 px on every screen (FR-015).
+    const W = Math.max(200, Math.floor(chartRoot.clientWidth) || 760);
+    chartWidth = W;
+    const H = W < 480 ? 200 : 240;
+    const FONT = 11;
+    const padL = 42, padR = 44, padT = 12, padB = 14;
     const innerW = W - padL - padR, innerH = H - padT - padB;
     const n = pts.length;
     const x = (i) => padL + (n === 1 ? 0 : (i / (n - 1)) * innerW);
     const y = (v) => padT + innerH * (1 - v);
+    const idx = sampleIndices(n, Math.max(2, Math.floor(innerW * 2)));
 
     function areaPath(getTop, getBottom) {
-      let d = "M " + x(0) + " " + y(getBottom(0));
-      for (let i = 0; i < n; i++) d += " L " + x(i) + " " + y(getBottom(i));
-      for (let i = n - 1; i >= 0; i--) d += " L " + x(i) + " " + y(getTop(i));
-      d += " Z";
-      return d;
+      let d = "M " + x(idx[0]) + " " + y(getBottom(idx[0]));
+      for (const i of idx) d += " L " + x(i) + " " + y(getBottom(i));
+      for (let k = idx.length - 1; k >= 0; k--) d += " L " + x(idx[k]) + " " + y(getTop(idx[k]));
+      return d + " Z";
     }
     function linePath(get) {
       let d = "";
-      for (let i = 0; i < n; i++) d += (i === 0 ? "M " : " L ") + x(i) + " " + y(get(i));
+      idx.forEach((i, k) => { d += (k === 0 ? "M " : " L ") + x(i) + " " + y(get(i)); });
       return d;
     }
 
     const winTop = (i) => pts[i].win;
     const drawTop = (i) => pts[i].win + pts[i].draw;
-    const lossTop = (i) => 1; // == pts[i].win+draw+loss
+    const lossTop = () => 1; // == win + draw + loss
 
-    // 2px surface-color gap between stacked bands: inset each boundary line with a stroke in surface color
-    let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" role="img" aria-label="Rolling 20-game win, draw and loss rate over ' + n + ' games">';
+    let svg = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Rolling 20-game win, draw and loss rate over ' + n + ' games">';
 
     // gridlines at 0/25/50/75/100%
     for (const g of [0, 0.25, 0.5, 0.75, 1]) {
       svg += '<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + y(g) + '" y2="' + y(g) + '" stroke="var(--grid-line)" stroke-width="1"/>';
-      svg += '<text x="' + (padL - 8) + '" y="' + (y(g) + 3) + '" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="var(--ink-muted)">' + Math.round(g * 100) + "%</text>";
+      svg += '<text x="' + (padL - 8) + '" y="' + (y(g) + 4) + '" text-anchor="end" font-family="var(--font-mono)" font-size="' + FONT + '" fill="var(--ink-muted)">' + Math.round(g * 100) + "%</text>";
     }
     svg += '<line x1="' + padL + '" x2="' + padL + '" y1="' + padT + '" y2="' + (H - padB) + '" stroke="var(--hairline-strong)" stroke-width="1"/>';
     svg += '<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + (H - padB) + '" y2="' + (H - padB) + '" stroke="var(--hairline-strong)" stroke-width="1"/>';
@@ -1203,16 +2272,15 @@
     svg += '<path d="' + linePath(winTop) + '" fill="none" stroke="var(--surface)" stroke-width="2"/>';
     svg += '<path d="' + linePath(drawTop) + '" fill="none" stroke="var(--surface)" stroke-width="2"/>';
 
-    // emphasized top line for win band (the headline series) + endpoint dot
+    // emphasized top line for win band (the headline series) + endpoint dots
     svg += '<path d="' + linePath(winTop) + '" fill="none" stroke="var(--status-good-fill)" stroke-width="2"/>';
     svg += '<circle cx="' + x(n-1) + '" cy="' + y(winTop(n-1)) + '" r="4" fill="var(--status-good-fill)" stroke="var(--surface)" stroke-width="2"/>';
     svg += '<circle cx="' + x(n-1) + '" cy="' + y(drawTop(n-1)) + '" r="4" fill="var(--status-warning-fill)" stroke="var(--surface)" stroke-width="2"/>';
     svg += '<circle cx="' + x(n-1) + '" cy="' + y(1) + '" r="4" fill="var(--status-critical-fill)" stroke="var(--surface)" stroke-width="2"/>';
 
-    // endpoint direct labels
+    // endpoint direct label (the right padding leaves room for "100%")
     const lastPt = pts[n-1];
-    const labelX = x(n-1) + 9;
-    svg += '<text x="' + labelX + '" y="' + (y(winTop(n-1)) + 3) + '" font-family="var(--font-mono)" font-size="10" fill="var(--ink-2)">' + Math.round(lastPt.win*100) + "%</text>";
+    svg += '<text x="' + (x(n-1) + 9) + '" y="' + (y(winTop(n-1)) + 4) + '" font-family="var(--font-mono)" font-size="' + FONT + '" fill="var(--ink-2)">' + Math.round(lastPt.win*100) + "%</text>";
 
     svg += '<g id="chart-crosshair" style="display:none">' +
       '<line id="crosshair-line" x1="0" x2="0" y1="' + padT + '" y2="' + (H-padB) + '" stroke="var(--ink-muted)" stroke-width="1" stroke-dasharray="2,2"/>' +
@@ -1226,36 +2294,66 @@
       '<span class="item"><span class="swatch" style="background:var(--status-critical-fill)"></span>Loss</span>' +
       "</div></div>";
     html += '<div class="chart-wrap">' + svg + '<div class="chart-tooltip" id="chart-tooltip"></div></div>';
-    html += '<div class="table-toggle"><button type="button" class="btn ghost" id="table-toggle-btn" aria-expanded="false">View as table</button></div>';
-    html += '<div class="chart-table-wrap" id="chart-table-wrap" hidden></div>';
-
-    chartRoot.innerHTML = html;
+    chartView.innerHTML = html;
     bindChartInteraction(pts, x, y, W, innerW, padL);
-    document.getElementById("table-toggle-btn").addEventListener("click", (e) => {
-      const wrap = document.getElementById("chart-table-wrap");
-      const expanded = e.target.getAttribute("aria-expanded") === "true";
-      wrap.hidden = expanded;
-      e.target.setAttribute("aria-expanded", String(!expanded));
-      if (!expanded && !wrap.dataset.built) {
-        wrap.innerHTML = buildTableHTML(pts);
-        wrap.dataset.built = "1";
-      }
-    });
+    tableToggleRow.hidden = false;
+    renderTable(pts);
   }
 
-  function buildTableHTML(pts) {
-    const bucket = 10;
-    let rows = "";
-    for (let start = 0; start < pts.length; start += bucket) {
-      const slice = pts.slice(start, Math.min(start + bucket, pts.length));
-      const last = slice[slice.length - 1];
-      rows += "<tr><td>" + (start + 1) + "–" + (start + slice.length) + "</td>" +
-        "<td>" + Math.round(last.win * 100) + "%</td>" +
-        "<td>" + Math.round(last.draw * 100) + "%</td>" +
-        "<td>" + Math.round(last.loss * 100) + "%</td></tr>";
-    }
-    return '<table class="data-table"><thead><tr><th>Games</th><th>Win</th><th>Draw</th><th>Loss</th></tr></thead><tbody>' + rows + "</tbody></table>";
+  // Redraw at the new width when the container is resized (debounced to one frame).
+  let chartFrame = 0;
+  new ResizeObserver(() => {
+    if (chartFrame) return;
+    chartFrame = requestAnimationFrame(() => {
+      chartFrame = 0;
+      if (chartWidth && Math.floor(chartRoot.clientWidth) !== chartWidth) renderChart();
+    });
+  }).observe(chartRoot);
+
+  /* ---------- Table view (FR-020) ----------
+     ui.tableOpen survives every re-render. Completed ranges of 10 games never change, so an
+     update only redraws the last (partial) row and appends the new ones. */
+
+  let tableCache = null; // { menace, games, rows, tbody }
+
+  function tableRowHTML(row) {
+    const pctText = (v) => Math.round(v * 100) + "%";
+    return "<tr><td>" + row.from + "–" + row.to + "</td><td>" + pctText(row.win) + "</td><td>" +
+      pctText(row.draw) + "</td><td>" + pctText(row.loss) + "</td></tr>";
   }
+
+  function renderTable(pts) {
+    tableToggle.setAttribute("aria-expanded", String(ui.tableOpen));
+    const show = ui.tableOpen && pts.length >= 2;
+    tableWrap.hidden = !show;
+    if (!show) {
+      if (tableCache) {
+        tableWrap.innerHTML = "";
+        tableCache = null;
+      }
+      return;
+    }
+    if (!tableCache || tableCache.menace !== state.menace || tableCache.games > pts.length) {
+      tableWrap.innerHTML = '<table class="data-table"><caption>Rolling 20-game rates, as at the last game in each range</caption>' +
+        '<thead><tr><th scope="col">Games</th><th scope="col">Win rate</th><th scope="col">Draw rate</th><th scope="col">Loss rate</th></tr></thead>' +
+        "<tbody></tbody></table>";
+      tableCache = { menace: state.menace, games: 0, rows: 0, tbody: tableWrap.querySelector("tbody") };
+    }
+    if (tableCache.games === pts.length) return;
+    let fromRow = tableCache.rows;
+    if (fromRow > 0 && tableCache.games % 10 !== 0) {
+      tableCache.tbody.lastElementChild.remove(); // the partial range has grown
+      fromRow -= 1;
+    }
+    tableCache.tbody.insertAdjacentHTML("beforeend", E.tableRows(pts, 10, fromRow).map(tableRowHTML).join(""));
+    tableCache.games = pts.length;
+    tableCache.rows = Math.ceil(pts.length / 10);
+  }
+
+  tableToggle.addEventListener("click", () => {
+    ui.tableOpen = !ui.tableOpen;
+    renderTable(currentSeries());
+  });
 
   function bindChartInteraction(pts, x, y, W, innerW, padL) {
     const svg = chartRoot.querySelector("svg");
@@ -1296,42 +2394,74 @@
   const trainProgressBar = document.getElementById("train-progress-bar");
   const trainCancelBtn = document.getElementById("train-cancel");
 
-  async function runBatch(n) {
-    if (state.training.running) return;
-    state.training.running = true;
-    state.training.cancel = false;
+  const controlsEl = document.getElementById("controls");
+  const SLICE_MS = 12; // engine work per slice before yielding to the browser (research R2)
+
+  function renderTrainingProgress() {
+    const { done, target } = ui.training;
+    trainProgressText.textContent = done + " / " + target;
+    trainProgressBar.style.width = (target ? Math.round((done / target) * 100) : 0) + "%";
+  }
+
+  // Runs `target` games against the selected computer opponent in time slices, so the page
+  // stays responsive. Stop is honoured between games; the record counts exactly the games run.
+  async function runTraining(target) {
+    if (ui.training.running || state.opponent === "human") return;
+    abandonCurrentGame();
+    const kind = state.opponent;
+    const opponent = (board) => Promise.resolve(computerMove(kind, board));
+    ui.training = { running: true, stopRequested: false, target, done: 0 };
+    controlsEl.dataset.training = "running";
     trainProgressGroup.hidden = false;
     trainCancelBtn.hidden = false;
     setControlsDisabled(true);
+    renderTrainingProgress();
+    setStatus("Training: " + target + " games against " + opponentLabel(kind).toLowerCase() + "…");
 
-    for (let i = 0; i < n; i++) {
-      if (state.training.cancel) break;
-      await playGame(state.opponent, false);
-      if (i % 5 === 0 || i === n - 1) {
-        trainProgressText.textContent = (i + 1) + " / " + n;
-        trainProgressBar.style.width = Math.round(((i + 1) / n) * 100) + "%";
-        renderStats();
-        renderChart();
-        renderBoxPanel();
-        await delay(0);
-      }
+    let last = null;
+    let openingEmpty = false;
+    while (ui.training.done < target && !ui.training.stopRequested && !openingEmpty) {
+      const sliceStart = performance.now();
+      do {
+        last = await E.playGame({ menace: state.menace, opponent, opponentKind: kind, rng: Math.random });
+        ui.training.done += 1;
+        if (openingBoxEmpty(last.game)) openingEmpty = true;
+      } while (
+        ui.training.done < target && !ui.training.stopRequested && !openingEmpty &&
+        performance.now() - sliceStart < SLICE_MS
+      );
+      rememberFinished(last.game, last.deltas);
+      renderTrainingProgress();
+      renderStats();
+      renderChart();
+      renderDrawer();
+      await nextTask();
     }
-    renderStats();
-    renderChart();
-    renderBoxPanel();
-    renderBoard();
-    setStatus("Training finished. " + state.gamesPlayed + " games played in total.");
 
-    state.training.running = false;
+    const { done } = ui.training;
+    ui.training.running = false;
+    controlsEl.dataset.training = "idle";
     trainProgressGroup.hidden = true;
     trainCancelBtn.hidden = true;
     setControlsDisabled(false);
+    renderBoard();
+    renderBoxPanel();
+    if (openingEmpty) {
+      setStatus(OPENING_EMPTY_MESSAGE + " Training stopped after " + done + " of " + target + " games.");
+    } else if (done < target) {
+      setStatus("Training stopped after " + done + " of " + target + " games.");
+    } else {
+      setStatus("Training finished: " + target + " games.");
+    }
   }
 
-  trainCancelBtn.addEventListener("click", () => { state.training.cancel = true; });
+  trainCancelBtn.addEventListener("click", () => { ui.training.stopRequested = true; });
 
+  // While training runs, every control except Stop is unavailable.
   function setControlsDisabled(disabled) {
-    document.querySelectorAll("#opponent-select button, [data-train], #new-game-btn, #reset-btn").forEach(b => b.disabled = disabled);
+    controlsEl.querySelectorAll("button").forEach((b) => {
+      if (b !== trainCancelBtn) b.disabled = disabled;
+    });
   }
 
   /* ================= Controls wiring ================= */
@@ -1341,28 +2471,27 @@
 
   opponentSelect.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-opponent]");
-    if (!btn || state.training.running) return;
+    if (!btn || ui.training.running) return;
     state.opponent = btn.dataset.opponent;
     opponentSelect.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
     opponentNameEl.textContent = state.opponent === "human" ? "You" : (state.opponent === "random" ? "Random mover" : "Perfect player");
     trainControls.hidden = state.opponent === "human";
-    if (state.pendingHumanResolve) { state.pendingHumanResolve = null; }
     startNewGame();
   });
 
   document.querySelectorAll("[data-train]").forEach(btn => {
-    btn.addEventListener("click", () => runBatch(Number(btn.dataset.train)));
+    btn.addEventListener("click", () => runTraining(Number(btn.dataset.train)));
   });
 
   document.getElementById("new-game-btn").addEventListener("click", () => {
-    if (state.training.running) return;
+    if (ui.training.running) return;
     startNewGame();
   });
 
   let resetArmed = false, resetTimer = null;
   const resetBtn = document.getElementById("reset-btn");
   resetBtn.addEventListener("click", () => {
-    if (state.training.running) return;
+    if (ui.training.running) return;
     if (!resetArmed) {
       resetArmed = true;
       resetBtn.textContent = "Really reset? (click again)";
@@ -1372,30 +2501,341 @@
     clearTimeout(resetTimer);
     resetArmed = false;
     resetBtn.textContent = "Reset MENACE";
-    state.boxes.clear();
-    state.discoveryCount = 0;
-    state.gamesPlayed = 0;
-    state.tally = { win: 0, draw: 0, loss: 0 };
-    state.gameLog = [];
-    minimaxMemo.clear();
+    abandonCurrentGame();
+    state.menace = E.createMenace({ beadRule: state.menace.beadRule });
+    ui.lastGame = null;
     startNewGame();
     renderStats();
     renderChart();
+    renderDrawer();
   });
 
-  function startNewGame() {
-    if (state.pendingHumanResolve) state.pendingHumanResolve = null;
-    playGame(state.opponent, true).then(() => {
-      if (state.opponent !== "human") {
-        // small pause then auto-continue is left to explicit New game / Run buttons
+  /* ================= Drawer view (US7; research R12) ================= */
+
+  const drawerToggle = document.getElementById("drawer-toggle");
+  const drawerBody = document.getElementById("drawer-body");
+  const drawerCountEl = document.getElementById("drawer-count");
+  const drawerMessageEl = document.getElementById("drawer-message");
+  const drawerListEl = document.getElementById("drawer-list");
+
+  function boxesWord(n) { return n + (n === 1 ? " box" : " boxes"); }
+
+  // Boxes MENACE used in the most recent finished game (FR-031).
+  function usedLastGame() {
+    const used = new Set();
+    if (!ui.lastGame) return used;
+    for (const step of ui.lastGame.steps) used.add(step.positionKey);
+    if (ui.lastGame.resignedAt) used.add(ui.lastGame.resignedAt.positionKey);
+    return used;
+  }
+
+  // The same facts as the (aria-hidden) mini-board, in words.
+  function beadListText(box) {
+    const parts = box.groups.map((g) => "box square " + (g[0] + 1) +
+      (g.length > 1 ? " (same as " + g.slice(1).map((i) => i + 1).join(", ") + ")" : "") + ": " + box.beads[g[0]]);
+    return positionSentence(box.canonicalBoard) + " Beads: " + (parts.length ? parts.join("; ") : "none") + ".";
+  }
+
+  function drawerCardHTML(box, used) {
+    const total = totalBeads(box);
+    const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
+    let badges = "";
+    if (used) badges += '<span class="badge used">Used last game</span>';
+    if (total === 0) badges += '<span class="badge empty">Empty: MENACE resigns here</span>';
+    return '<li class="drawer-item' + (used ? " used" : "") + '">' +
+      '<h3 class="drawer-box-title">Box #' + box.discoveryIndex + " · " + tierWord + " move · " + beadWord(total) + "</h3>" +
+      '<div class="drawer-item-body">' + miniBoardHTML(box, null, "mini-board mini-board-sm", true) +
+      '<div class="drawer-item-meta"><span class="code" aria-hidden="true">' + box.canonicalBoard.map(glyph).join("") + "</span>" + badges + "</div></div>" +
+      '<p class="sr-only">' + beadListText(box) + "</p></li>";
+  }
+
+  // Renders only while open; when shut, only the toggle's count is updated (FR-032).
+  function renderDrawer() {
+    const all = state.menace.boxes.size;
+    drawerToggle.textContent = (ui.drawer.open ? "Close the drawer · " : "Open the drawer · ") + boxesWord(all);
+    drawerToggle.setAttribute("aria-expanded", String(ui.drawer.open));
+    drawerBody.hidden = !ui.drawer.open;
+    if (!ui.drawer.open) return;
+
+    const { move, emptyOnly, sort } = ui.drawer;
+    const shown = [];
+    for (const box of state.menace.boxes.values()) {
+      if (move !== "all" && box.moveNumber !== Number(move)) continue;
+      if (emptyOnly && totalBeads(box) !== 0) continue;
+      shown.push(box);
+    }
+    const byDiscovery = (a, b) => a.discoveryIndex - b.discoveryIndex;
+    if (sort === "most") shown.sort((a, b) => totalBeads(b) - totalBeads(a) || byDiscovery(a, b));
+    else if (sort === "fewest") shown.sort((a, b) => totalBeads(a) - totalBeads(b) || byDiscovery(a, b));
+    else shown.sort(byDiscovery);
+
+    drawerCountEl.textContent = "Showing " + shown.length + " of " + all + " discovered boxes";
+    let message = "";
+    if (all === 0) message = "MENACE opens a box the first time it meets a position. Play or train a game to fill the drawer.";
+    else if (shown.length === 0) {
+      message = "No boxes match these filters. MENACE opens a box the first time it meets a position, so more appear as it plays.";
+    }
+    drawerMessageEl.textContent = message;
+    drawerMessageEl.hidden = !message;
+    const used = usedLastGame();
+    drawerListEl.innerHTML = shown.map((box) => drawerCardHTML(box, used.has(box.positionKey))).join("");
+  }
+
+  drawerToggle.addEventListener("click", () => {
+    ui.drawer.open = !ui.drawer.open;
+    renderDrawer();
+  });
+
+  // Filters and sort: re-render, then announce the new count (politely, only on change).
+  function onDrawerFilterChange() {
+    renderDrawer();
+    announce(drawerCountEl.textContent);
+  }
+  drawerBody.querySelectorAll('input[name="drawer-move"]').forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (!radio.checked) return;
+      ui.drawer.move = radio.value === "all" ? "all" : Number(radio.value);
+      onDrawerFilterChange();
+    });
+  });
+  document.getElementById("drawer-empty").addEventListener("change", (e) => {
+    ui.drawer.emptyOnly = e.target.checked;
+    onDrawerFilterChange();
+  });
+  document.getElementById("drawer-sort").addEventListener("change", (e) => {
+    ui.drawer.sort = e.target.value;
+    onDrawerFilterChange();
+  });
+
+  /* ================= Confirmation dialog (research R10) =================
+     One native <dialog>: modal, labelled by its heading and described by its text. Focus starts
+     on Cancel, Esc cancels, and focus goes back to the control that opened it. Resolves with the
+     chosen action's id. An action with keepOpen runs its onSelect and leaves the dialog open. */
+
+  const dialogEl = document.getElementById("confirm-dialog");
+  const dialogTitleEl = document.getElementById("confirm-title");
+  const dialogBodyEl = document.getElementById("confirm-body");
+  const dialogActionsEl = document.getElementById("confirm-actions");
+
+  function confirmDialog({ title, body, actions, opener: trigger }) {
+    if (dialogEl.open) return Promise.resolve("cancel");
+    // The control that asked; script clicks and Safari mouse clicks don't focus buttons.
+    const opener = trigger || document.activeElement;
+    dialogTitleEl.textContent = title;
+    dialogBodyEl.textContent = body;
+    dialogActionsEl.innerHTML = "";
+    return new Promise((resolve) => {
+      const finish = (id) => {
+        dialogEl.oncancel = null;
+        if (dialogEl.open) dialogEl.close();
+        if (opener && opener.isConnected && typeof opener.focus === "function") opener.focus();
+        resolve(id);
+      };
+      for (const action of actions) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn" + (action.primary ? " primary" : "");
+        btn.dataset.action = action.id;
+        btn.textContent = action.label;
+        btn.addEventListener("click", () => {
+          if (action.keepOpen) {
+            if (action.onSelect) action.onSelect();
+            return;
+          }
+          finish(action.id);
+        });
+        dialogActionsEl.appendChild(btn);
       }
+      dialogEl.oncancel = (e) => {
+        e.preventDefault();
+        finish("cancel");
+      };
+      dialogEl.showModal();
+      const safest = dialogActionsEl.querySelector('[data-action="cancel"]') || dialogActionsEl.firstElementChild;
+      if (safest) safest.focus();
     });
   }
 
+  /* ================= Bead rule (US6) ================= */
+
+  const ruleSelect = document.getElementById("rule-select");
+  const ruleHintEl = document.getElementById("rule-hint");
+  const chartEyebrowEl = document.getElementById("chart-eyebrow");
+  const beadRuleCurrentEl = document.getElementById("bead-rule-current");
+  const sameRulesDifferenceEl = document.getElementById("same-rules-difference");
+
+  // A Fresh MENACE has no games and an empty drawer; changing it needs no confirmation.
+  function isFresh(menace) {
+    return menace.record.gamesPlayed === 0 && menace.boxes.size === 0;
+  }
+
+  function plural(n, word) { return n + " " + word + (n === 1 ? "" : "s"); }
+
+  // Everything that names the rule in use (FR-025, FR-027).
+  function renderRuleDisplays() {
+    const rule = state.menace.beadRule;
+    ruleSelect.querySelectorAll("button[data-rule]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.rule === rule)));
+    ruleHintEl.textContent = RULE_HINTS[rule];
+    chartEyebrowEl.textContent = "Rolling last 20 games · " + RULE_PHRASE[rule] + " rule";
+    if (rule === "michie1963") {
+      beadRuleCurrentEl.textContent = "This page uses Michie’s scheme unless you switch the Bead rule control to one colour per square.";
+      sameRulesDifferenceEl.textContent = "With the Michie 1963 bead rule, its colours are shared just as in his paper too.";
+    } else {
+      beadRuleCurrentEl.textContent = "You have switched this page to one colour per square; choose “Michie 1963” under Bead rule to return to his scheme.";
+      sameRulesDifferenceEl.textContent = "The one difference, with the one-per-square bead rule selected, is the colour scheme: every empty square has its own colour.";
+    }
+  }
+
+  // Replaces the current MENACE with a fresh one under `rule` (data-model.md: Menace lifecycle).
+  function switchRule(rule) {
+    abandonCurrentGame();
+    state.menace = E.createMenace({ beadRule: rule });
+    ui.lastGame = null;
+    ui.view = null;
+    renderRuleDisplays();
+    renderStats();
+    renderChart();
+    renderBoxPanel();
+    renderDrawer();
+    startNewGame();
+    setStatus("<strong>Bead rule: " + RULE_PHRASE[rule] + ".</strong> A fresh MENACE has started. " + statusEl.innerHTML);
+  }
+
+  ruleSelect.addEventListener("click", async (e) => {
+    const btn = e.target.closest("button[data-rule]");
+    if (!btn || ui.training.running) return;
+    const rule = btn.dataset.rule;
+    if (rule === state.menace.beadRule) return;
+    if (isFresh(state.menace)) {
+      switchRule(rule);
+      return;
+    }
+    const games = state.menace.record.gamesPlayed;
+    const choice = await confirmDialog({
+      title: "Switch to the " + RULE_PHRASE[rule] + " rule?",
+      body: "Switching the bead rule starts a fresh MENACE. Your " + plural(games, "game") +
+        " of training will be lost unless you save first.",
+      actions: ruleDialogActions(),
+      opener: btn,
+    });
+    if (choice === "switch" && !ui.training.running) switchRule(rule);
+  });
+
+  // "Save MENACE…" keeps the dialog open, so the visitor can save first (FR-024, T070).
+  function ruleDialogActions() {
+    return [
+      { id: "save", label: "Save MENACE…", keepOpen: true, onSelect: saveMenace },
+      { id: "cancel", label: "Cancel" },
+      { id: "switch", label: "Switch and start fresh", primary: true },
+    ];
+  }
+
+  /* ================= Save and load (US8; research R11) =================
+     Saving is a local download; loading reads a file the visitor picks. Nothing is sent
+     anywhere (FR-039). A file is validated completely before anything changes. */
+
+  const saveBtn = document.getElementById("save-btn");
+  const loadBtn = document.getElementById("load-btn");
+  const loadInput = document.getElementById("load-input");
+
+  function pad2(n) { return String(n).padStart(2, "0"); }
+
+  function escapeHTML(text) {
+    return String(text).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  }
+
+  function saveMenace() {
+    if (ui.training.running) return;
+    const now = new Date();
+    const text = E.serialize(state.menace, { now: now.toISOString() });
+    const games = state.menace.record.gamesPlayed;
+    const date = now.getFullYear() + "-" + pad2(now.getMonth() + 1) + "-" + pad2(now.getDate());
+    const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "menace-" + state.menace.beadRule + "-" + games + "-games-" + date + ".json";
+    link.hidden = true;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setStatus("Saved MENACE: " + plural(games, "game") + ".");
+  }
+
+  function savedOn(iso) {
+    const date = new Date(iso);
+    return isNaN(date) ? iso : date.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+  }
+
+  async function loadFile(file) {
+    const refuse = (message) =>
+      setStatus("Couldn’t load “" + escapeHTML(file.name) + "”. " + message + " Your MENACE hasn’t changed.");
+    if (file.size > E.MAX_SAVE_BYTES) return refuse(E.rejectionMessage("too-large"));
+    let text;
+    try {
+      text = await file.text();
+    } catch (error) {
+      return refuse("The file couldn’t be read.");
+    }
+    const result = E.parseSave(text);
+    if (!result.ok) return refuse(result.message);
+    if (ui.training.running) return;
+
+    // Replacing a trained MENACE needs confirmation; a fresh one is replaced at once.
+    if (!isFresh(state.menace)) {
+      const current = state.menace;
+      const saved = result.menace;
+      const choice = await confirmDialog({
+        title: "Replace your MENACE?",
+        body: "Replace your current MENACE (" + plural(current.record.gamesPlayed, "game") + ", " +
+          RULE_PHRASE[current.beadRule] + ") with the saved one (" + plural(saved.record.gamesPlayed, "game") + ", " +
+          RULE_PHRASE[saved.beadRule] + ", saved on " + savedOn(result.savedAt) + ")?",
+        actions: [
+          { id: "cancel", label: "Cancel" },
+          { id: "replace", label: "Replace", primary: true },
+        ],
+        opener: loadBtn,
+      });
+      if (choice !== "replace" || ui.training.running) return;
+    }
+    applyLoadedMenace(result.menace);
+  }
+
+  // Replaces the whole MENACE, rule included (FR-035, FR-038), and starts a new game.
+  function applyLoadedMenace(menace) {
+    const ruleChanged = menace.beadRule !== state.menace.beadRule;
+    abandonCurrentGame();
+    state.menace = menace;
+    ui.lastGame = null;
+    ui.view = null;
+    renderRuleDisplays();
+    renderStats();
+    renderChart();
+    renderBoxPanel();
+    renderDrawer();
+    startNewGame();
+    setStatus("<strong>Loaded MENACE: " + plural(menace.record.gamesPlayed, "game") + ".</strong>" +
+      (ruleChanged ? " The bead rule is now " + RULE_PHRASE[menace.beadRule] + "." : "") + " " + statusEl.innerHTML);
+  }
+
+  saveBtn.addEventListener("click", saveMenace);
+  loadBtn.addEventListener("click", () => {
+    if (!ui.training.running) loadInput.click();
+  });
+  loadInput.addEventListener("change", () => {
+    const file = loadInput.files && loadInput.files[0];
+    loadInput.value = ""; // so the same file can be chosen again
+    if (file) loadFile(file);
+  });
+
   /* ================= Init ================= */
 
+  renderRuleDisplays();
   renderStats();
   renderChart();
+  renderDrawer();
   startNewGame();
 })();
 </script>
+</body>
+</html>

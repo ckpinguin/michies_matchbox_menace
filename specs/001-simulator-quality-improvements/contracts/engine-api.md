@@ -21,6 +21,7 @@ The engine lives in `<script id="menace-engine">` in [index.html](../../../index
 | `TRANSFORM_NAMES` | 8 strings, matching the [research R4 table](../research.md#r4-box-panel-orientation-and-symbols-fr-007fr-009-us2) |
 | `SAVE_FORMAT` | `"menace-drawer"` |
 | `SAVE_VERSION` | `1` |
+| `MAX_SAVE_BYTES` | `5 * 1024 * 1024` *(added in implementation)* |
 
 ## Board helpers
 
@@ -34,12 +35,15 @@ reachablePositions() → ReadonlySet<positionKey>
 - `canonicalize` picks the lexicographically smallest key and, on a tie, the lowest transform index.
 - `moveGroups` puts the representative first in each group and sorts groups by their representative.
 - `reachablePositions` returns the 304 keys. It is computed once and cached.
+- Also exported, for the UI and tests: `LINES`, `applyTransform(board, T)`, `boardKey(board)` and `keyToBoard(key)`.
 
 ## Menace
 
 ```text
 createMenace({ beadRule = DEFAULT_BEAD_RULE }) → Menace
+newGame({ opponent, signal }) → Game          // added in implementation: a fresh InProgress game
 startingBeads(positionKey, moveNumber, beadRule) → number[9]
+drawBead(counts, rng) → square | null
 chooseMove(menace, game, rng) → MoveChoice
 commit(menace, game) → BeadChange[]
 ```
@@ -62,19 +66,20 @@ randomMove(board, rng) → square
 perfectMove(board, rng) → square
 ```
 
-`perfectMove` uses depth-aware scores and a memo holding scores only. It chooses uniformly among the best replies, takes an immediate win when one exists, and prefers the faster of two wins.
+`perfectMove` plays for whichever side is to move (the side with fewer marks). It uses depth-aware scores and a memo holding scores only. It chooses uniformly among the best replies, takes an immediate win when one exists, and prefers the faster of two wins.
 
 ## Playing a game
 
 ```text
-playGame({ menace, opponent, rng, signal, pause, onEvent }) → Promise<GameResult>
+playGame({ menace, opponent, opponentKind, rng, signal, pause, onEvent }) → Promise<GameResult>
 ```
 
 | Param | Contract |
 | --- | --- |
+| `opponentKind` | *(added in implementation)* `"human" \| "random" \| "perfect"`, recorded as `game.opponent`. Optional. |
 | `opponent(board, signal)` | `→ Promise<square \| null>`. It resolves to `null` if the signal aborts, which is how a pending human move is cancelled. |
 | `pause(kind, signal)` | `→ Promise<void>`. The UI passes animated delays that resolve as soon as the signal aborts. Tests and training pass `() => Promise.resolve()`. `kind` is one of `"menace-move"` or `"opponent-move"`. |
-| `onEvent(event)` | A synchronous callback used for rendering. Events: `{type: "start", game}`, `{type: "menace", choice, board}`, `{type: "opponent", square, board}`, `{type: "end", game}`. |
+| `onEvent(event)` | A synchronous callback used for rendering. Events: `{type: "start", game}`, `{type: "menace", choice, board}` (also sent for a `resigned` choice), `{type: "opponent", square, board}`, `{type: "end", game, deltas}`. `end` is sent after `commit`. |
 | `signal` | An `AbortSignal`. It is checked after every `await`. |
 
 `GameResult` takes one of two forms:
@@ -94,14 +99,16 @@ playGame({ menace, opponent, rng, signal, pause, onEvent }) → Promise<GameResu
 
 ```text
 rollingSeries(outcomes, window = 20) → { game, win, draw, loss }[]
-tableRows(series, bucket = 10) → { from, to, win, draw, loss }[]   // as at the last game in each range
+extendRollingSeries(series, outcomes, window = 20) → series          // appends the points for new games, in place (added in Convergence, T078)
+tableRows(series, bucket = 10, fromRow = 0) → { from, to, win, draw, loss }[]   // as at the last game in each range; fromRow skips rows already shown
 ```
 
 ## Persistence
 
 ```text
-serialize(menace, { now }) → string                                     // pretty-printed JSON, see save-file.md
-parseSave(text) → { ok: true, menace } | { ok: false, code, message }
+serialize(menace, { now }) → string                                     // pretty-printed JSON, see save-file.md; `now` is an ISO 8601 string
+parseSave(text) → { ok: true, menace, savedAt } | { ok: false, code, message }
+rejectionMessage(code) → string                                         // the plain message for a code (used for files rejected before reading)
 ```
 
 `message` is plain language for visitors. `code` is one of:

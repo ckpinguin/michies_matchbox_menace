@@ -280,19 +280,25 @@ The pressed segmented button already passes: light 5.86, dark 6.16. The page has
 
 ## R14. Historical text (FR-026, FR-027, SC-006)
 
-The page's claims were checked one by one against sources.
+The page's claims were checked one by one against sources during planning. They were **re-checked against the sources themselves during implementation (2026-11-22)**, which corrected four planning findings. Those corrections are marked ⚠ below.
 
-| # | Current claim | Finding | Action |
-| --- | --- | --- | --- |
-| 1 | Michie "spent the Second World War in the Testery, working alongside Alan Turing and Jack Good on German teleprinter ciphers" | Michie worked on Tunny in the Testery and then in Max Newman's Newmanry, with Jack Good. Turing was mostly in Hut 8, but he was Michie's friend and weekly chess partner, and they discussed machines that learn. | Reword: "worked on the German 'Tunny' teleprinter cipher, first in the Testery and then in Max Newman's Newmanry alongside Jack Good, and was a friend and weekly chess partner of Alan Turing." |
-| 2 | Built MENACE "together with his colleague Roger Chambers" | Sources credit Michie alone. Chambers co-authored BOXES (1968). | Remove from the MENACE build. Optionally mention Chambers with BOXES. |
-| 3 | 304 matchboxes, symmetric positions merged | Confirmed by computation and by sources. | Keep. |
-| 4 | Beads in "nine colours, one per empty square" | True only under per-square beads. In 1963, equivalent moves share a colour. | Describe both rules and say which Michie used (US6). |
-| 5 | 4/3/2/1 starting beads; +3/+1/−1 | Confirmed. | Keep. |
-| 6 | Resigns when a box is empty | Confirmed. | Keep. |
-| 7 | "stopped losing altogether" against a sharp opponent | Michie's tournament: 220 games over about 16 hours, with MENACE drawing consistently after about 20 games. | Keep, optionally adding the figures. |
-| 8 | "Michie went on in 1965 to found … Department of Machine Intelligence and Perception" | The Experimental Programming Unit was founded in January 1965 and became the Department in October 1966. | Correct the dates. |
-| 9 | "This page runs the same rules" | True only under `michie1963` once US6 lands. | Make the claim conditional on the selected rule. |
+| # | Claim on the page before | Finding (re-checked) | Page now says | Source |
+| --- | --- | --- | --- | --- |
+| 1 | Michie "spent the Second World War in the Testery, working alongside Alan Turing and Jack Good" | Michie was Max Newman's first cryptographic assistant in the Testery (late 1942), stayed with Newman in the Newmanry from early 1943, and worked closely with Jack Good. ⚠ Planning said Turing was Michie's "friend and weekly chess partner", but none of the sources checked says so. GCHQ says only that his "interactions with Alan Turing implanted an interest in … machine learning". | Worked on Tunny, "first in the Testery and then in Max Newman's Newmanry alongside Jack Good, and his contact there with Alan Turing left him with a lasting interest in machines that learn" | GCHQ; Wikipedia: Donald Michie |
+| 2 | Built MENACE "together with his colleague Roger Chambers" | ⚠ The sources disagree. Wikipedia's MENACE article says "designed and built by … Donald Michie and his colleague Roger Chambers". Michie's 1963 paper (sole author), Wikipedia's Michie article and M. Scroggs name Michie alone. No primary source for Chambers' part in MENACE was found (see spec US5). Every source ties Chambers to BOXES (Michie & Chambers, 1968). | MENACE is credited to Michie, without claiming he worked alone. Chambers is mentioned for BOXES (1968), the pole-balancing learner. | Wikipedia: MENACE; Michie 1963 |
+| 3 | 304 matchboxes, with symmetric positions merged | ⚠ *(Convergence, T079)* The sources disagree. Michie's own 1963 paper says "Every one of the 287 essentially distinct positions which the opening player can encounter … is represented by a separate box". Wikipedia ("made from 304 matchboxes") and M. Scroggs give 304. Symmetric positions merged: confirmed. 304 is also what the simulator computes for positions with a real choice (R3). | History text: "one box for each essentially different position it could face: 287 of them by the count in his 1963 paper, though most later accounts give 304". Same-rules text: the page "has a box for every position in which MENACE has a real choice, which comes to 304". | Michie 1963; Wikipedia: MENACE; M. Scroggs; computed (R3) |
+| 4 | Beads in "nine colours, one per empty square" | True only under one colour per square. Michie 1963: "At first sight there are seven possible moves available. Considerations of symmetry, however, reduce these to four". His opening box holds three colours ("white, lilac and gold"). | Both schemes are described, and the page says which one it uses (US6) | Michie 1963 |
+| 5 | Starting beads 4/3/2/1; reinforcement +3/+1/−1 | Confirmed from the primary source *(Convergence, T079)*. Michie 1963, Table 2: stage of play 1/3/5/7, "number of times each colour is replicated" 4/3/2/1. "A draw … received a unit bonus. A win … was rewarded by three extra beads to each open box"; a defeat is punished by "confiscation of the selected bead". Also confirmed by Wikipedia and M. Scroggs. | Kept | Michie 1963; Wikipedia: MENACE; M. Scroggs |
+| 6 | Resigns when a box is empty | Confirmed. | Kept | Michie 1963 |
+| 7 | "stopped losing altogether" against a sharp opponent | ⚠ Wikipedia says that in Michie's 1961 tournament "he and the computer began to draw consistently after twenty games". "Stopped losing altogether" overstates it. | "In a tournament Michie played against it in 1961, MENACE was drawing consistently after about twenty games" | Wikipedia: MENACE |
+| 8 | "Michie went on in 1965 to found … Department of Machine Intelligence and Perception" | ⚠ Edinburgh Informatics, the University's own history, says: "In 1965 this became the Experimental Programming Unit with Michie as Director. In 1966 the Department of Machine Intelligence and Perception (DMIP) was formed". Wikipedia says Michie directed the Department "(previously the Experimental Programming Unit) from its establishment in 1965", which counts from the unit's start. No source gives a month; planning's "January 1965 / October 1966" was not confirmed. | "In 1965 Michie became director of the … Experimental Programming Unit, which grew into its Department of Machine Intelligence and Perception, formed in 1966" *(the 1966 date was added in Convergence, T082)* | Edinburgh Informatics history; Wikipedia: Donald Michie |
+| 9 | "This page runs the same rules" | True only under `michie1963` once US6 lands. | Made conditional on the selected rule (US6) | — |
+| 10 | Masthead: "Edinburgh, 1961" | ⚠ The year is supported by both Wikipedia articles (M. Scroggs says 1960). No source checked places the build in Edinburgh. | "Donald Michie, 1961" | Wikipedia: MENACE; Wikipedia: Donald Michie |
+| 11 | MENACE always moved first, playing ◯ | Confirmed: "MENACE played first, as O". | Kept | Wikipedia: MENACE |
+| 12 | Footer: "Donald Michie & Roger Chambers' 1961 MENACE" | Same issue as row 2. | "Donald Michie's 1961 MENACE" | as row 2 |
+| 13 | "Michie pre-built every box in advance" *(Convergence, T079)* | Only partly supported. Wikipedia: MENACE "was made from 304 matchboxes glued together in an arrangement similar to a chest of drawers". Michie 1963: each position "is represented by a separate box, the face of which bears a drawing of the position and a code-number". No source says when the boxes were filled. | "Michie's machine was a fixed set of matchboxes glued together like a chest of drawers, each box marked with a drawing of its position" | Wikipedia: MENACE; Michie 1963 |
+| 14 | "an early working demonstration that a machine could improve at a task purely through trial, error and reward, the idea now called reinforcement learning" *(Convergence, T079)* | Supported once reworded. Michie 1963 (abstract): "a trial-and-error device which learns to play the game of Noughts and Crosses". Wikipedia: MENACE refined "its strategy through reinforcement learning" and "proved that a computer could learn from failure and success to become good at a task". | "Michie called it 'a trial-and-error device which learns to play': an early working example of a machine learning from success and failure, in the way now called reinforcement learning" | Michie 1963; Wikipedia: MENACE |
+| 15 | "the game collapses to 304 cases" (how-it-works text) | See row 3. | "collapses to a few hundred cases" | as row 3 |
 
 Sources:
 
@@ -300,9 +306,10 @@ Sources:
 - [Wikipedia: MENACE](https://en.wikipedia.org/wiki/Matchbox_Educable_Noughts_and_Crosses_Engine)
 - [Wikipedia: Donald Michie](https://en.wikipedia.org/wiki/Donald_Michie)
 - [GCHQ: Donald Michie](https://www.gchq.gov.uk/person/donald-michie)
-- [Kellogg College blog](https://www.kellogg.ox.ac.uk/blog/what-did-you-do-during-the-war)
 - [Edinburgh Informatics history](https://informatics.ed.ac.uk/60-years-of-computer-science-and-ai/a-short-history-of-the-antecedents-of-the-school)
 - [M. Scroggs, MENACE](https://www.mscroggs.co.uk/menace/)
+- The Kellogg College blog listed during planning does not mention Michie, so it is no longer cited.
+- Michie 1963 was read through its text layer (the published PDF, as hosted by Gwern) during Convergence (T079), which confirmed rows 3, 4, 5, 13 and 14.
 
 ## R15. Small fixes
 

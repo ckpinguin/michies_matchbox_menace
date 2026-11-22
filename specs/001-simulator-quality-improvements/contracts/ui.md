@@ -17,7 +17,7 @@ This is what visitors and assistive technology can rely on. Where nothing is sai
 | Auto-train | "Run 20 / 100 / 500" and "Stop" | Abandons the current game. Time-sliced run. Final message gives `done` of `target` (FR-004, FR-005) |
 | New game | Button | Abandons the current game and starts a new one |
 | Reset MENACE | Button with the existing "click again" confirmation | Abandons the current game; fresh MENACE with the same rule |
-| Save MENACE… *(new)* | Button | Downloads the save file ([save-file.md](./save-file.md)). Announces "Saved MENACE: N games". |
+| Save MENACE… *(new)* | Button in a "Your MENACE" group | Downloads the save file ([save-file.md](./save-file.md)). Announces "Saved MENACE: N games". |
 | Load MENACE… *(new)* | Button that opens a hidden `<input type="file" accept=".json,application/json">` | Validate → (confirm) → replace; or a plain rejection message (FR-035–FR-038) |
 
 While training runs, every control except **Stop** is unavailable: `disabled` for buttons outside the board.
@@ -41,6 +41,7 @@ While training runs, every control except **Stop** is unavailable: `disabled` fo
 - A square that can't be played has `aria-disabled="true"`. It stays focusable and ignores activation.
 - **Labels**: "Board square n, empty", "Board square n, MENACE's nought" or "Board square n, ‹opponent›'s cross". The opponent is "your" for the human, otherwise "Random mover" or "Perfect player" (FR-012).
 - **Winning squares** get `class="win"` (outline plus tint, readable without colour). Their label adds ", winning line" (FR-019).
+- **State hooks** *(added in implementation; used by the browser checks)*: the board has `data-state="idle" | "playing" | "over"` and `data-turn="human"` while it waits for the visitor. Each square has `data-mark`. The controls card has `data-training="idle" | "running"`.
 
 ## Status line and live region
 
@@ -57,6 +58,7 @@ While training runs, every control except **Stop** is unavailable: `disabled` fo
 
 - **Position code**: written with ◯ (MENACE), ✕ (opponent) and · (empty), with a legend line: "◯ MENACE · ✕ opponent · · empty" (FR-007).
 - **Orientation notice**: shown when `transformIndex ≠ 0`. "This box shows the board ‹transform name›. The bead for box square c was played on board square r." (FR-008)
+- **Shared-colour notice** *(added in Convergence, T080)*: shown when `transformIndex = 0` but the drawn bead stands for several squares (Michie 1963). "The bead for box square c (same as d, e) was played on board square r." (US6/AC4). The drawn bead's ledger row has `class="drawn"`.
 - **Ledger**: one row per move group: "box square c (same as d, e) — k beads", plus the ± badge after commit. Badge text uses the `--status-*-ink` tokens.
 - **Resigned box**: an entry with the existing message. An empty *opening* box adds the reset/load hint.
 
@@ -70,7 +72,7 @@ While training runs, every control except **Stop** is unavailable: `disabled` fo
 
 - Drawn at the container's real pixel width. Labels are 11 px, and never under 10 px at widths ≥ 320 px (FR-015).
 - The eyebrow reads "Rolling last 20 games · ‹rule› rule".
-- **Table toggle**: a button with `aria-expanded`. Its state persists across re-renders.
+- **Table toggle**: a button with `aria-expanded`. Its state persists across re-renders. The button and the table are created once; an update redraws only the last partial row and appends the new rows (Convergence, T078), so keyboard focus stays on the toggle.
 - **Table**: `<caption>` "Rolling 20-game rates, as at the last game in each range". Headers: Games · Win rate · Draw rate · Loss rate (FR-020).
 
 ## Drawer view *(new)*
@@ -78,13 +80,13 @@ While training runs, every control except **Stop** is unavailable: `disabled` fo
 | Part | Semantics |
 | --- | --- |
 | Section | `<section aria-labelledby>` with the heading "The drawer" |
-| Disclosure | Button "Open the drawer · n boxes" with `aria-expanded` and `aria-controls`. Collapsed by default. |
+| Disclosure | Button "Open the drawer · n boxes" ("Close the drawer · n boxes" while open) with `aria-expanded` and `aria-controls`. Collapsed by default. |
 | Move filter | `<fieldset>` with `<legend>`Move`</legend>` and radio buttons All / 1st / 3rd / 5th / 7th |
 | Empty filter | Checkbox "Only empty boxes" |
 | Sort | `<label>` + `<select>`: Discovery order / Most beads / Fewest beads |
 | Count | "Showing n of m discovered boxes". Announced politely only after a filter or sort change. |
-| List | `<ul>` of `<li>` cards. Each card has a heading "Box #i · kth move · b beads", a mini-board (`aria-hidden`) with an sr-only bead list, and badges "Used last game" and "Empty: MENACE resigns here". |
-| Empty states | "MENACE opens a box the first time it meets a position. Play or train a game to fill the drawer." / "No boxes match these filters." |
+| List | `<ul>` of `<li>` cards (`content-visibility: auto`, so off-screen cards cost nothing to lay out). Each card has a heading "Box #i · kth move · b beads", a mini-board (`aria-hidden`) with an sr-only bead list, and badges "Used last game" and "Empty: MENACE resigns here". |
+| Empty states | "MENACE opens a box the first time it meets a position. Play or train a game to fill the drawer." / "No boxes match these filters. MENACE opens a box the first time it meets a position, so more appear as it plays." (FR-033) |
 
 ## Visual tokens (contrast)
 

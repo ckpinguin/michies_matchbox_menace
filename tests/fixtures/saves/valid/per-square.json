@@ -1,0 +1,27 @@
+{
+  "format": "menace-drawer",
+  "version": 1,
+  "savedAt": "2026-11-22T09:30:00.000Z",
+  "beadRule": "perSquare",
+  "record": {
+    "gamesPlayed": 4,
+    "win": 3,
+    "draw": 0,
+    "loss": 1,
+    "outcomes": "WWWL"
+  },
+  "boxes": [
+    { "position": ".........", "moveNumber": 1, "discoveryIndex": 1, "beads": [4, 4, 10, 4, 7, 4, 3, 4, 4] },
+    { "position": "....X...O", "moveNumber": 3, "discoveryIndex": 2, "beads": [3, 3, 3, 3, 0, 6, 3, 3, 0] },
+    { "position": "..O.X.OX.", "moveNumber": 5, "discoveryIndex": 3, "beads": [5, 2, 0, 2, 0, 2, 0, 0, 2] },
+    { "position": "O.O.XXX.O", "moveNumber": 7, "discoveryIndex": 4, "beads": [0, 1, 0, 1, 0, 0, 0, 4, 0] },
+    { "position": "......O.X", "moveNumber": 3, "discoveryIndex": 5, "beads": [6, 3, 3, 3, 3, 3, 0, 2, 0] },
+    { "position": "..XO..X.O", "moveNumber": 5, "discoveryIndex": 6, "beads": [2, 5, 0, 0, 2, 2, 0, 2, 0] },
+    { "position": ".OXX.OX.O", "moveNumber": 7, "discoveryIndex": 7, "beads": [4, 0, 0, 0, 1, 0, 0, 1, 0] },
+    { "position": "....O...X", "moveNumber": 3, "discoveryIndex": 8, "beads": [3, 3, 3, 3, 0, 3, 3, 6, 0] },
+    { "position": "..O.O.XX.", "moveNumber": 5, "discoveryIndex": 9, "beads": [5, 2, 0, 2, 0, 2, 0, 0, 2] },
+    { "position": "..OXO.XOX", "moveNumber": 7, "discoveryIndex": 10, "beads": [4, 1, 0, 0, 0, 1, 0, 0, 0] },
+    { "position": "....O.OXX", "moveNumber": 5, "discoveryIndex": 11, "beads": [2, 1, 2, 2, 0, 2, 0, 0, 0] },
+    { "position": "..XXOXO.O", "moveNumber": 7, "discoveryIndex": 12, "beads": [1, 0, 0, 0, 0, 0, 0, 1, 0] }
+  ]
+}

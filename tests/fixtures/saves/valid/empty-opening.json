@@ -1,0 +1,16 @@
+{
+  "format": "menace-drawer",
+  "version": 1,
+  "savedAt": "2026-11-22T10:00:00.000Z",
+  "beadRule": "michie1963",
+  "record": {
+    "gamesPlayed": 12,
+    "win": 0,
+    "draw": 0,
+    "loss": 12,
+    "outcomes": "LLLLLLLLLLLL"
+  },
+  "boxes": [
+    { "position": ".........", "moveNumber": 1, "discoveryIndex": 1, "beads": [0, 0, 0, 0, 0, 0, 0, 0, 0] }
+  ]
+}

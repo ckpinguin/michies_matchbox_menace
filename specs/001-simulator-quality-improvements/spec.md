@@ -326,7 +326,7 @@ A teacher trains MENACE for 1,000 games before a lesson. They save it to a file 
 - **FR-039**: The page MUST NOT send the visitor's games or drawer anywhere; saving and loading happen only on the visitor's device. The footer MUST explain that the drawer resets on reload unless the visitor saves it to a file.
 - **FR-040**: The verified rules MUST stay unchanged under both bead rules: 304 boxes, 4/3/2/1 starting beads by move, +3/+1/−1 reinforcement, and resignation when a box is empty.
 - **FR-041**: The new controls (bead rule, save, load) and the drawer view MUST meet FR-010–FR-016: AA contrast, keyboard operation, correct spoken labels and announcements, and usability at 320 px wide.
-- **FR-042**: The page MUST keep its current look, its three opponents and its current controls, apart from the changes above.
+- **FR-042**: The page MUST keep its current look, its three opponents and its current controls, apart from the changes above. *(Amended during implementation; see tasks T075 and T083.)* The Auto-train controls are hidden while the opponent is "Play it yourself", and the Progress read-out is hidden unless a training run is in progress. The original page set both as hidden, but a CSS rule overrode that, so they always showed. Running "training" against yourself would have waited for a click on every move.
 
 ### Key Entities
 

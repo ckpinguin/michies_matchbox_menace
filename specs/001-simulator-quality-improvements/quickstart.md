@@ -34,7 +34,7 @@ Expected: all tests pass. They cover:
 
 | Test file | Proves |
 | --- | --- |
-| `rules.test.mjs` | Both rules yield 304 boxes (1/12/108/183). Under `michie1963`, exactly 56 boxes have merged groups, the opening box has 3 colours × 4 beads, and representatives carry the starting beads 4/3/2/1. Under `perSquare`, every free square carries beads. Reinforcement is +3/+1/−1 with a floor at 0. (SC-008, FR-040) |
+| `rules.test.mjs` | Both rules yield 304 boxes. Every transform's name matches its geometry, and MENACE plays `T[colorIdx]` on the real board (1/12/108/183). Under `michie1963`, exactly 56 boxes have merged groups, the opening box has 3 colours × 4 beads, and representatives carry the starting beads 4/3/2/1. Under `perSquare`, every free square carries beads. Reinforcement is +3/+1/−1 with a floor at 0. (SC-008, FR-040) |
 | `session.test.mjs` | Aborting during a pause, during a pending human move, or before the opponent replies leaves the drawer, beads and record unchanged. N completed games add exactly N to the record. Provisional boxes join the drawer only at commit. An empty opening box ends a game as a resignation at move 1. (SC-001, FR-001–FR-006) |
 | `opponents.test.mjs` | Over 500 seeded games, the perfect player never misses an immediate win, prefers the quicker of two wins, and plays ≥ 2 different replies in every position where it has ties, across 50 encounters. (SC-005) |
 | `save-file.test.mjs` | Train 1,000 seeded games, then check that `parseSave(serialize(m))` deep-equals `m`. The valid example in [save-file.md](./contracts/save-file.md) is accepted. Every fixture in `tests/fixtures/saves/invalid/` (≥ 10 files: not JSON, wrong format, version 2, non-canonical position, unreachable position, duplicate position, wrong move number, beads on an occupied square, beads on a non-representative, negative beads, totals ≠ outcomes, discovery gap) is rejected with its expected `code`. (SC-009, SC-010) |
@@ -64,6 +64,14 @@ The script starts Chrome with a temporary profile, opens `file://…/index.html`
 | `load-reject` | Load each invalid fixture | A plain message is shown and the state is unchanged | SC-010 |
 | `drawer` | Train 500, open the drawer, filter 7th + "Only empty", sort by Most beads | The count line matches the number of matching cards, the order is right, and "Used last game" is marked | FR-028–FR-033 |
 | `no-network` | Record `Network.requestWillBeSent` events for the whole run | No request other than the page's own `file://` URL | FR-039 |
+| `glyphs` | Train 20 | Position codes use ◯ ✕ ·, a legend is shown, and ledger rows say "box square n" | FR-007, FR-009 |
+| `opening-empty` | Load `tests/fixtures/saves/valid/empty-opening.json`, then Run 100 | The page says MENACE can't start a game and offers reset or load. Training stops after 1 of 100 games. | FR-004, FR-006 |
+| `contrast-dialog-light`, `contrast-dialog-dark`, `keyboard-controls`, `narrow-320-dialog` | The FR-041 sweep: the dialog's text contrast, keyboard use of the bead rule, dialog, drawer and save controls, and the dialog at 320 px | All pass | FR-041 |
+| `perf-training`, `perf-drawer`, `perf-save-load` | 500 games against the perfect player; opening a 304-box drawer; parsing and saving a 10,000-game MENACE | < 3 s with no task over 50 ms; < 16 ms; < 200 ms | Plan budgets |
+| `perf-long-session` | Load a 50,000-game MENACE, open the table and the drawer, then Run 500 | No task over 50 ms. The table ends with 5,050 rows, identical to one rebuilt from scratch. | Constitution budgets; edge case: long sessions |
+| `shared-colour` | Michie 1963: play until an unrotated box draws a bead that stands for several squares | The panel names the board square played, and MENACE's nought is on it | US6/AC4 |
+
+Every check also fails if the page throws an uncaught error. Each check's `Math.random` is seeded from its name, so a failure can be reproduced. `--screenshots=<dir>` also writes full-page screenshots at 1280 px and 375 px, light and dark. The baseline is in `baseline/` and the result after this feature is in `after/`.
 
 ## 4. Manual checks (not automatable)
 
