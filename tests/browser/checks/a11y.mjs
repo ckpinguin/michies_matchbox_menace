@@ -57,6 +57,16 @@ function auditContrast(rootSelector) {
     }
     let bg = backdrop;
     for (let k = start; k < styles.length; k++) bg = over(parse(styles[k].backgroundColor), bg);
+    // SVG text drawn on an SVG shape (feature 002's matchbox): the shape, not an HTML ancestor,
+    // is the background. The page names the shape's colour token in data-contrast-bg.
+    const svgBg = el instanceof SVGElement ? el.closest("[data-contrast-bg]") : null;
+    if (svgBg) {
+      const probe = document.createElement("span");
+      probe.style.backgroundColor = `var(${svgBg.dataset.contrastBg})`;
+      document.body.appendChild(probe);
+      bg = over(parse(getComputedStyle(probe).backgroundColor), bg);
+      probe.remove();
+    }
     let fg = over(parse(textValue), bg);
     if (opacity < 1) {
       bg = mix(bg, backdrop, opacity);
@@ -169,7 +179,127 @@ function readBoard() {
   };
 }
 
+// ---------- Feature 002: the same audits with both helps on (FR-017, FR-019, SC-007) ----------
+
+// Both helps on, a tip open, "What changed?" shown, the story open, and MENACE's steps
+// paused at step 4 ("One step at a time").
+async function openHelpsState(ctx) {
+  await ctx.click("#help-words");
+  await ctx.click("#help-steps");
+  await ctx.click('#help-pacing [data-pacing="manual"]');
+  await ctx.selectOpponent("random"); // MENACE's first move opens a new box: its tip appears
+  await ctx.waitFor(() => document.querySelector("#tip-slot .tip"), { message: "No tip appeared" });
+  await ctx.train(20);
+  await ctx.click("#new-game-btn");
+  for (const step of ["find", "shake", "tilt"]) {
+    await ctx.waitFor((s) => document.querySelector("#step-area").dataset.step === s, { message: `No "${step}" step` }, step);
+    await ctx.click("#step-next");
+  }
+  await ctx.waitFor(() => document.querySelector("#step-area").dataset.step === "lookup");
+  await ctx.click("#story-toggle");
+  await ctx.sleep(1500); // let a turning face finish
+  const state = await ctx.eval(() => ({
+    tip: Boolean(document.querySelector("#tip-slot .tip")),
+    compare: !document.querySelector("#compare-section").hidden,
+    story: !document.querySelector("#story-body").hidden,
+    step: document.querySelector("#step-area").dataset.step,
+  }));
+  if (!(state.tip && state.compare && state.story && state.step === "lookup")) {
+    throw new Error(`Could not set up the helps state: ${JSON.stringify(state)}`);
+  }
+}
+
+function helpsContrastCheck(scheme) {
+  return {
+    name: `contrast-helps-${scheme}`,
+    spec: "FR-019, SC-007",
+    timeout: 120000,
+    async before(ctx) {
+      await ctx.page.emulate({ width: 1280, height: 900, colorScheme: scheme });
+    },
+    async run(ctx) {
+      await openHelpsState(ctx);
+      await openOptionalViews(ctx);
+      const { audited, failures } = await ctx.eval(auditContrast);
+      ctx.assert(audited > 80, `Only ${audited} text elements were audited`);
+      ctx.assert(failures.length === 0, `${failures.length} of ${audited} text elements fail:\n${[...new Set(failures)].slice(0, 25).join("\n")}`);
+    },
+  };
+}
+
 export default [
+  helpsContrastCheck("light"),
+  helpsContrastCheck("dark"),
+  {
+    name: "keyboard-helps",
+    spec: "FR-017, SC-007",
+    timeout: 120000,
+    async run(ctx) {
+      const where = () => {
+        const a = document.activeElement;
+        if (!a) return "none";
+        if (a.closest("#board")) return "board";
+        if (a.closest(".tip")) return "tip";
+        return a.id || a.tagName.toLowerCase();
+      };
+      await ctx.click("#help-words");
+      await ctx.click("#help-steps");
+      await ctx.click('#help-pacing [data-pacing="manual"]');
+      await ctx.click("#new-game-btn"); // "Play it yourself": MENACE opens, with its steps
+      await ctx.waitFor(() => document.querySelector("#step-area").dataset.step === "find" && document.querySelector("#tip-slot .tip"));
+
+      // From the board, Tab reaches the tip's button and then Next; nothing took focus by itself.
+      await ctx.eval(() => document.querySelector('#board button[tabindex="0"]').focus());
+      await ctx.page.press("Tab");
+      ctx.assert(await ctx.eval(where) === "tip", `Tab from the board reached ${await ctx.eval(where)}, not the tip`);
+      await ctx.page.press("Tab");
+      ctx.assert(await ctx.eval(where) === "step-next", `The next Tab reached ${await ctx.eval(where)}, not Next`);
+
+      // Enter steps through the move; focus stays on Next, then returns to the board.
+      for (let k = 0; k < 4; k++) await ctx.page.press("Enter");
+      const at = await ctx.eval(() => ({ step: document.querySelector("#step-area").dataset.step, focus: document.activeElement.id }));
+      ctx.assert(at.step === "play" && at.focus === "step-next", `After 4 × Enter: step ${at.step}, focus on ${at.focus}`);
+      await ctx.page.press("Enter");
+      await ctx.waitFor(() => document.querySelector("#board").dataset.turn === "human");
+      ctx.assert(await ctx.eval(where) === "board", `When the steps ended, focus went to ${await ctx.eval(where)}`);
+
+      // Play a square by keyboard; MENACE's next steps do not pull focus off the board.
+      const target = await ctx.eval(() => [...document.querySelectorAll("#board button[data-idx]")].findIndex((b) => !b.dataset.mark));
+      await ctx.eval((i) => document.querySelector(`#board button[data-idx="${i}"]`).focus(), target);
+      await ctx.page.press("Enter");
+      await ctx.waitFor(() => !document.querySelector("#step-area").hidden, { message: "MENACE's reply showed no steps" });
+      ctx.assert(await ctx.eval(where) === "board", `MENACE's steps moved focus to ${await ctx.eval(where)}`);
+
+      // The Helps buttons work from the keyboard.
+      await ctx.eval(() => document.querySelector("#help-words").focus());
+      await ctx.page.press(" ");
+      ctx.assert(await ctx.eval(() => document.querySelector("#help-words").getAttribute("aria-pressed")) === "false",
+        "Space did not turn Simple words off");
+    },
+  },
+  {
+    name: "narrow-320-helps",
+    spec: "FR-019, SC-007",
+    timeout: 120000,
+    async before(ctx) {
+      await ctx.page.emulate({ width: 320, height: 740, mobile: true });
+    },
+    async run(ctx) {
+      await openHelpsState(ctx);
+      await openOptionalViews(ctx);
+      await ctx.sleep(200);
+      const info = await ctx.eval(() => {
+        const root = document.documentElement;
+        const wide = [...document.body.querySelectorAll("*")]
+          .filter((el) => el.getBoundingClientRect().right > root.clientWidth + 0.5 && !el.closest(".sr-only"))
+          .slice(0, 5)
+          .map((el) => el.tagName.toLowerCase() + (el.id ? "#" + el.id : "") + "." + String(el.getAttribute("class") || "").split(" ")[0]);
+        return { scrollWidth: root.scrollWidth, clientWidth: root.clientWidth, wide };
+      });
+      ctx.assert(info.scrollWidth <= info.clientWidth,
+        `The page scrolls sideways at 320 px with the helps on (${info.scrollWidth} > ${info.clientWidth}); too wide: ${info.wide.join(", ")}`);
+    },
+  },
   contrastCheck("light"),
   contrastCheck("dark"),
   dialogContrastCheck("light"),

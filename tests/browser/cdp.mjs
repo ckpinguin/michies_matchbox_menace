@@ -141,8 +141,11 @@ export class Page {
     return result.result.value;
   }
 
-  /** Emulates a screen size and (optionally) a colour scheme. */
-  async emulate({ width, height, mobile = false, colorScheme } = {}) {
+  /**
+   * Emulates a screen size and, optionally, media features: a colour scheme and reduced motion
+   * ("reduce" | "no-preference"). The media features set here replace any set earlier.
+   */
+  async emulate({ width, height, mobile = false, colorScheme, reducedMotion } = {}) {
     if (width && height) {
       await this.send("Emulation.setDeviceMetricsOverride", {
         width,
@@ -151,9 +154,11 @@ export class Page {
         mobile,
       });
     }
-    if (colorScheme) {
+    if (colorScheme) this.mediaFeatures = { ...this.mediaFeatures, "prefers-color-scheme": colorScheme };
+    if (reducedMotion) this.mediaFeatures = { ...this.mediaFeatures, "prefers-reduced-motion": reducedMotion };
+    if (colorScheme || reducedMotion) {
       await this.send("Emulation.setEmulatedMedia", {
-        features: [{ name: "prefers-color-scheme", value: colorScheme }],
+        features: Object.entries(this.mediaFeatures).map(([name, value]) => ({ name, value })),
       });
     }
   }

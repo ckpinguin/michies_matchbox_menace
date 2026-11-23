@@ -118,6 +118,7 @@ What a box looked like before a training run (FR-016; research K11).
 | `gamesBefore` | integer | `record.gamesPlayed` when the run started. |
 | `beads` | `Map<positionKey, number[9]>` | Copies of every existing box's beads at the start. |
 | `newBoxes` | `Set<positionKey>` | Filled at the end: boxes opened during the run. Their "before" is their starting beads. |
+| `after` | `Map<positionKey, number[9]>` | Filled at the end: every box's beads as the run left them. "After" shows these, so games played later are not counted as changes made by the run (T068). |
 
 There is one snapshot at a time; each run replaces it. It is cleared on reset, rule change and load.
 

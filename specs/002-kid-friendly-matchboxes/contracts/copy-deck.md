@@ -41,6 +41,7 @@ All text shown in simple-words mode lives in this one inline JSON block inside `
   },
   "story": [ { "picture": "drawer", "sentences": ["…", "…"], "alt": "…" } ],
   "compare": { "gained": "…", "lost": "…", "nothing": "…", "newBox": "…" },
+  "boxPanel": { "gaveUp": "…" },
   "explains": { "<word-list term>": "<one plain sentence>" }
 }
 ```
@@ -56,3 +57,4 @@ All text shown in simple-words mode lives in this one inline JSON block inside `
 4. **Story content.** Taken together, the story's text covers finding a box, drawing a bead, playing the square, and the bead changes for a win, a draw and a loss.
 5. **Tip coverage.** Every FR-014 event has a tip, and each tip text has 2 sentences or fewer.
 6. **Sourced facts.** Every factual statement matches the sources in [research K13](../research.md#k13-historical-statements-used-by-the-help-fr-020). This is checked by reading, at review time.
+7. **Step captions** (added by T067, T069 and T070). Every caption of the five steps (`steps.find`, `shake`, `tilt`, `lookup`, `play`) is exactly one sentence (FR-006). Both shared-colour captions say the squares are the same move and that MENACE picks one of them (US4/AC2). Every `learning` caption says the move gets more or less likely or often (US3/AC4).

@@ -456,6 +456,112 @@
   }
   .status-line strong { color: var(--ink); }
 
+  /* ---------- Feature 002: helps, step area, matchbox pictures ---------- */
+  .help-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+  .segmented.help-pacing { flex-wrap: wrap; }
+
+  .step-area {
+    margin-top: 0.9rem;
+    border-top: 1px solid var(--hairline);
+    padding-top: 0.9rem;
+  }
+  .step-indicator {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--brass-ink);
+    margin: 0 0 0.5rem;
+  }
+  .step-indicator:empty { display: none; }
+  .step-picture { max-width: 220px; }
+  .step-caption {
+    font-size: 0.98rem;
+    color: var(--ink);
+    margin: 0.6rem 0 0.75rem;
+    min-height: 1.5em;
+  }
+  .step-controls .btn[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  #step-next[hidden], #step-playpause[hidden], #step-replay[hidden] { display: none; }
+  .board[data-step-focus="board"] { box-shadow: 0 0 0 3px var(--surface), 0 0 0 6px var(--accent); }
+
+  /* the bead marker on a board square (FR-004, FR-010) */
+  .board .square .bead-marker.fading { opacity: 0.35; }
+  .matchbox .face { transform-box: fill-box; transform-origin: center; }
+
+  /* matchbox pictures (research K3) */
+  .matchbox { display: block; width: 100%; max-width: 200px; height: auto; overflow: visible; }
+  .matchbox .sleeve { fill: var(--surface-2); stroke: var(--wood); stroke-width: 1.5; }
+  .matchbox .sleeve-end { fill: var(--brass); }
+  .matchbox .face-cell { fill: var(--surface); stroke: var(--hairline-strong); stroke-width: 1; }
+  .matchbox .tray { fill: var(--surface); stroke: var(--wood); stroke-width: 1.5; }
+  .matchbox .tray-lip { fill: var(--wood); }
+  .matchbox .bead-disc { stroke: var(--ink-2); stroke-width: 0.8; }
+  .matchbox .bead-drawn .bead-disc, .board .bead-marker .bead-disc { stroke: var(--accent); stroke-width: 2; }
+  .matchbox .box-no, .matchbox .heap-count, .matchbox .tray-note { fill: var(--ink); font-family: var(--font-mono); }
+  .matchbox .box-no { font-size: 10px; }
+  .matchbox .heap-count { font-size: 10px; font-weight: 600; }
+  .matchbox .tray-note { font-size: 9px; }
+  .matchbox .face-highlight { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+  .matchbox .aside-spot { fill: none; stroke: var(--hairline-strong); stroke-dasharray: 3 2; }
+  .matchbox-wrap { flex: 0 0 auto; width: 200px; max-width: 100%; }
+  .matchbox-caption {
+    font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 0 0 0.3rem;
+  }
+  /* tips (contracts/ui.md §Tips) */
+  .tip {
+    margin-top: 1rem;
+    background: var(--surface-2);
+    border: 1px solid var(--hairline-strong);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.7rem 0.85rem 0.8rem;
+  }
+  .card .tip h3.tip-title {
+    font-family: var(--font-serif); font-size: 1rem; letter-spacing: 0; text-transform: none;
+    color: var(--ink); font-weight: 600; margin: 0 0 0.3rem;
+  }
+  .tip-text { margin: 0 0 0.6rem; font-size: 0.92rem; color: var(--ink); }
+
+  /* the picture story (FR-015) */
+  .story-section { margin-bottom: 2.6rem; }
+  .story-list {
+    list-style: none; margin: 1.2rem 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 1.2rem;
+  }
+  .story-list li {
+    background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 6px; padding: 0.8rem;
+  }
+  .story-list .story-no {
+    font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--brass-ink); margin: 0 0 0.4rem;
+  }
+  .story-list svg { display: block; width: 100%; height: auto; max-width: 300px; margin-bottom: 0.5rem; }
+  .story-list p.story-sentence { margin: 0.2rem 0 0; font-size: 0.95rem; color: var(--ink); }
+  .story-art-text { fill: var(--ink); font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+  .story-art-line { stroke: var(--ink-2); stroke-width: 2; fill: none; }
+
+  /* "What changed?" (FR-016) */
+  .compare-section { margin-bottom: 2.6rem; }
+  .compare-picker { display: flex; flex-direction: column; gap: 0.35rem; margin: 0.4rem 0 1rem; max-width: 100%; }
+  .compare-picker select {
+    font: inherit; font-family: var(--font-mono); font-size: 0.85rem; max-width: 100%;
+    background: var(--surface-2); color: var(--ink); border: 1px solid var(--hairline-strong); border-radius: 6px; padding: 0.4rem 0.5rem;
+  }
+  .compare-pictures { display: flex; flex-wrap: wrap; gap: 1.2rem 2rem; }
+  .compare-figure { margin: 0; width: 200px; max-width: 100%; }
+  .compare-figure figcaption {
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.11em; text-transform: uppercase;
+    color: var(--brass-ink); margin-bottom: 0.4rem;
+  }
+  .compare-summary { margin: 1rem 0 0; color: var(--ink); font-size: 1rem; }
+
+  .new-box-badge {
+    display: inline-block; font-family: var(--font-mono); font-size: 0.7rem;
+    background: var(--accent); color: var(--accent-ink); border-radius: 4px; padding: 0.05rem 0.4rem; margin-bottom: 0.4rem;
+  }
+
   /* box panel */
   .box-id {
     font-family: var(--font-mono);
@@ -501,14 +607,12 @@
   .box-entry-resigned .box-entry-eyebrow { color: var(--status-critical-ink); }
 
   .box-body {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1.4rem;
-    align-items: start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem 1.4rem;
+    align-items: flex-start;
   }
-  @media (max-width: 560px) {
-    .box-body { grid-template-columns: 1fr; }
-  }
+  .box-body .bead-ledger { flex: 1 1 12rem; min-width: 0; }
   .mini-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -809,6 +913,20 @@
       <span class="control-hint" id="rule-hint">Mirror-image moves share one bead colour.</span>
     </div>
 
+    <div class="control-group" id="help-controls">
+      <span class="control-label" id="help-label">Helps</span>
+      <div class="help-row">
+        <div class="segmented help-switches" role="group" aria-labelledby="help-label">
+          <button type="button" id="help-steps" aria-pressed="false">Step by step</button>
+          <button type="button" id="help-words" aria-pressed="false">Simple words</button>
+        </div>
+        <div class="segmented help-pacing" role="group" id="help-pacing" aria-label="Pace of the steps" hidden>
+          <button type="button" data-pacing="manual" aria-pressed="false">One step at a time</button>
+          <button type="button" data-pacing="auto" aria-pressed="true">Play by itself</button>
+        </div>
+      </div>
+    </div>
+
     <div class="control-group" id="train-controls" hidden>
       <span class="control-label">Auto-train</span>
       <div class="btn-row">
@@ -853,7 +971,18 @@
         <span><svg viewBox="0 0 100 100"><line x1="22" y1="22" x2="78" y2="78" stroke="var(--ink)" stroke-width="12" stroke-linecap="round"/><line x1="78" y1="22" x2="22" y2="78" stroke="var(--ink)" stroke-width="12" stroke-linecap="round"/></svg> <span id="opponent-name">You</span></span>
       </div>
       <div class="board" id="board" role="grid" aria-label="Noughts and crosses board" data-state="idle"></div>
+      <div id="tip-slot"></div>
       <p class="status-line" id="status-line">Your move — click a square.</p>
+      <section class="step-area" id="step-area" aria-label="How MENACE is moving" hidden>
+        <p class="step-indicator" id="step-indicator"></p>
+        <div class="step-picture" id="step-picture"></div>
+        <p class="step-caption" id="step-caption"></p>
+        <div class="btn-row step-controls">
+          <button type="button" class="btn primary" id="step-next">Next</button>
+          <button type="button" class="btn" id="step-playpause" aria-pressed="false">Pause</button>
+          <button type="button" class="btn ghost" id="step-replay" hidden>Replay turn</button>
+        </div>
+      </section>
     </div>
 
     <div class="card" id="box-card">
@@ -867,6 +996,19 @@
   <section class="card chart-card">
     <h2 class="section-title"><span class="eyebrow-inline" id="chart-eyebrow">Rolling last 20 games · Michie 1963 rule</span>Learning curve</h2>
     <div id="chart-root"></div>
+  </section>
+
+  <section class="card compare-section" id="compare-section" aria-labelledby="compare-title" hidden>
+    <h2 class="section-title" id="compare-title"><span class="eyebrow-inline">Before and after</span>What changed in the last training run?</h2>
+    <div class="compare-picker">
+      <label class="control-label" for="compare-select">Box</label>
+      <select id="compare-select"></select>
+    </div>
+    <div class="compare-pictures">
+      <figure class="compare-figure"><figcaption>Before</figcaption><div id="compare-before"></div></figure>
+      <figure class="compare-figure"><figcaption>After</figcaption><div id="compare-after"></div></figure>
+    </div>
+    <p class="compare-summary" id="compare-summary"></p>
   </section>
 
   <section class="card drawer-section" aria-labelledby="drawer-title">
@@ -896,6 +1038,12 @@
       <p class="drawer-message" id="drawer-message" hidden></p>
       <ul class="drawer-list" id="drawer-list"></ul>
     </div>
+  </section>
+
+  <section class="card story-section" aria-labelledby="story-title">
+    <h2 class="section-title" id="story-title"><span class="eyebrow-inline">Six pictures, for everyone</span>How MENACE learns: the picture story</h2>
+    <button type="button" class="btn" id="story-toggle" aria-expanded="false" aria-controls="story-body">Show the picture story</button>
+    <ol class="story-list" id="story-body" hidden></ol>
   </section>
 
   <section class="how-it-works">
@@ -946,12 +1094,128 @@
 </div>
 
 <div aria-live="polite" class="sr-only" id="live-status"></div>
+<div aria-live="polite" class="sr-only" id="live-tip"></div>
 
 <dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-body">
   <h2 id="confirm-title"></h2>
   <p id="confirm-body"></p>
   <div class="btn-row confirm-actions" id="confirm-actions"></div>
 </dialog>
+
+<!-- Simple-words copy deck (feature 002, contracts/copy-deck.md). Plain data: the page reads it
+     with JSON.parse, and tests/engine/copy.test.mjs holds every string to the reading-level rules
+     (at most 15 words a sentence, no unexplained word-list term). -->
+<script type="application/json" id="menace-copy">
+{
+  "placeholders": {
+    "colour": "blue",
+    "shape": "star",
+    "n": "3",
+    "box": "7",
+    "board": "5",
+    "opponent": "Random mover",
+    "games": "20 games",
+    "rule": "Michie 1963",
+    "beads": "3 beads",
+    "lostColour": "red",
+    "lostShape": "plus"
+  },
+  "wordList": ["reinforcement", "reinforce", "symmetry", "symmetric", "canonical", "orientation", "transform",
+               "rolling", "rate", "resign", "resigns", "resigned", "stabiliser", "algorithm", "probability",
+               "representative"],
+  "steps": {
+    "find":   { "text": "MENACE finds the matchbox with the same picture as the board.",
+                "newBox": "MENACE has never seen this board, so it fills a new box with beads." },
+    "shake":  { "text": "MENACE shakes the box to mix up the beads." },
+    "tilt":   { "text": "MENACE tilts the box, and a {colour} {shape} bead rolls to the front first." },
+    "lookup": { "text": "The {colour} {shape} bead points to this square on the board.",
+                "turned": "The box picture turns to match the board, and the {colour} {shape} bead points here.",
+                "shared": "These squares are the same move, so MENACE puts its ◯ on one of them.",
+                "turnedShared": "The picture turns, and these squares are the same move: MENACE picks one of them." },
+    "play":   { "text": "MENACE puts its ◯ on that square." },
+    "forced": { "text": "Only one square is left. MENACE needs no box, so it plays there." },
+    "empty":  { "text": "This box has no beads left. MENACE has nothing to draw, so it gives up.",
+                "opening": "This is the first box, and it is empty. MENACE cannot start until you reset it or load a saved one." }
+  },
+  "learning": {
+    "win":  "MENACE won, so it gets 3 more {colour} beads. Now it picks that move more often.",
+    "draw": "It was a draw, so MENACE gets 1 more {colour} bead. Now it picks that move a little more often.",
+    "loss": "MENACE lost, so the {colour} bead is taken away. Now it picks that move less often."
+  },
+  "status": {
+    "yourTurn": "Your turn. Pick an empty square on the board.",
+    "opponentThinking": "{opponent} is thinking.",
+    "menaceShaking": "MENACE is shaking a box.",
+    "menaceChoosing": "MENACE is choosing its move.",
+    "menaceMoved": "MENACE drew a bead and played square {board}.",
+    "forced": "Only one square was left, so MENACE played square {board}.",
+    "menaceGivesUp": "This box has no beads left, so MENACE gives up.",
+    "opponentMoved": "{opponent} played square {board}.",
+    "menaceWins": "MENACE wins! Every box it used gets 3 more of the beads it drew.",
+    "youWin": "You win! MENACE loses the beads it drew.",
+    "opponentWins": "{opponent} wins. MENACE loses the beads it drew.",
+    "draw": "It is a draw. Every box MENACE used gets 1 more bead.",
+    "openingEmpty": "MENACE’s first box is empty, so it cannot play. Reset it or load a saved one.",
+    "trainingStart": "MENACE is practising {games} against the {opponent}.",
+    "trainingDone": "Practice is over. MENACE played {games}.",
+    "trainingStopped": "Practice stopped after {games}.",
+    "ruleSwitched": "New bead rule: {rule}. A fresh MENACE has started.",
+    "saved": "MENACE is saved. It has played {games}.",
+    "loadFailed": "That file could not be loaded. Your MENACE has not changed.",
+    "loaded": "MENACE is loaded. It has played {games}.",
+    "loadedRule": "MENACE is loaded. It has played {games}. The bead rule is now {rule}."
+  },
+  "tips": {
+    "new-box":    { "title": "A new matchbox",
+                    "text": "MENACE has never seen this board before. It takes a new box and fills it with beads." },
+    "first-win":  { "title": "MENACE won!",
+                    "text": "Each box it used gets 3 more of the beads it drew. So it will pick those moves more often." },
+    "first-draw": { "title": "A draw",
+                    "text": "Each box MENACE used gets 1 more of the beads it drew. A draw still helps a little." },
+    "first-loss": { "title": "MENACE lost",
+                    "text": "The beads it drew are taken away. So it will pick those moves less often." },
+    "turned-box": { "title": "A turned box",
+                    "text": "One box covers the same board turned or flipped. So its picture may look turned around." },
+    "empty-box":  { "title": "An empty box",
+                    "text": "This box has run out of beads. MENACE has nothing to draw, so it gives up." }
+  },
+  "story": [
+    { "picture": "drawer",
+      "sentences": ["MENACE is a pile of matchboxes, one for each board it might see.",
+                    "Each box has a drawing of its board on the front."],
+      "alt": "A row of matchboxes. Each has a small noughts and crosses board drawn on its front." },
+    { "picture": "find",
+      "sentences": ["On its turn, MENACE finds the box whose drawing matches the board.",
+                    "Inside are coloured beads, one colour for each square it could play."],
+      "alt": "The board, an arrow, and the matchbox with the same drawing. Its open tray holds beads of several colours." },
+    { "picture": "shake",
+      "sentences": ["MENACE shakes the box and tilts it.",
+                    "The first bead to roll to the front is the one it uses."],
+      "alt": "A tilted matchbox. One bead has rolled out to the front." },
+    { "picture": "lookup",
+      "sentences": ["The bead’s colour and shape show which square to play.",
+                    "MENACE puts its ◯ on that square."],
+      "alt": "A blue star bead and the board. The top-left square shows the same blue star." },
+    { "picture": "win",
+      "sentences": ["After a win, each box used gets 3 more beads of the colour it drew.",
+                    "After a draw, it gets 1 more."],
+      "alt": "Three new blue star beads drop into the open tray, marked plus 3." },
+    { "picture": "loss",
+      "sentences": ["After a loss, the bead MENACE drew is taken away.",
+                    "So good moves get more likely, and bad moves less likely."],
+      "alt": "A blue star bead is taken out and put aside, marked minus 1." }
+  ],
+  "compare": {
+    "gained": "MENACE now likes the {colour} {shape} move more: it gained {beads}.",
+    "lost": "No move gained beads, but MENACE now likes the {lostColour} {lostShape} move less.",
+    "gainedLost": "MENACE now likes the {colour} {shape} move more, and the {lostColour} {lostShape} move less.",
+    "nothing": "Nothing changed in this box during the run.",
+    "newBox": "This box was new in the run, so “Before” shows the beads it started with."
+  },
+  "boxPanel": { "gaveUp": "gave up" },
+  "explains": {}
+}
+</script>
 
 <script id="menace-engine">
 /* =====================================================================================
@@ -1394,6 +1658,63 @@ var MenaceEngine = (function () {
     return { status: "finished", game, deltas };
   }
 
+  /* ---------- Picture helpers (feature 002, contracts/engine-additions.md) ---------- */
+
+  // The second mark of each bead colour, so colour is never the only cue (research K4).
+  // These names and shapes belong to this page, not to Michie.
+  const BEAD_MARKS = Object.freeze([
+    ["blue", "star"], ["teal", "heart"], ["yellow", "triangle"],
+    ["green", "square"], ["brown", "diamond"], ["purple", "moon"],
+    ["red", "plus"], ["pink", "flower"], ["orange", "arrow"],
+  ].map(([colourName, shape], colorIdx) => Object.freeze({ colorIdx, colourName, shape })));
+
+  // How to turn or flip a box's picture so that it matches the real board (research K5): CSS
+  // matrix(a, b, c, d, 0, 0), with the picture's centre at the origin and y pointing down, moves
+  // box square i onto real square TRANSFORMS[t][i].
+  const PICTURE_MATRICES = Object.freeze([
+    [1, 0, 0, 1],   // same orientation
+    [0, -1, 1, 0],  // rotated 90° clockwise: turn back 90° anticlockwise
+    [-1, 0, 0, -1], // rotated 180°: turn half way round
+    [0, 1, -1, 0],  // rotated 90° anticlockwise: turn back 90° clockwise
+    [-1, 0, 0, 1],  // mirrored left–right: flip left–right
+    [1, 0, 0, -1],  // mirrored top–bottom: flip top–bottom
+    [0, 1, 1, 0],   // mirrored along ↘: flip along ↘
+    [0, -1, -1, 0], // mirrored along ↙: flip along ↙
+  ].map(Object.freeze));
+
+  // A colour with more beads than this is drawn as a heap with its count (FR-002).
+  const BEAD_DISPLAY_LIMIT = 12;
+
+  // One TrayGroup per move group whose representative holds beads, in representative order.
+  // The counts always add up to the box's total: non-representatives hold no beads.
+  function beadLayout(beads, groups, limit) {
+    const max = limit === undefined ? BEAD_DISPLAY_LIMIT : limit;
+    const tray = [];
+    for (const group of groups) {
+      const colorIdx = group[0];
+      const count = beads[colorIdx];
+      if (!(count > 0)) continue;
+      const display = count <= max ? "beads" : "heap";
+      tray.push({ colorIdx, count, display, shown: display === "beads" ? count : 1 });
+    }
+    return tray;
+  }
+
+  // What changed in a box between two moments (FR-016): the representative with the largest
+  // gain and the one with the largest loss (`by` counts the beads gained or lost). Ties go to the
+  // lower colour; either is null when nothing changed that way.
+  function beadChanges(beforeBeads, afterBeads, groups) {
+    let gained = null;
+    let lost = null;
+    const reps = groups.map((g) => g[0]).sort((a, b) => a - b);
+    for (const colorIdx of reps) {
+      const by = afterBeads[colorIdx] - beforeBeads[colorIdx];
+      if (by > 0 && (!gained || by > gained.by)) gained = { colorIdx, by };
+      if (by < 0 && (!lost || -by > lost.by)) lost = { colorIdx, by: -by };
+    }
+    return { gained, lost };
+  }
+
   /* ---------- Record helpers ---------- */
 
   // Rolling win/draw/loss rates over the last `window` games, one point per game.
@@ -1659,6 +1980,11 @@ var MenaceEngine = (function () {
     serialize,
     parseSave,
     rejectionMessage,
+    BEAD_MARKS,
+    BEAD_DISPLAY_LIMIT,
+    PICTURE_MATRICES,
+    beadLayout,
+    beadChanges,
   });
 })();
 </script>
@@ -1683,7 +2009,107 @@ var MenaceEngine = (function () {
     tableOpen: false, // the learning-curve table stays open across re-renders
     drawer: { open: false, move: "all", emptyOnly: false, sort: "discovery" },
     training: { running: false, stopRequested: false, target: 0, done: 0 },
+    // Feature 002 (data-model.md: HelpSettings, Tip, TrainingSnapshot). In memory only: nothing
+    // here is stored or saved, and it all resets on reload (constitution II).
+    help: { stepByStep: false, pacing: "auto", simpleWords: false },
+    tipsShown: new Set(), // Tip.event values already shown on this visit
+    snapshot: null,       // TrainingSnapshot of the last training run, or null
+    heldBack: null,       // { idx, colorIdx, squares } while MENACE's ◯ waits behind its bead marker
   };
+
+  /* ================= Copy deck (feature 002, contracts/copy-deck.md) =================
+     Every simple-words string lives in <script id="menace-copy">. copyText() fills its
+     {placeholders} with HTML-escaped values. */
+
+  const COPY = JSON.parse(document.getElementById("menace-copy").textContent);
+
+  function copyEntry(path) {
+    let value = COPY;
+    for (const key of path.split(".")) {
+      if (value === null || typeof value !== "object" || !(key in value)) {
+        throw new Error("No copy-deck entry: " + path);
+      }
+      value = value[key];
+    }
+    return value;
+  }
+
+  function copyText(path, vars) {
+    const text = copyEntry(path);
+    if (typeof text !== "string") throw new Error("Copy-deck entry is not text: " + path);
+    return text.replace(/\{([a-zA-Z]+)\}/g, (whole, name) =>
+      vars && Object.prototype.hasOwnProperty.call(vars, name) ? escapeHTML(String(vars[name])) : whole);
+  }
+
+  function hasCopy(path) {
+    try { return typeof copyEntry(path) === "string"; } catch (e) { return false; }
+  }
+
+  // Re-renders whatever text is on screen in the other wording, without announcing it again
+  // (FR-005). Tips exist only in simple words, so turning them off closes any tip.
+  function onWordsChanged() {
+    if (ui.lastStatus) {
+      const shown = statusParts(ui.lastStatus);
+      setStatus(shown.html, { announce: false, copy: shown.copy });
+    }
+    if (activeSequence) activeSequence.refreshCaption();
+    if (!ui.help.simpleWords) clearTips();
+    renderBoxPanel(); // the empty box's caption has a simple-words form too (US1/AC6)
+  }
+
+  /* ================= Tips (feature 002, US5; contracts/ui.md §Tips, research K9) =================
+     data-model.md: Tip (event, title, text, shown). A tip shows the first time its event happens on
+     this visit, only while Simple words is on, one at a time in event order. It never takes focus;
+     "Got it", or Esc from inside it, closes it. */
+
+  const tipSlot = document.getElementById("tip-slot");
+  const tipLiveEl = document.getElementById("live-tip");
+  const tipQueue = [];
+
+  function showTip(event) {
+    if (!ui.help.simpleWords || ui.tipsShown.has(event) || !hasCopy("tips." + event + ".text")) return;
+    ui.tipsShown.add(event);
+    tipQueue.push(event);
+    if (!tipSlot.querySelector(".tip")) nextTip();
+  }
+
+  function nextTip() {
+    const event = tipQueue.shift();
+    if (!event) return;
+    const title = copyText("tips." + event + ".title");
+    const text = copyText("tips." + event + ".text");
+    const tip = document.createElement("section");
+    tip.className = "tip";
+    tip.setAttribute("role", "note");
+    tip.setAttribute("aria-labelledby", "tip-title-" + event);
+    tip.dataset.copy = "tips." + event;
+    tip.innerHTML = '<h3 class="tip-title" id="tip-title-' + event + '">' + title + "</h3>" +
+      '<p class="tip-text">' + text + "</p>" +
+      '<button type="button" class="btn tip-close">Got it</button>';
+    tip.querySelector("button").addEventListener("click", () => closeTip(tip));
+    tip.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        e.stopPropagation();
+        closeTip(tip);
+      }
+    });
+    tipSlot.appendChild(tip);
+    // Its own polite region, so it queues behind the status message instead of replacing it.
+    tipLiveEl.textContent = textOf(title) + ". " + textOf(text);
+  }
+
+  function closeTip(tip) {
+    const hadFocus = tip.contains(document.activeElement);
+    tip.remove();
+    if (hadFocus) squares[ui.focusSquare].focus();
+    nextTip();
+  }
+
+  function clearTips() {
+    tipQueue.length = 0;
+    tipSlot.querySelectorAll(".tip").forEach((tip) => closeTip(tip));
+  }
 
   /* ================= Game controller (research R1) =================
      At most one game is in progress. Every action that starts something new first calls
@@ -1699,6 +2125,13 @@ var MenaceEngine = (function () {
       currentRun = null;
     }
     if (pendingHuman) pendingHuman.resolve(null);
+    // Feature 002 (FR-011): any step or learning sequence stops at once and leaves no trace.
+    if (currentSequence) {
+      currentSequence.abort();
+      currentSequence = null;
+    }
+    if (activeSequence) activeSequence.cancel();
+    ui.heldBack = null;
   }
 
   // Resolves after ms, or at once if the signal aborts.
@@ -1829,18 +2262,25 @@ var MenaceEngine = (function () {
     boardEl.dataset.state = !game ? "idle" : inProgress ? "playing" : "over";
     boardEl.dataset.turn = inProgress && pendingHuman ? "human" : "";
     const winLine = game && game.status === "finished" && game.winLine ? game.winLine : [];
+    // Feature 002 (FR-004, research K1): MENACE's ◯ waits behind the drawn bead's marker. The
+    // engine's board already holds the mark; only the picture holds it back.
+    const held = inProgress && ui.heldBack ? ui.heldBack : null;
     squares.forEach((btn, i) => {
-      const mark = board[i];
+      const mark = held && i === held.idx ? null : board[i];
+      const marker = Boolean(held && mark === null && held.squares.includes(i));
+      const fading = marker && Boolean(held.fading) && i !== held.idx;
       const winning = winLine.includes(i);
       btn.classList.toggle("win", winning);
       const playable = inProgress && pendingHuman !== null && mark === null;
       if (playable) btn.removeAttribute("aria-disabled");
       else btn.setAttribute("aria-disabled", "true");
-      if (btn.dataset.mark !== (mark || "")) {
-        btn.innerHTML = markSVG(mark);
-        btn.dataset.mark = mark || "";
+      const show = marker ? "bead-" + held.colorIdx + (fading ? "-fading" : "") : mark || "";
+      if (btn.dataset.show !== show) {
+        btn.innerHTML = marker ? beadMarkerSVG(held.colorIdx, fading) : markSVG(mark);
+        btn.dataset.show = show;
       }
-      btn.setAttribute("aria-label", squareLabel(i, mark, winning));
+      btn.dataset.mark = mark || "";
+      btn.setAttribute("aria-label", squareLabel(i, mark, winning) + (marker && !fading ? ", MENACE's bead points here" : ""));
     });
   }
 
@@ -1943,7 +2383,201 @@ var MenaceEngine = (function () {
     return html + "</div>";
   }
 
-  function boxCardHTML(box, step, delta, outcome) {
+  /* ---------- Matchbox pictures (feature 002, research K3/K4) ---------- */
+
+  // Shapes in unit coordinates (about −1…1), drawn in the bead's ink colour.
+  function starPath() {
+    let d = "";
+    for (let k = 0; k < 10; k++) {
+      const r = k % 2 === 0 ? 0.98 : 0.42;
+      const a = -Math.PI / 2 + (k * Math.PI) / 5;
+      d += (k === 0 ? "M" : "L") + (r * Math.cos(a)).toFixed(3) + " " + (r * Math.sin(a)).toFixed(3);
+    }
+    return d + "Z";
+  }
+  function flowerPath() {
+    let d = "";
+    const r = 0.36;
+    for (let k = 0; k < 5; k++) {
+      const a = -Math.PI / 2 + (k * 2 * Math.PI) / 5;
+      const x = 0.5 * Math.cos(a), y = 0.5 * Math.sin(a);
+      d += "M" + (x + r).toFixed(3) + " " + y.toFixed(3) +
+        "A" + r + " " + r + " 0 1 0 " + (x - r).toFixed(3) + " " + y.toFixed(3) +
+        "A" + r + " " + r + " 0 1 0 " + (x + r).toFixed(3) + " " + y.toFixed(3) + "Z";
+    }
+    return d;
+  }
+  const SHAPE_PATHS = {
+    star: starPath(),
+    heart: "M0 0.85C-1.15 0.05 -0.75 -0.95 0 -0.35C0.75 -0.95 1.15 0.05 0 0.85Z",
+    triangle: "M0 -0.85L0.9 0.7L-0.9 0.7Z",
+    square: "M-0.68 -0.68H0.68V0.68H-0.68Z",
+    diamond: "M0 -0.95L0.75 0L0 0.95L-0.75 0Z",
+    moon: "M0.5875 -0.7A0.8 0.8 0 1 0 0.5875 0.7A0.7 0.7 0 0 1 0.5875 -0.7Z",
+    plus: "M-0.28 -0.9H0.28V-0.28H0.9V0.28H0.28V0.9H-0.28V0.28H-0.9V-0.28H-0.28Z",
+    flower: flowerPath(),
+    arrow: "M0 -0.95L0.8 -0.1H0.3V0.9H-0.3V-0.1H-0.8Z",
+  };
+
+  function beadName(colorIdx) {
+    const m = E.BEAD_MARKS[colorIdx];
+    return m.colourName + " " + m.shape;
+  }
+
+  // A bead: a disc in its colour with its shape in the matching ink (FR-003). The <g> itself
+  // has no transform attribute, so animations can move it with CSS transforms.
+  function beadMarkSVG(colorIdx, cx, cy, r, cls) {
+    const shape = E.BEAD_MARKS[colorIdx].shape;
+    return '<g class="' + (cls || "bead") + '" data-color="' + colorIdx + '" data-shape="' + shape + '">' +
+      '<circle class="bead-disc" cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + catColor(colorIdx) + '"/>' +
+      '<path d="' + SHAPE_PATHS[shape] + '" transform="translate(' + cx + " " + cy + ") scale(" + (r * 0.62).toFixed(2) + ')" fill="' + catInk(colorIdx) + '"/></g>';
+  }
+
+  // The board's bead marker (FR-004): the drawn bead's colour and shape on its square.
+  function beadMarkerSVG(colorIdx, fading) {
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' +
+      beadMarkSVG(colorIdx, 50, 50, 40, "bead-marker" + (fading ? " fading" : "")) + "</svg>";
+  }
+
+  const MB = {
+    width: 200,
+    cell: 24, gap: 2, faceX: 61, faceY: 12,
+    trayX: 8, trayY: 110, trayW: 184, pad: 7,
+    clusterW: 46, clusterH: 35, clusterGap: 10, perRow: 3,
+    beadR: 5, beadStep: 11,
+  };
+
+  function faceCellCentre(i) {
+    return {
+      x: MB.faceX + (i % 3) * (MB.cell + MB.gap) + MB.cell / 2,
+      y: MB.faceY + Math.floor(i / 3) * (MB.cell + MB.gap) + MB.cell / 2,
+    };
+  }
+
+  // The tray's clusters: fixed positions computed from the counts alone (no randomness,
+  // research K2). Each row of clusters is as tall as the fullest cluster in it.
+  function clusterHeight(t, inTray) {
+    if (t.display === "heap") return MB.clusterH;
+    return 12 + Math.max(0, Math.ceil(inTray / 4) - 1) * MB.beadStep;
+  }
+  function trayLayout(tray, drawn, extra) {
+    const clusters = tray.map((t) => {
+      const inTray = t.count - (drawn === t.colorIdx ? 1 : 0);
+      const room = t.display === "beads" ? inTray + ((extra && extra[t.colorIdx]) || 0) : inTray;
+      return { t, inTray, h: clusterHeight(t, room) };
+    });
+    let y = MB.trayY + MB.pad;
+    for (let row = 0; row * MB.perRow < Math.max(1, clusters.length); row++) {
+      const inRow = clusters.slice(row * MB.perRow, (row + 1) * MB.perRow);
+      const h = inRow.length ? Math.max(...inRow.map((c) => c.h)) : 12;
+      inRow.forEach((c, k) => { c.origin = { x: MB.trayX + MB.pad + k * (MB.clusterW + MB.clusterGap), y }; });
+      y += h + 8;
+    }
+    return { clusters, trayH: Math.max(26, y - 8 + MB.pad - MB.trayY) };
+  }
+  function beadSpot(origin, j) {
+    return { x: origin.x + 6 + (j % 4) * MB.beadStep, y: origin.y + 6 + Math.floor(j / 4) * MB.beadStep };
+  }
+  const HEAP_SPOTS = [[6, 17], [17, 17], [28, 17], [11.5, 8], [22.5, 8]];
+
+  function matchboxLabel(box, tray, drawn) {
+    const where = positionSentence(box.canonicalBoard).replace(/^Position: /, "").replace(/\.$/, "");
+    let label = "Matchbox " + box.discoveryIndex + ". Its drawing shows " + where.charAt(0).toLowerCase() + where.slice(1) + ".";
+    if (!tray.length) return label + " No beads left: the box is empty.";
+    label += " Beads: " + tray.map((t) =>
+      t.count + " " + beadName(t.colorIdx) + (drawn === t.colorIdx ? " (1 of them drawn out)" : "")).join(", ") + ".";
+    return label;
+  }
+
+  // data-model.md: MatchboxPicture (positionKey, face, tray, drawn, label). Options:
+  //   beads        the beads to show (default: the box's own)
+  //   drawn        colour of the bead shown leaving the box, or null
+  //   highlight    colour whose face squares are ringed (step 4)
+  //   aside        reserve a "put aside" spot beside the box (losses)
+  //   dropped      { colorIdx, n }: the last n beads of that colour are new (a win or draw)
+  //   removed      colour of the bead taken out and put aside (a loss)
+  //   nested       { x, y, scale }: drawn as a group inside a larger picture (the story)
+  //   turn         the transform t between the box and the board; `turned` draws the face
+  //                already turned to match the board (research K5)
+  function matchboxSVG(box, opts) {
+    const o = opts || {};
+    const beads = o.beads || box.beads;
+    const drawn = o.drawn === undefined || o.drawn === null ? null : o.drawn;
+    const tray = E.beadLayout(beads, box.groups);
+    const { clusters, trayH } = trayLayout(tray, drawn);
+    const trayBottom = MB.trayY + trayH;
+    const height = trayBottom + 28;
+    const label = o.label || matchboxLabel(box, tray, drawn);
+
+    let svg = o.nested
+      ? '<g class="matchbox" transform="translate(' + o.nested.x + " " + o.nested.y + ") scale(" + o.nested.scale + ')">'
+      : '<svg class="matchbox" data-position-key="' + box.positionKey + '" viewBox="0 0 ' + MB.width + " " + height +
+        '" width="' + MB.width + '" height="' + height + '" role="img" aria-label="' + escapeHTML(label) + '">';
+
+    // The sleeve, whose face bears a drawing of the position (Michie 1963).
+    svg += '<rect class="sleeve" x="14" y="4" width="172" height="100" rx="4"/>' +
+      '<rect class="sleeve-end" x="14" y="4" width="7" height="100" rx="2"/>' +
+      '<rect class="sleeve-end" x="179" y="4" width="7" height="100" rx="2"/>' +
+      '<text class="box-no" x="26" y="18" data-contrast-bg="--surface-2">#' + box.discoveryIndex + "</text>";
+    if (o.turn) {
+      const m = E.PICTURE_MATRICES[o.turn];
+      svg += '<g class="face" data-transform="' + o.turn + '"' +
+        (o.turned ? ' style="transform: matrix(' + m.join(", ") + ', 0, 0)"' : "") + ">";
+    } else {
+      svg += '<g class="face">';
+    }
+    for (let i = 0; i < 9; i++) {
+      const c = faceCellCentre(i);
+      svg += '<rect class="face-cell" x="' + (c.x - MB.cell / 2) + '" y="' + (c.y - MB.cell / 2) + '" width="' + MB.cell + '" height="' + MB.cell + '" rx="2"/>';
+      const mark = box.canonicalBoard[i];
+      if (mark === "X") {
+        svg += '<circle cx="' + c.x + '" cy="' + c.y + '" r="7" fill="none" stroke="var(--accent)" stroke-width="2.6"/>';
+      } else if (mark === "O") {
+        svg += '<path d="M' + (c.x - 6) + " " + (c.y - 6) + "L" + (c.x + 6) + " " + (c.y + 6) + "M" + (c.x + 6) + " " + (c.y - 6) + "L" + (c.x - 6) + " " + (c.y + 6) +
+          '" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round"/>';
+      } else {
+        const group = groupOf(box, i);
+        const rep = group ? group[0] : i;
+        svg += beadMarkSVG(rep, c.x, c.y, 7.5, "key-dot");
+        if (o.highlight === rep) {
+          svg += '<rect class="face-highlight" x="' + (c.x - 11) + '" y="' + (c.y - 11) + '" width="22" height="22" rx="4"/>';
+        }
+      }
+    }
+    svg += "</g>";
+
+    // The open tray of loose beads (no compartments, as in Michie's boxes).
+    svg += '<rect class="tray" x="' + MB.trayX + '" y="' + MB.trayY + '" width="' + MB.trayW + '" height="' + trayH + '" rx="3" data-contrast-bg="--surface"/>' +
+      '<rect class="tray-lip" x="' + MB.trayX + '" y="' + (MB.trayY - 3) + '" width="' + MB.trayW + '" height="3"/>';
+    if (!tray.length) {
+      svg += '<text class="tray-note" x="100" y="' + (MB.trayY + trayH / 2 + 3) + '" text-anchor="middle" data-contrast-bg="--surface">No beads left</text>';
+    }
+    clusters.forEach(({ t, inTray, origin }) => {
+      const drop = o.dropped && o.dropped.colorIdx === t.colorIdx ? o.dropped.n : 0;
+      svg += '<g class="tray-group" data-color="' + t.colorIdx + '" data-count="' + t.count + '" data-display="' + t.display + '">';
+      if (t.display === "beads") {
+        for (let j = 0; j < inTray; j++) {
+          const p = beadSpot(origin, j);
+          svg += beadMarkSVG(t.colorIdx, p.x, p.y, MB.beadR, j >= inTray - drop ? "bead bead-drop" : "bead");
+        }
+      } else {
+        for (const [dx, dy] of HEAP_SPOTS) svg += beadMarkSVG(t.colorIdx, origin.x + dx, origin.y + dy, MB.beadR, "heap-bead");
+        svg += '<text class="heap heap-count" x="' + (origin.x + 17) + '" y="' + (origin.y + 33) + '" text-anchor="middle" data-contrast-bg="--surface">× ' + inTray + "</text>";
+        // New beads fall onto a heap and merge into it.
+        for (let k = 0; k < drop; k++) svg += beadMarkSVG(t.colorIdx, origin.x + 8 + k * 9, origin.y + 4, MB.beadR, "bead-drop");
+      }
+      svg += "</g>";
+    });
+
+    // Below the tray: the drawn bead, rolled out to the front, and the "put aside" spot.
+    const rowY = trayBottom + 14;
+    if (drawn !== null) svg += beadMarkSVG(drawn, 100, rowY, 7, "bead bead-drawn");
+    if (o.aside) svg += '<circle class="aside-spot" cx="172" cy="' + rowY + '" r="9"/>';
+    if (o.removed !== undefined && o.removed !== null) svg += beadMarkSVG(o.removed, 172, rowY, 6, "bead-out");
+    return svg + (o.nested ? "</g>" : "</svg>");
+  }
+
+  function boxCardHTML(box, step, delta, outcome, committed) {
     const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
     let html = "";
     html += '<div class="box-id"><span>Box #' + box.discoveryIndex + "</span>" + codeHTML(box.canonicalBoard) + "</div>";
@@ -1960,6 +2594,10 @@ var MenaceEngine = (function () {
     }
 
     html += '<div class="box-body">';
+    // Feature 002 (clarification C): the matchbox picture, beside the unchanged detail. Until the
+    // game is committed, the drawn bead is shown outside the box (FR-004).
+    html += '<div class="matchbox-wrap">' +
+      matchboxSVG(box, { drawn: step && !committed ? step.colorIdx : null }) + "</div>";
     html += miniBoardHTML(box, step ? step.colorIdx : null);
 
     // One ledger row per move group: "box square c (same as d, e) — k beads" (FR-009).
@@ -2000,18 +2638,27 @@ var MenaceEngine = (function () {
       const delta = deltas ? deltas.find(d => d.positionKey === step.positionKey) : null;
       const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
       html += '<div class="box-entry"><p class="box-entry-eyebrow">' + tierWord + " move</p>" +
-        boxCardHTML(box, step, delta, game.outcome) + "</div>";
+        boxCardHTML(box, step, delta, game.outcome, Boolean(deltas)) + "</div>";
     });
 
     if (game.resignedAt) {
       const box = lookupBox(game.resignedAt.positionKey, game);
       if (box) {
         const tierWord = TIER_LABEL[box.moveNumber] || (box.moveNumber + "th");
-        html += '<div class="box-entry box-entry-resigned"><p class="box-entry-eyebrow">' + tierWord + " move · resigned</p>" +
+        const opening = box.moveNumber === 1;
+        // US1/AC6, FR-013: with Simple words on, the empty box's caption uses the copy deck's plain
+        // words ("gives up"); otherwise feature 001's note, unchanged.
+        const simple = ui.help.simpleWords;
+        const keys = simple ? ["steps.empty.text"].concat(opening ? ["steps.empty.opening"] : []) : null;
+        const note = simple
+          ? '<p class="box-note" data-copy="' + keys.join(" ") + '">' + keys.map((k) => copyText(k)).join(" ") + "</p>"
+          : '<p class="box-note"><strong>Every colour was already at 0 beads.</strong> MENACE had nothing left to draw, so it resigned.' +
+            (opening ? " This is its opening box, so it can’t start any game until you reset MENACE or load a saved one." : "") + "</p>";
+        html += '<div class="box-entry box-entry-resigned"><p class="box-entry-eyebrow">' + tierWord + " move · " +
+          (simple ? copyText("boxPanel.gaveUp") : "resigned") + "</p>" +
           '<div class="box-id"><span>Box #' + box.discoveryIndex + "</span>" + codeHTML(box.canonicalBoard) + "</div>" +
-          '<p class="box-note"><strong>Every colour was already at 0 beads.</strong> MENACE had nothing left to draw, so it resigned.' +
-          (box.moveNumber === 1 ? " This is its opening box, so it can’t start any game until you reset MENACE or load a saved one." : "") +
-          "</p></div>";
+          '<div class="box-body"><div class="matchbox-wrap">' + matchboxSVG(box) + "</div></div>" +
+          note + "</div>";
       }
     }
 
@@ -2047,8 +2694,30 @@ var MenaceEngine = (function () {
   // start and end, save and load) are also spoken; passing messages such as "shaking a box" or
   // "thinking" are visible only (FR-016, contracts/ui.md §Status line).
   function setStatus(html, options) {
+    // data-copy names the copy-deck entries shown (feature 002), or is absent for the standard words.
+    if (options && options.copy) statusEl.dataset.copy = options.copy;
+    else statusEl.removeAttribute("data-copy");
     statusEl.innerHTML = html;
     if (!options || options.announce !== false) announce(html.replace(/<[^>]+>/g, ""));
+  }
+
+  // Feature 002 (FR-013): a status message is one or more parts { key, vars, html }. With Simple
+  // words on, each part is the copy deck's status.<key>; otherwise its standard html, unchanged.
+  function statusParts(parts) {
+    const out = parts.map((p) => ui.help.simpleWords && hasCopy("status." + p.key)
+      ? { html: copyText("status." + p.key, p.vars), copy: "status." + p.key }
+      : { html: p.html, copy: null });
+    return {
+      html: out.map((o) => o.html).join(" "),
+      copy: out.every((o) => o.copy) ? out.map((o) => o.copy).join(" ") : null,
+    };
+  }
+
+  function say(parts, options) {
+    const list = Array.isArray(parts) ? parts : [parts];
+    ui.lastStatus = list;
+    const shown = statusParts(list);
+    setStatus(shown.html, { ...(options || {}), copy: shown.copy });
   }
 
   let lastAnnounced = "";
@@ -2059,6 +2728,219 @@ var MenaceEngine = (function () {
     lastAnnounced = text;
     liveEl.textContent = announceToggle ? text + "\u00a0" : text;
   }
+
+  function textOf(html) { return html.replace(/<[^>]+>/g, ""); }
+
+  /* ================= Helps controls (feature 002, contracts/ui.md \u00a7Helps group) =================
+     Two independent switches, plus the pacing choice while Step by step is on. A move already
+     under way finishes in the mode it started in. */
+
+  const helpStepsBtn = document.getElementById("help-steps");
+  const helpWordsBtn = document.getElementById("help-words");
+  const helpPacingEl = document.getElementById("help-pacing");
+
+  function renderHelpControls() {
+    helpStepsBtn.setAttribute("aria-pressed", String(ui.help.stepByStep));
+    helpWordsBtn.setAttribute("aria-pressed", String(ui.help.simpleWords));
+    helpPacingEl.hidden = !ui.help.stepByStep;
+    helpPacingEl.querySelectorAll("button[data-pacing]").forEach((b) =>
+      b.setAttribute("aria-pressed", String(b.dataset.pacing === ui.help.pacing)));
+    renderStepControls();
+  }
+
+  helpStepsBtn.addEventListener("click", () => {
+    if (ui.training.running) return;
+    ui.help.stepByStep = !ui.help.stepByStep;
+    renderHelpControls();
+  });
+
+  helpWordsBtn.addEventListener("click", () => {
+    if (ui.training.running) return;
+    ui.help.simpleWords = !ui.help.simpleWords;
+    renderHelpControls();
+    onWordsChanged();
+  });
+
+  helpPacingEl.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-pacing]");
+    if (!btn || ui.training.running) return;
+    ui.help.pacing = btn.dataset.pacing;
+    renderHelpControls();
+    if (activeSequence) activeSequence.reschedule();
+  });
+
+  /* ================= Motion (feature 002; FR-018, research K2) =================
+     Every new animation goes through motion(): fixed keyframes, never Math.random. With
+     prefers-reduced-motion nothing animates; a kept end state is applied at once, so
+     document.getAnimations() stays empty. */
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const DONE_ANIMATION = Object.freeze({ finished: Promise.resolve(), cancel() {}, finish() {} });
+
+  function applyFrame(el, frame) {
+    for (const [prop, value] of Object.entries(frame)) {
+      if (prop !== "offset" && prop !== "easing" && prop !== "composite") el.style[prop] = value;
+    }
+  }
+
+  function motion(el, keyframes, options) {
+    const keep = Boolean(options && (options.fill === "forwards" || options.fill === "both"));
+    if (!el || reduceMotion.matches || typeof el.animate !== "function") {
+      if (el && keep) applyFrame(el, keyframes[keyframes.length - 1]);
+      return DONE_ANIMATION;
+    }
+    const anim = el.animate(keyframes, options);
+    if (keep) {
+      // Keep the end state as an inline style, so finished animations don't pile up.
+      anim.finished.then(() => {
+        applyFrame(el, keyframes[keyframes.length - 1]);
+        anim.cancel();
+      }, () => {});
+    }
+    return anim;
+  }
+
+  /* ================= Step area and sequences (feature 002, contracts/ui.md \u00a7Step area) =================
+     runSequence() shows frames one at a time (data-model.md: MoveStep sequence state:
+     idle \u2192 running(step k) \u2192 done, or cancelled when the signal aborts). With "One step at a time"
+     each frame waits for Next; with "Play by itself" each stays STEP_MS, and Pause holds it. */
+
+  const stepArea = document.getElementById("step-area");
+  const stepIndicatorEl = document.getElementById("step-indicator");
+  const stepPictureEl = document.getElementById("step-picture");
+  const stepCaptionEl = document.getElementById("step-caption");
+  const stepNextBtn = document.getElementById("step-next");
+  const stepPauseBtn = document.getElementById("step-playpause");
+  const stepReplayBtn = document.getElementById("step-replay");
+  const STEP_MS = 2200; // each automatic step stays at least 2 s (FR-007)
+
+  let activeSequence = null;  // the sequence on screen, if any
+  let currentSequence = null; // AbortController of a sequence that outlives its game (learning)
+
+  function renderStepControls() {
+    const seq = activeSequence;
+    const manual = ui.help.pacing === "manual";
+    stepNextBtn.hidden = !seq || !manual;
+    stepPauseBtn.hidden = !seq || manual;
+    stepPauseBtn.setAttribute("aria-pressed", String(Boolean(seq && seq.paused)));
+  }
+
+  // caption = { html, copyKey }: copyKey names the copy-deck entry when the deck supplied the text.
+  function setCaption(el, caption) {
+    el.innerHTML = caption.html;
+    if (caption.copyKey) el.dataset.copy = caption.copyKey;
+    else el.removeAttribute("data-copy");
+  }
+
+  function hideStepArea() {
+    const hadFocus = stepArea.contains(document.activeElement);
+    stepArea.hidden = true;
+    stepArea.dataset.step = "";
+    stepIndicatorEl.textContent = "";
+    stepPictureEl.innerHTML = "";
+    stepCaptionEl.textContent = "";
+    stepCaptionEl.removeAttribute("data-copy");
+    stepReplayBtn.hidden = true;
+    boardEl.dataset.stepFocus = "";
+    renderStepControls();
+    if (hadFocus) squares[ui.focusSquare].focus();
+  }
+
+  // A frame's caption is worked out when it is shown, so it follows the Simple words switch.
+  function captionOf(frame) {
+    return typeof frame.caption === "function" ? frame.caption() : frame.caption;
+  }
+
+  // frames: [{ step, indicator, caption() → { html, copyKey }, highlight, ms, render(pictureEl), replay? }]
+  function runSequence(frames, signal) {
+    return new Promise((resolve) => {
+      if (!frames.length || signal.aborted) return resolve(false);
+      if (activeSequence) activeSequence.cancel();
+      let k = -1, timer = null, dueAt = 0, remaining = 0, finished = false;
+
+      const seq = {
+        paused: false,
+        next() { advance(); },
+        togglePause() {
+          if (!seq.paused) {
+            seq.paused = true;
+            remaining = Math.max(0, dueAt - performance.now());
+            clearTimeout(timer);
+            timer = null;
+          } else {
+            seq.paused = false;
+            schedule(remaining || STEP_MS);
+          }
+          renderStepControls();
+        },
+        replay() {
+          const frame = frames[k];
+          if (frame && frame.replay) frame.replay(stepPictureEl);
+        },
+        reschedule() {
+          if (k >= 0) schedule(frames[k].ms || STEP_MS);
+          renderStepControls();
+        },
+        // Shows the current caption again in the other wording, without announcing it (FR-005).
+        refreshCaption() {
+          if (k >= 0) setCaption(stepCaptionEl, captionOf(frames[k]));
+        },
+        cancel() { end(false); },
+      };
+
+      const onAbort = () => end(false);
+      signal.addEventListener("abort", onAbort, { once: true });
+      activeSequence = seq;
+      stepArea.hidden = false;
+
+      function end(completed) {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timer);
+        signal.removeEventListener("abort", onAbort);
+        if (activeSequence === seq) {
+          activeSequence = null;
+          hideStepArea();
+        }
+        resolve(completed);
+      }
+
+      function schedule(ms) {
+        clearTimeout(timer);
+        timer = null;
+        if (finished || ui.help.pacing !== "auto" || seq.paused) return;
+        dueAt = performance.now() + ms;
+        timer = setTimeout(advance, ms);
+      }
+
+      function advance() {
+        if (finished) return;
+        if (k + 1 >= frames.length) end(true);
+        else show(k + 1);
+      }
+
+      function show(i) {
+        k = i;
+        const frame = frames[k];
+        stepArea.dataset.step = frame.step;
+        stepIndicatorEl.textContent = frame.indicator || "";
+        const caption = captionOf(frame);
+        setCaption(stepCaptionEl, caption);
+        stepReplayBtn.hidden = !frame.replay;
+        boardEl.dataset.stepFocus = frame.highlight === "board" ? "board" : "";
+        if (frame.render) frame.render(stepPictureEl);
+        announce(textOf(caption.html));
+        renderStepControls();
+        schedule(frame.ms || STEP_MS);
+      }
+
+      show(0);
+    });
+  }
+
+  stepNextBtn.addEventListener("click", () => { if (activeSequence) activeSequence.next(); });
+  stepPauseBtn.addEventListener("click", () => { if (activeSequence) activeSequence.togglePause(); });
+  stepReplayBtn.addEventListener("click", () => { if (activeSequence) activeSequence.replay(); });
 
   /* ================= Opponents ================= */
 
@@ -2074,10 +2956,10 @@ var MenaceEngine = (function () {
   function animatedOpponent(kind) {
     return (board, signal) => {
       if (kind === "human") {
-        setStatus("Your move — choose a board square.", { announce: false });
+        say({ key: "yourTurn", html: "Your move — choose a board square." }, { announce: false });
         return humanMove(signal);
       }
-      setStatus(opponentLabel(kind) + " is thinking…", { announce: false });
+      say({ key: "opponentThinking", vars: { opponent: opponentDisplayName(kind) }, html: opponentLabel(kind) + " is thinking…" }, { announce: false });
       return Promise.resolve(computerMove(kind, board));
     };
   }
@@ -2105,6 +2987,415 @@ var MenaceEngine = (function () {
   const OPENING_EMPTY_MESSAGE =
     "<strong>MENACE can’t start a game:</strong> its opening box has no beads left. " +
     "Reset MENACE or load a saved MENACE to play again.";
+  const OPENING_EMPTY_STATUS = { key: "openingEmpty", html: OPENING_EMPTY_MESSAGE };
+  const GIVES_UP_STATUS = { key: "menaceGivesUp", html: "MENACE has <strong>no beads left</strong> for this position — it resigns." };
+
+  // The result as a status part: the standard words are resultMessage's (FR-019).
+  function resultStatus(game) {
+    const html = resultMessage(game);
+    if (game.outcome === "draw") return { key: "draw", html };
+    if (game.outcome === "win") return { key: "menaceWins", html };
+    if (game.opponent === "human") return { key: "youWin", html };
+    return { key: "opponentWins", vars: { opponent: opponentDisplayName(game.opponent) }, html };
+  }
+
+  /* ================= Step by step: the five steps of a move (feature 002, US2) =================
+     research K1: the engine's "menace-move" pause waits for the steps, and the board holds back
+     MENACE's ◯ until step 5. The engine itself is unchanged, so outcomes are too (FR-021). */
+
+  // Standard words. The simple words are in the copy deck, under "steps".
+  const STEP_TEXT = {
+    "find.text": "MENACE finds the matchbox whose drawing matches the board.",
+    "find.newBox": "MENACE has never met this board before, so it takes a new matchbox and fills it with beads.",
+    "shake.text": "MENACE shakes the matchbox to mix up the beads.",
+    "tilt.text": "MENACE tilts the box forward, and the first bead to roll to the front, a {colour} {shape}, is the one it uses.",
+    "lookup.text": "The {colour} {shape} bead stands for board square {board}.",
+    "lookup.turned": "This box’s drawing is the board {turn}, so the picture turns to match the board, and its {colour} {shape} bead stands for board square {board}.",
+    "lookup.shared": "The {colour} {shape} bead stands for {count} squares that are really the same move, so MENACE puts its ◯ on one of them, board square {board}.",
+    "lookup.turnedShared": "This box’s drawing is the board {turn}, so the picture turns to match, and the {colour} {shape} bead’s {count} squares are really the same move: MENACE plays one of them, board square {board}.",
+    "play.text": "MENACE puts its ◯ on board square {board}.",
+    "forced.text": "Only one square is left, so MENACE needs no matchbox: it plays board square {board}.",
+    "empty.text": "This matchbox has no beads left, so MENACE has nothing to draw and resigns the game.",
+    "empty.opening": "This is MENACE’s opening box, so it can’t start any game until you reset MENACE or load a saved one.",
+  };
+
+  function fillText(template, vars) {
+    return template.replace(/\{([a-zA-Z]+)\}/g, (whole, name) =>
+      vars && Object.prototype.hasOwnProperty.call(vars, name) ? escapeHTML(String(vars[name])) : whole);
+  }
+
+  // data-model.md: MoveStep.caption: the copy deck's simple words when that help is on.
+  function stepCaption(key, vars) {
+    if (ui.help.simpleWords && hasCopy("steps." + key)) {
+      return { html: copyText("steps." + key, vars), copyKey: "steps." + key };
+    }
+    return { html: fillText(STEP_TEXT[key], vars), copyKey: null };
+  }
+
+  function beadVars(colorIdx, realIdx, box) {
+    const mark = E.BEAD_MARKS[colorIdx];
+    return { colour: mark.colourName, shape: mark.shape, board: realIdx + 1, box: box ? box.discoveryIndex : "" };
+  }
+
+  // Fixed movement patterns (research K2: no randomness).
+  const SHAKE_FRAMES = [
+    { transform: "translateX(0px)" }, { transform: "translateX(-7px) rotate(-2deg)" },
+    { transform: "translateX(7px) rotate(2deg)" }, { transform: "translateX(-7px) rotate(-2deg)" },
+    { transform: "translateX(7px) rotate(2deg)" }, { transform: "translateX(0px)" },
+  ];
+  const TILT_FRAMES = [
+    { transform: "rotate(0deg)" }, { transform: "rotate(-6deg)" }, { transform: "rotate(0deg)" },
+  ];
+
+  // Turns the face of a matchbox picture from the box's orientation to the board's (FR-009).
+  function turnFace(svg) {
+    const face = svg && svg.querySelector(".face[data-transform]");
+    if (!face) return DONE_ANIMATION;
+    const m = E.PICTURE_MATRICES[Number(face.dataset.transform)];
+    face.style.transform = "";
+    return motion(face,
+      [{ transform: "matrix(1, 0, 0, 1, 0, 0)" }, { transform: "matrix(" + m.join(", ") + ", 0, 0)" }],
+      { duration: 1200, easing: "ease-in-out", fill: "forwards" });
+  }
+
+  function showPicture(el, box, opts, before) {
+    el.innerHTML = (before || "") + matchboxSVG(box, opts);
+    return el.querySelector("svg.matchbox");
+  }
+
+  // data-model.md: MoveStep (id, index, highlight, variant). Returns the frames for one MENACE
+  // move: five steps for a drawn bead, one caption for the last free square, and "find" then
+  // "empty" for an empty box.
+  function moveStepFrames(choice, game) {
+    if (choice.kind === "forced") {
+      return [{
+        step: "forced", index: null, indicator: "", highlight: "square", variant: null,
+        caption: () => stepCaption("forced.text", { board: choice.realIdx + 1 }),
+        render(el) { el.innerHTML = ""; },
+      }];
+    }
+    const box = lookupBox(choice.positionKey, game);
+    if (choice.kind === "resigned") {
+      return [
+        {
+          step: "find", index: 1, indicator: "", highlight: "board", variant: null,
+          caption: () => stepCaption("find.text", {}),
+          render(el) { showPicture(el, box); },
+        },
+        {
+          step: "empty", index: null, indicator: "", highlight: "box", variant: null,
+          caption: () => stepCaption(choice.moveNumber === 1 ? "empty.opening" : "empty.text", {}),
+          render(el) { showPicture(el, box); },
+        },
+      ];
+    }
+    const vars = beadVars(choice.colorIdx, choice.realIdx, box);
+    const drawn = choice.colorIdx;
+    const isNew = Boolean(choice.provisional);
+    const t = choice.transformIndex;
+    vars.turn = E.TRANSFORM_NAMES[t];
+    vars.count = choice.groupSquares.length;
+    // research K7: under Michie's rule a colour can stand for several equivalent squares.
+    const targets = choice.groupSquares.map((g) => E.TRANSFORMS[t][g]);
+    const shared = targets.length > 1;
+    const lookupKey = t && shared ? "lookup.turnedShared" : t ? "lookup.turned" : shared ? "lookup.shared" : "lookup.text";
+    const replay = t ? (el) => turnFace(el.querySelector("svg.matchbox")) : null;
+    return [
+      {
+        step: "find", index: 1, indicator: "Step 1 of 5", highlight: "board", variant: isNew ? "new-box" : null,
+        caption: () => stepCaption(isNew ? "find.newBox" : "find.text", vars),
+        render(el) {
+          const svg = showPicture(el, box, {}, isNew ? '<span class="new-box-badge">New box</span>' : "");
+          motion(svg, [{ opacity: 0, transform: "translateY(-10px)" }, { opacity: 1, transform: "translateY(0px)" }], { duration: 450, easing: "ease-out" });
+        },
+      },
+      {
+        step: "shake", index: 2, indicator: "Step 2 of 5", highlight: "box", variant: null,
+        caption: () => stepCaption("shake.text", vars),
+        render(el) { motion(showPicture(el, box), SHAKE_FRAMES, { duration: 900 }); },
+      },
+      {
+        step: "tilt", index: 3, indicator: "Step 3 of 5", highlight: "bead", variant: null,
+        caption: () => stepCaption("tilt.text", vars),
+        render(el) {
+          const svg = showPicture(el, box, { drawn });
+          motion(svg, TILT_FRAMES, { duration: 700 });
+          motion(svg.querySelector(".bead-drawn"),
+            [{ transform: "translate(0px, -34px)", opacity: 0.25 }, { transform: "translate(0px, 0px)", opacity: 1 }],
+            { duration: 800, easing: "ease-in" });
+        },
+      },
+      {
+        step: "lookup", index: 4, indicator: "Step 4 of 5", highlight: "squares",
+        variant: t ? "turned" : shared ? "shared" : null,
+        caption: () => stepCaption(lookupKey, vars),
+        replay,
+        render(el) {
+          const svg = showPicture(el, box, { drawn, highlight: drawn, turn: t });
+          // The bead's square (or squares) land on the board once the picture has turned.
+          const held = ui.heldBack;
+          const land = () => {
+            if (held && ui.heldBack === held) {
+              ui.heldBack = { ...held, squares: targets };
+              renderBoard();
+            }
+          };
+          if (t) turnFace(svg).finished.then(land, land);
+          else land();
+        },
+      },
+      {
+        step: "play", index: 5, indicator: "Step 5 of 5", highlight: "square", variant: null,
+        caption: () => stepCaption("play.text", vars),
+        replay,
+        render(el) {
+          showPicture(el, box, { drawn, turn: t, turned: true });
+          const others = targets.filter((i) => i !== choice.realIdx);
+          if (!ui.heldBack || !others.length) {
+            ui.heldBack = null;
+            renderBoard();
+            return;
+          }
+          // The ◯ goes on one square; the other markers fade (research K7).
+          const fade = { idx: null, colorIdx: drawn, squares: others, fading: true };
+          ui.heldBack = fade;
+          renderBoard();
+          const clear = () => {
+            if (ui.heldBack === fade) {
+              ui.heldBack = null;
+              renderBoard();
+            }
+          };
+          const fading = [...boardEl.querySelectorAll(".bead-marker.fading")].map((m) =>
+            motion(m, [{ opacity: 0.35 }, { opacity: 0 }], { duration: 500, fill: "forwards" }).finished);
+          Promise.all(fading).then(clear, clear);
+        },
+      },
+    ];
+  }
+
+  /* ================= Beads in and out after a game (feature 002, US3; research K10) ================= */
+
+  // Standard words. The simple words are in the copy deck, under "learning".
+  const LEARNING_TEXT = {
+    win: "MENACE won, so 3 more {colour} beads go into this box. That move is now more likely next time.",
+    draw: "A draw: 1 more {colour} bead goes into this box, so that move becomes a little more likely.",
+    loss: "MENACE lost, so the {colour} bead it drew is taken out. That move is now less likely next time.",
+  };
+
+  function learningCaption(result, vars) {
+    if (ui.help.simpleWords && hasCopy("learning." + result)) {
+      return { html: copyText("learning." + result, vars), copyKey: "learning." + result };
+    }
+    return { html: fillText(LEARNING_TEXT[result], vars), copyKey: null };
+  }
+
+  // data-model.md: LearningStep (positionKey, result, colorIdx, before, after, caption). The
+  // counts come only from the game's committed deltas, so the pictures match the box (SC-004).
+  function learningFrames(game, deltas) {
+    return deltas.map((d, k) => {
+      const learning = {
+        positionKey: d.positionKey, result: game.outcome, colorIdx: d.colorIdx, before: d.before, after: d.after,
+      };
+      const box = lookupBox(d.positionKey, game);
+      const vars = beadVars(d.colorIdx, 0, box);
+      vars.n = Math.abs(d.after - d.before);
+      return {
+        step: "learning", index: null, highlight: "box", variant: null, learning,
+        indicator: "After the game · box " + (k + 1) + " of " + deltas.length,
+        caption: () => learningCaption(game.outcome, vars),
+        render(el) {
+          const change = learning.after - learning.before;
+          const svg = showPicture(el, box, change > 0
+            ? { dropped: { colorIdx: learning.colorIdx, n: change } }
+            : { removed: change < 0 ? learning.colorIdx : null, aside: change < 0 });
+          svg.querySelectorAll(".bead-drop").forEach((bead, j) => {
+            const merge = Boolean(bead.closest('[data-display="heap"]'));
+            motion(bead, merge
+              ? [{ transform: "translateY(-40px)", opacity: 0 }, { transform: "translateY(0px)", opacity: 1, offset: 0.6 }, { transform: "translateY(4px)", opacity: 0 }]
+              : [{ transform: "translateY(-40px)", opacity: 0 }, { transform: "translateY(0px)", opacity: 1 }],
+            { duration: 650, delay: j * 220, easing: "ease-in", fill: "both" });
+          });
+          motion(svg.querySelector(".bead-out"),
+            [{ transform: "translate(-72px, -40px)" }, { transform: "translate(0px, 0px)" }],
+            { duration: 900, easing: "ease-in-out", fill: "both" });
+        },
+      };
+    });
+  }
+
+  /* ================= The picture story (feature 002, US5; FR-015, research K9) =================
+     Six still scenes drawn by the page from fixed demo boxes (no randomness, no animation), with
+     the copy deck's sentences. It always uses the simple words. */
+
+  const storyToggle = document.getElementById("story-toggle");
+  const storyBody = document.getElementById("story-body");
+
+  function demoBox(key, moveNumber, index, beads) {
+    const board = E.keyToBoard(key);
+    return {
+      positionKey: key, canonicalBoard: board, moveNumber, discoveryIndex: index,
+      groups: E.moveGroups(board, "michie1963"),
+      beads: beads || E.startingBeads(key, moveNumber, "michie1963"),
+    };
+  }
+
+  // A plain board drawing for the scenes: marks, and optional bead markers { square: colorIdx }.
+  function boardArt(board, x, y, size, markers) {
+    const cell = size / 3;
+    let out = '<rect x="' + x + '" y="' + y + '" width="' + size + '" height="' + size + '" rx="3" fill="var(--wood)"/>';
+    for (let i = 0; i < 9; i++) {
+      const cx = x + (i % 3) * cell + cell / 2, cy = y + Math.floor(i / 3) * cell + cell / 2;
+      out += '<rect x="' + (cx - cell / 2 + 1.5) + '" y="' + (cy - cell / 2 + 1.5) + '" width="' + (cell - 3) + '" height="' + (cell - 3) + '" rx="2" fill="var(--surface)"/>';
+      const r = cell * 0.28;
+      if (board[i] === "X") out += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="var(--accent)" stroke-width="2.4"/>';
+      else if (board[i] === "O") {
+        out += '<path d="M' + (cx - r) + " " + (cy - r) + "L" + (cx + r) + " " + (cy + r) + "M" + (cx + r) + " " + (cy - r) + "L" + (cx - r) + " " + (cy + r) +
+          '" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/>';
+      } else if (markers && markers[i] !== undefined) out += beadMarkSVG(markers[i], cx, cy, r * 1.15, "story-bead");
+    }
+    return out;
+  }
+
+  function arrowArt(x1, y, x2) {
+    return '<path class="story-art-line" d="M' + x1 + " " + y + "L" + x2 + " " + y + "M" + (x2 - 6) + " " + (y - 5) + "L" + x2 + " " + y + "L" + (x2 - 6) + " " + (y + 5) + '"/>';
+  }
+
+  const STORY_SCENES = {
+    drawer() {
+      return '<rect x="4" y="120" width="252" height="6" rx="2" fill="var(--wood)"/>' +
+        matchboxSVG(demoBox(".........", 1, 1), { nested: { x: 6, y: 40, scale: 0.4 } }) +
+        matchboxSVG(demoBox("X...O....", 3, 2), { nested: { x: 90, y: 40, scale: 0.4 } }) +
+        matchboxSVG(demoBox("X.O.X....", 5, 3), { nested: { x: 174, y: 40, scale: 0.4 } });
+    },
+    find() {
+      return boardArt(E.keyToBoard("X...O...."), 8, 30, 84) + arrowArt(100, 72, 134) +
+        matchboxSVG(demoBox("X...O....", 3, 2), { nested: { x: 140, y: 12, scale: 0.56 } });
+    },
+    shake() {
+      return '<g transform="rotate(-8 130 80)">' +
+        matchboxSVG(demoBox(".........", 1, 1), { nested: { x: 68, y: 8, scale: 0.62 }, drawn: 0 }) + "</g>" +
+        '<path class="story-art-line" d="M40 40 Q30 60 40 80 M28 48 Q20 62 28 76 M220 40 Q230 60 220 80 M232 48 Q240 62 232 76"/>';
+    },
+    lookup() {
+      return beadMarkSVG(0, 40, 72, 16, "story-bead") + arrowArt(64, 72, 112) +
+        boardArt(E.keyToBoard("........."), 124, 22, 100, { 0: 0 });
+    },
+    win() {
+      return matchboxSVG(demoBox(".........", 1, 1, [7, 4, 0, 0, 4, 0, 0, 0, 0]), { nested: { x: 30, y: 4, scale: 0.68 }, dropped: { colorIdx: 0, n: 3 } }) +
+        '<text class="story-art-text" x="190" y="118">+3</text>';
+    },
+    loss() {
+      return matchboxSVG(demoBox(".........", 1, 1, [3, 4, 0, 0, 4, 0, 0, 0, 0]), { nested: { x: 30, y: 4, scale: 0.68 }, removed: 0, aside: true }) +
+        '<text class="story-art-text" x="190" y="102">−1</text>';
+    },
+  };
+
+  // data-model.md: PictureStory.panels; StoryPanel.picture, StoryPanel.sentences, StoryPanel.alt.
+  function renderStory() {
+    storyBody.innerHTML = COPY.story.map((panel, i) =>
+      '<li><div class="story-no">Picture ' + (i + 1) + " of " + COPY.story.length + "</div>" +
+      '<svg viewBox="0 0 260 150" role="img" aria-label="' + escapeHTML(panel.alt) + '">' + STORY_SCENES[panel.picture]() + "</svg>" +
+      panel.sentences.map((sentence) => '<p class="story-sentence">' + escapeHTML(sentence) + "</p>").join("") +
+      "</li>").join("");
+  }
+
+  storyToggle.addEventListener("click", () => {
+    const open = storyToggle.getAttribute("aria-expanded") !== "true";
+    if (open && !storyBody.childElementCount) renderStory();
+    storyToggle.setAttribute("aria-expanded", String(open));
+    storyToggle.textContent = open ? "Hide the picture story" : "Show the picture story";
+    storyBody.hidden = !open;
+  });
+
+  /* ================= "What changed?" after a training run (feature 002, US6; research K11) ================= */
+
+  const compareSection = document.getElementById("compare-section");
+  const compareSelect = document.getElementById("compare-select");
+  const compareBeforeEl = document.getElementById("compare-before");
+  const compareAfterEl = document.getElementById("compare-after");
+  const compareSummaryEl = document.getElementById("compare-summary");
+
+  // data-model.md: TrainingSnapshot (gamesBefore, beads, newBoxes). Taken when a run starts.
+  function takeSnapshot() {
+    ui.snapshot = {
+      menace: state.menace,
+      gamesBefore: state.menace.record.gamesPlayed,
+      beads: new Map([...state.menace.boxes].map(([key, box]) => [key, box.beads.slice()])),
+      newBoxes: new Set(),
+    };
+  }
+
+  // At the end of the run: which boxes are new, and every box's beads as the run left them. "After"
+  // shows these, so games played later are not counted as changes made by the run (FR-016).
+  function finishSnapshot() {
+    const snap = ui.snapshot;
+    if (!snap || snap.menace !== state.menace) return;
+    for (const key of state.menace.boxes.keys()) if (!snap.beads.has(key)) snap.newBoxes.add(key);
+    snap.after = new Map([...state.menace.boxes].map(([key, box]) => [key, box.beads.slice()]));
+  }
+
+  function clearSnapshot() {
+    ui.snapshot = null;
+    renderCompare();
+  }
+
+  function compareSentence(box, before, after) {
+    const { gained, lost } = E.beadChanges(before, after, box.groups);
+    const vars = {};
+    if (gained) {
+      vars.colour = E.BEAD_MARKS[gained.colorIdx].colourName;
+      vars.shape = E.BEAD_MARKS[gained.colorIdx].shape;
+      vars.beads = plural(gained.by, "bead");
+    }
+    if (lost) {
+      vars.lostColour = E.BEAD_MARKS[lost.colorIdx].colourName;
+      vars.lostShape = E.BEAD_MARKS[lost.colorIdx].shape;
+    }
+    const key = gained && lost ? "gainedLost" : gained ? "gained" : lost ? "lost" : "nothing";
+    return copyText("compare." + key, vars);
+  }
+
+  function renderCompareBox() {
+    const snap = ui.snapshot;
+    const box = snap && state.menace.boxes.get(compareSelect.value);
+    if (!box || !snap.after || !snap.after.has(box.positionKey)) return;
+    const isNew = snap.newBoxes.has(box.positionKey);
+    const before = isNew
+      ? E.startingBeads(box.positionKey, box.moveNumber, state.menace.beadRule)
+      : snap.beads.get(box.positionKey);
+    const after = snap.after.get(box.positionKey);
+    compareBeforeEl.innerHTML = matchboxSVG(box, {
+      beads: before,
+      label: "Before the run. " + matchboxLabel({ ...box, beads: before }, E.beadLayout(before, box.groups), null),
+    });
+    compareAfterEl.innerHTML = matchboxSVG(box, {
+      beads: after,
+      label: "After the run. " + matchboxLabel({ ...box, beads: after }, E.beadLayout(after, box.groups), null),
+    });
+    compareSummaryEl.innerHTML = (isNew ? copyText("compare.newBox") + " " : "") + compareSentence(box, before, after);
+  }
+
+  function renderCompare() {
+    const snap = ui.snapshot;
+    if (!snap || snap.menace !== state.menace || !state.menace.boxes.size) {
+      compareSection.hidden = true;
+      compareSelect.innerHTML = "";
+      return;
+    }
+    // The opening box first, then the others in discovery order.
+    const boxes = [...state.menace.boxes.values()].sort((a, b) =>
+      (a.moveNumber === 1 ? 0 : 1) - (b.moveNumber === 1 ? 0 : 1) || a.discoveryIndex - b.discoveryIndex);
+    const keep = compareSelect.value;
+    compareSelect.innerHTML = boxes.map((box) =>
+      '<option value="' + box.positionKey + '">Box #' + box.discoveryIndex + " · " + (TIER_LABEL[box.moveNumber] || box.moveNumber + "th") +
+      " move" + (snap.newBoxes.has(box.positionKey) ? " · new in this run" : "") + "</option>").join("");
+    if (keep && state.menace.boxes.has(keep)) compareSelect.value = keep;
+    compareSection.hidden = false;
+    renderCompareBox();
+  }
+
+  compareSelect.addEventListener("change", renderCompareBox);
 
   /* ================= Main game loop ================= */
 
@@ -2119,27 +3410,49 @@ var MenaceEngine = (function () {
     };
   }
 
-  function onAnimatedEvent(event) {
+  function onAnimatedEvent(event, run) {
+    let endFrames;
     if (event.type === "start") {
       ui.view = { game: event.game, deltas: null };
       renderBoard();
       renderBoxPanel();
-      setStatus("MENACE is shaking a box…", { announce: false });
+      say({ key: "menaceShaking", html: "MENACE is shaking a box…" }, { announce: false });
     } else if (event.type === "menace") {
       const choice = event.choice;
+      // A move starts in the mode the help is in now, and finishes in it (contracts/ui.md).
+      const steps = ui.help.stepByStep && !ui.training.running;
+      run.pendingSteps = steps && choice.kind !== "resigned" ? moveStepFrames(choice, event.game || ui.view.game) : null;
+      run.resignChoice = choice.kind === "resigned" ? choice : null;
+      // The bead's square shows its marker until MENACE's ◯ is placed (FR-004). With the steps,
+      // the marker waits for step 4 and the ◯ for step 5.
+      ui.heldBack = choice.kind === "bead"
+        ? { idx: choice.realIdx, colorIdx: choice.colorIdx, squares: steps ? [] : [choice.realIdx] }
+        : null;
       renderBoard();
       renderBoxPanel();
+      run.movedStatus = choice.kind === "forced"
+        ? { key: "forced", vars: { board: choice.realIdx + 1 }, html: "Only one square left — MENACE plays " + squareWord(choice.realIdx) + " by default." }
+        : { key: "menaceMoved", vars: { board: choice.realIdx + 1 }, html: "MENACE drew a bead and played " + squareWord(choice.realIdx) + "." };
       if (choice.kind === "resigned") {
-        setStatus("MENACE has <strong>no beads left</strong> for this position — it resigns.");
+        say(GIVES_UP_STATUS);
+      } else if (run.pendingSteps) {
+        // The step captions are announced; the status line waits for the move (FR-017).
+        say({ key: "menaceChoosing", html: "MENACE is choosing its move…" }, { announce: false });
       } else {
-        setStatus(choice.kind === "forced"
-          ? "Only one square left — MENACE plays " + squareWord(choice.realIdx) + " by default."
-          : "MENACE drew a bead and played " + squareWord(choice.realIdx) + ".");
+        say(run.movedStatus);
       }
+      // Tips (US5, research K9): the first new box, turned box and empty box of this visit.
+      if (choice.provisional) showTip("new-box");
+      if (choice.kind === "bead" && choice.transformIndex !== 0) showTip("turned-box");
+      if (choice.kind === "resigned") showTip("empty-box");
     } else if (event.type === "opponent") {
       renderBoard();
-      setStatus(opponentDisplayName(shownOpponent()) + " played " + squareWord(event.square) + ".");
+      say({
+        key: "opponentMoved", vars: { opponent: opponentDisplayName(shownOpponent()), board: event.square + 1 },
+        html: opponentDisplayName(shownOpponent()) + " played " + squareWord(event.square) + ".",
+      });
     } else if (event.type === "end") {
+      endFrames = ui.help.stepByStep && !ui.training.running ? gameEndFrames(event.game, event.deltas, run) : [];
       rememberFinished(event.game, event.deltas);
       renderBoard();
       renderBoxPanel();
@@ -2148,11 +3461,51 @@ var MenaceEngine = (function () {
       renderDrawer();
       const outcome = event.game.outcome;
       if (openingBoxEmpty(event.game)) {
-        setStatus(OPENING_EMPTY_MESSAGE);
+        say(OPENING_EMPTY_STATUS);
       } else if (event.game.resignedAt) {
-        setStatus("MENACE has <strong>no beads left</strong> for this position — it resigns.");
+        say(GIVES_UP_STATUS);
       } else {
-        setStatus(resultMessage(event.game));
+        say(resultStatus(event.game));
+      }
+      showTip("first-" + event.game.outcome);
+      if (endFrames.length) startEndSequence(endFrames);
+    }
+  }
+
+  // The frames shown after a game with Step by step on: an empty box's steps if MENACE gave up,
+  // then the beads going into or out of every box used (FR-008).
+  function gameEndFrames(game, deltas, run) {
+    return (run.resignChoice ? moveStepFrames(run.resignChoice, game) : []).concat(learningFrames(game, deltas));
+  }
+
+  // A sequence that outlives its game. Any interruption aborts it through abandonCurrentGame().
+  function startEndSequence(frames) {
+    if (currentSequence) currentSequence.abort();
+    const controller = new AbortController();
+    currentSequence = controller;
+    runSequence(frames, controller.signal).finally(() => {
+      if (currentSequence === controller) currentSequence = null;
+    });
+  }
+
+  // The engine waits on this after each move. After MENACE's move the bead marker shows for the
+  // wait, then the ◯ replaces it.
+  async function movePause(kind, signal, run) {
+    if (kind !== "menace-move") return pause(350, signal);
+    const frames = ui.training.running ? null : run.pendingSteps; // training never animates (FR-012)
+    run.pendingSteps = null;
+    try {
+      if (frames) {
+        const done = await runSequence(frames, signal);
+        if (done && currentRun === run) say(run.movedStatus, { announce: false });
+      } else {
+        await pause(450, signal);
+      }
+    } finally {
+      // A newer game may already own the board; only this game's own run clears its marker.
+      if (currentRun === run && ui.heldBack) {
+        ui.heldBack = null;
+        renderBoard();
       }
     }
   }
@@ -2168,9 +3521,9 @@ var MenaceEngine = (function () {
       opponentKind: state.opponent,
       rng: Math.random,
       signal: run.controller.signal,
-      pause: (kind, signal) => pause(kind === "menace-move" ? 450 : 350, signal),
+      pause: (kind, signal) => movePause(kind, signal, run),
       onEvent: (event) => {
-        if (currentRun === run) onAnimatedEvent(event);
+        if (currentRun === run) onAnimatedEvent(event, run);
       },
     }).finally(() => {
       if (currentRun === run) currentRun = null;
@@ -2407,6 +3760,7 @@ var MenaceEngine = (function () {
   async function runTraining(target) {
     if (ui.training.running || state.opponent === "human") return;
     abandonCurrentGame();
+    takeSnapshot(); // feature 002: "What changed?" compares against this (FR-016)
     const kind = state.opponent;
     const opponent = (board) => Promise.resolve(computerMove(kind, board));
     ui.training = { running: true, stopRequested: false, target, done: 0 };
@@ -2415,7 +3769,10 @@ var MenaceEngine = (function () {
     trainCancelBtn.hidden = false;
     setControlsDisabled(true);
     renderTrainingProgress();
-    setStatus("Training: " + target + " games against " + opponentLabel(kind).toLowerCase() + "…");
+    say({
+      key: "trainingStart", vars: { games: plural(target, "game"), opponent: opponentDisplayName(kind) },
+      html: "Training: " + target + " games against " + opponentLabel(kind).toLowerCase() + "…",
+    });
 
     let last = null;
     let openingEmpty = false;
@@ -2445,12 +3802,17 @@ var MenaceEngine = (function () {
     setControlsDisabled(false);
     renderBoard();
     renderBoxPanel();
+    finishSnapshot();
+    renderCompare();
     if (openingEmpty) {
-      setStatus(OPENING_EMPTY_MESSAGE + " Training stopped after " + done + " of " + target + " games.");
+      say([OPENING_EMPTY_STATUS, {
+        key: "trainingStopped", vars: { games: plural(done, "game") },
+        html: "Training stopped after " + done + " of " + target + " games.",
+      }]);
     } else if (done < target) {
-      setStatus("Training stopped after " + done + " of " + target + " games.");
+      say({ key: "trainingStopped", vars: { games: plural(done, "game") }, html: "Training stopped after " + done + " of " + target + " games." });
     } else {
-      setStatus("Training finished: " + target + " games.");
+      say({ key: "trainingDone", vars: { games: plural(target, "game") }, html: "Training finished: " + target + " games." });
     }
   }
 
@@ -2503,6 +3865,7 @@ var MenaceEngine = (function () {
     abandonCurrentGame();
     state.menace = E.createMenace({ beadRule: state.menace.beadRule });
     ui.lastGame = null;
+    clearSnapshot();
     startNewGame();
     renderStats();
     renderChart();
@@ -2691,13 +4054,17 @@ var MenaceEngine = (function () {
     state.menace = E.createMenace({ beadRule: rule });
     ui.lastGame = null;
     ui.view = null;
+    clearSnapshot();
     renderRuleDisplays();
     renderStats();
     renderChart();
     renderBoxPanel();
     renderDrawer();
     startNewGame();
-    setStatus("<strong>Bead rule: " + RULE_PHRASE[rule] + ".</strong> A fresh MENACE has started. " + statusEl.innerHTML);
+    say([{
+      key: "ruleSwitched", vars: { rule: RULE_NAMES[rule] },
+      html: "<strong>Bead rule: " + RULE_PHRASE[rule] + ".</strong> A fresh MENACE has started.",
+    }].concat(ui.lastStatus || []));
   }
 
   ruleSelect.addEventListener("click", async (e) => {
@@ -2758,7 +4125,7 @@ var MenaceEngine = (function () {
     link.click();
     link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
-    setStatus("Saved MENACE: " + plural(games, "game") + ".");
+    say({ key: "saved", vars: { games: plural(games, "game") }, html: "Saved MENACE: " + plural(games, "game") + "." });
   }
 
   function savedOn(iso) {
@@ -2768,7 +4135,7 @@ var MenaceEngine = (function () {
 
   async function loadFile(file) {
     const refuse = (message) =>
-      setStatus("Couldn’t load “" + escapeHTML(file.name) + "”. " + message + " Your MENACE hasn’t changed.");
+      say({ key: "loadFailed", html: "Couldn’t load “" + escapeHTML(file.name) + "”. " + message + " Your MENACE hasn’t changed." });
     if (file.size > E.MAX_SAVE_BYTES) return refuse(E.rejectionMessage("too-large"));
     let text;
     try {
@@ -2807,14 +4174,19 @@ var MenaceEngine = (function () {
     state.menace = menace;
     ui.lastGame = null;
     ui.view = null;
+    clearSnapshot();
     renderRuleDisplays();
     renderStats();
     renderChart();
     renderBoxPanel();
     renderDrawer();
     startNewGame();
-    setStatus("<strong>Loaded MENACE: " + plural(menace.record.gamesPlayed, "game") + ".</strong>" +
-      (ruleChanged ? " The bead rule is now " + RULE_PHRASE[menace.beadRule] + "." : "") + " " + statusEl.innerHTML);
+    say([{
+      key: ruleChanged ? "loadedRule" : "loaded",
+      vars: { games: plural(menace.record.gamesPlayed, "game"), rule: RULE_NAMES[menace.beadRule] },
+      html: "<strong>Loaded MENACE: " + plural(menace.record.gamesPlayed, "game") + ".</strong>" +
+        (ruleChanged ? " The bead rule is now " + RULE_PHRASE[menace.beadRule] + "." : ""),
+    }].concat(ui.lastStatus || []));
   }
 
   saveBtn.addEventListener("click", saveMenace);

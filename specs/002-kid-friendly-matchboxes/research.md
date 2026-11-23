@@ -246,3 +246,22 @@ Every factual statement in the copy deck is checked against the sources in featu
 | Boxes for the first move start with 4 beads of each colour, then 3, 2, 1. | Michie 1963 (Table 2) |
 
 The colour and shape names, and the moon, star and other marks, belong to this page, not to history. Michie's own colour names (white, lilac, gold …) are not used, and the help never presents its colours as his.
+
+**Review of the copy deck (T063, 2026-11-23)**. Every factual sentence in `<script id="menace-copy">` was read against the table above and feature 001 R14. Result: no mismatch, no change needed.
+
+| Deck entries | Statement | Source |
+| --- | --- | --- |
+| `steps.find.text`, `story.0`, `story.1.sentences.0` | A box's front shows a drawing of its board; MENACE finds the box that matches. | Michie 1963 (row 1) |
+| `steps.shake`, `steps.tilt`, `story.2` | Shake, tilt; the first bead to roll to the front is used. | Michie 1963 (row 2) |
+| `steps.lookup.*`, `story.1.sentences.1`, `story.3` | Each colour stands for a square MENACE could play; equivalent squares share a colour and are one move. | Michie 1963 (row 3); feature 001 R3 |
+| `learning.*`, `status.menaceWins`, `status.draw`, `status.youWin`, `status.opponentWins`, `tips.first-*`, `story.4`, `story.5` | Win +3, draw +1, loss: the drawn bead is taken away. | Michie 1963 (row 4) |
+| `steps.empty.*`, `status.menaceGivesUp`, `tips.empty-box` | An empty box means MENACE gives up. | Scroggs (row 5) |
+| `steps.forced`, `status.forced` | On the last free square MENACE needs no box. | Michie 1963: boxes exist only for MENACE's 1st, 3rd, 5th and 7th moves (feature 001 R14, Table 2) |
+| `tips.turned-box` | One box covers the same board turned or flipped. | Michie 1963 (symmetric positions share a box); feature 001 R4 |
+
+Two statements describe this page rather than history, and are worded that way:
+
+- `steps.find.newBox` and `tips.new-box` ("It takes a new box and fills it with beads"): the page opens a box the first time MENACE meets its position (feature 001's drawer and "Boxes discovered"). Michie prepared all his boxes in advance; the help does not claim otherwise.
+- `compare.*` sentences report this MENACE's own bead counts.
+
+The colour names and shapes appear only as the page's own labels (`BEAD_MARKS`); no entry attributes them to Michie.

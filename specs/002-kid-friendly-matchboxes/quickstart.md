@@ -40,7 +40,7 @@ Expected: all tests pass, including feature 001's.
 ## 3. Browser checks
 
 ```sh
-node tests/browser/check.mjs --only=matchbox,steps,learning,turned,shared-colour-markers,tips,simple-words,story,compare,help,reduced-motion
+node tests/browser/check.mjs --only=matchbox,bead-marks,steps,learning,turned,shared-colour-markers,tips,simple-words,story,compare,help,reduced-motion,contrast-helps,keyboard-helps,narrow-320-helps
 node tests/browser/check.mjs     # the full suite, including feature 001's checks
 ```
 
@@ -48,6 +48,7 @@ node tests/browser/check.mjs     # the full suite, including feature 001's check
 | --- | --- | --- | --- |
 | `matchbox-counts` | Play 10 games against the Random mover. After each MENACE move and each game, compare every matchbox's tray with the box's beads. | Individual beads (≤ 12) or heap counts add up to the real totals, always | FR-001, FR-002, SC-004 |
 | `bead-marks` | Read the marks on the beads and on the board marker for the drawn bead | Same colour and same shape. No two colours share a shape. | FR-003, FR-004 |
+| `matchbox-empty` | Load `tests/fixtures/saves/valid/empty-opening.json` | The resigned entry shows a matchbox with an empty tray and the "nothing to draw" caption | US1/AC6 |
 | `steps-order` | Step by step on, One step at a time. Watch MENACE's move and press Next 4 times. | Steps 1–5 appear in order with captions. MENACE's ◯ appears only at step 5. | FR-006, FR-007 |
 | `steps-auto` | Play by itself | Each step is visible for at least 2 s, and Pause holds the current step | FR-007 |
 | `steps-interrupt` | Press New game during step 3 | The steps vanish, nothing is recorded, and a new game starts | FR-011 |
@@ -58,10 +59,11 @@ node tests/browser/check.mjs     # the full suite, including feature 001's check
 | `simple-words-text` | Simple words on, one game | Every status message and caption shown comes from the copy deck | FR-013 |
 | `story` | Open the picture story | 6 or fewer panels, each with a labelled picture and 2 or fewer sentences | FR-015 |
 | `compare` | Run 100 games, open What changed? | Before and after match the snapshot and the live box, and the sentence names the colour that gained most | FR-016 |
-| `help-identical` | Seeded: 100 training games plus 5 animated games, once with both helps on and once with both off | Identical record and identical beads in every box | FR-021, SC-008 |
-| `help-perf` | Run 500 against the perfect player with the helps on, then off | On ≤ 1.1 × off | FR-012, SC-005 |
+| `help-identical` | Seeded: 5 animated games against the Random mover, then Run 100, then Save. Once with both helps on (pressing Next through every step), then, after a reload with the same seed, with both off. | The two save files are identical apart from `savedAt` | FR-021, SC-008 |
+| `help-perf` | Against the Random mover, alternating helps off and on, three rounds each: Reset, then 4 × Run 500 (2,000 games, timed exactly). Then switch the "What changed?" box 50 times. | Best on ≤ 1.1 × best off. A matchbox picture draws in under 2 ms. | FR-012, SC-005 |
 | `reduced-motion` | Emulate `prefers-reduced-motion: reduce`, Step by step on, one move | `document.getAnimations()` is empty throughout, and every caption still appears | FR-018 |
-| feature 001's `contrast-*`, `keyboard*`, `narrow-320*` | Re-run with both helps on and a step sequence open | All pass | FR-017, FR-019, SC-007 |
+| `contrast-helps-light`, `contrast-helps-dark`, `narrow-320-helps` | Feature 001's contrast audit and 320 px check, with both helps on, a tip open, "What changed?" shown, the story open and MENACE's steps paused at step 4 | All text passes; nothing scrolls sideways | FR-019, SC-007 |
+| `keyboard-helps` | Both helps on, "Play it yourself". Tab from the board, step through a move with Enter, then play a square by keyboard. | Tab reaches the tip, then Next; focus stays on Next while stepping, returns to the board at the end, and is never taken by MENACE's steps | FR-017, SC-007 |
 
 ## 4. Manual checks (not automatable)
 
